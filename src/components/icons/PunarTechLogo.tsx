@@ -9,14 +9,14 @@ interface LogoProps {
 export const PunarTechLogo: React.FC<LogoProps> = ({ className = '', size = 'md' }) => {
   const heightClass =
     size === 'sm'
-      ? 'h-7 sm:h-8'
+      ? 'h-6 sm:h-7'
       : size === 'lg'
-      ? 'h-10 sm:h-12 md:h-14'
-      : 'h-8 sm:h-10 md:h-11';
+      ? 'h-7 sm:h-9 md:h-12'
+      : 'h-6 sm:h-8 md:h-10';
 
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      <div className="dark:bg-white/95 dark:px-2.5 dark:py-1 dark:rounded-xl dark:shadow-xs transition-all duration-200 inline-flex items-center">
+      <div className="dark:bg-white/95 dark:px-2 dark:py-0.5 sm:dark:px-2.5 sm:dark:py-1 rounded-lg sm:rounded-xl dark:shadow-xs transition-all duration-200 inline-flex items-center shrink-0">
         <img
           src="/logo.png"
           alt="पुनरTech - PunarTech Laptops"

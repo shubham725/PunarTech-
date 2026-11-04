@@ -78,8 +78,8 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <header className="sticky top-0 z-40 bg-white/95 dark:bg-[#050505]/95 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800 shadow-2xs transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between gap-4 h-16 sm:h-20">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between gap-2 sm:gap-4 h-14 sm:h-18 md:h-20">
           {/* LEFT: Logo & Brand Tagline */}
           <div className="shrink-0 flex items-center">
             <a
@@ -228,16 +228,34 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           </nav>
 
-          {/* RIGHT: Actions (Compare, Wishlist, ThemeToggle, WhatsApp Group, Admin) */}
+          {/* RIGHT: Actions (ThemeToggle, Compare, Wishlist, WhatsApp Group, Admin, Menu) */}
           <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
             {/* Theme Toggle (Dark / Light) */}
             <ThemeToggle />
 
-            {/* Compare Shortcut */}
+            {/* Wishlist Shortcut */}
+            <button
+              type="button"
+              onClick={onOpenWishlist}
+              className="relative p-2 rounded-[12px] text-zinc-600 dark:text-zinc-300 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all duration-300 border border-zinc-200/70 dark:border-zinc-800 cursor-pointer"
+              title="View saved laptops"
+              aria-label="Wishlist"
+            >
+              <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-rose-500 fill-rose-500/15" />
+              {wishlistedCount > 0 && (
+                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-rose-500 text-white text-[10px] font-bold flex items-center justify-center shadow-xs">
+                  {wishlistedCount}
+                </span>
+              )}
+            </button>
+
+            {/* Compare Shortcut (Shown on tablet/desktop, or on mobile only when items are being compared) */}
             <button
               type="button"
               onClick={onOpenCompare}
-              className="relative p-2 rounded-[12px] text-zinc-600 dark:text-zinc-400 hover:text-[#009B69] dark:hover:text-[#10B981] hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all duration-300 border border-transparent hover:border-zinc-200 dark:hover:border-zinc-700 cursor-pointer"
+              className={`${
+                comparedCount > 0 ? 'flex' : 'hidden sm:flex'
+              } items-center relative p-2 rounded-[12px] text-zinc-600 dark:text-zinc-300 hover:text-[#009B69] dark:hover:text-[#10B981] hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all duration-300 border border-zinc-200/70 dark:border-zinc-800 cursor-pointer`}
               title="Compare laptops side-by-side"
               aria-label="Compare laptops"
             >
@@ -249,33 +267,16 @@ export const Header: React.FC<HeaderProps> = ({
               )}
             </button>
 
-            {/* Wishlist Shortcut */}
-            <button
-              type="button"
-              onClick={onOpenWishlist}
-              className="relative p-2 rounded-[12px] text-zinc-600 dark:text-zinc-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all duration-300 border border-transparent hover:border-zinc-200 dark:hover:border-zinc-700 cursor-pointer"
-              title="View saved laptops"
-              aria-label="Wishlist"
-            >
-              <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-rose-500" />
-              {wishlistedCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-rose-500 text-white text-[10px] font-bold flex items-center justify-center shadow-xs">
-                  {wishlistedCount}
-                </span>
-              )}
-            </button>
-
-            {/* WhatsApp Community Group Button */}
+            {/* WhatsApp Community Group Button (Visible on sm+ screens; on mobile it lives inside the drawer) */}
             <a
               href={WHATSAPP_CONFIG.groupInviteUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-[12px] bg-gradient-to-r from-[#009B69] to-[#007A8D] hover:from-[#00875A] hover:to-[#006979] dark:from-[#10B981] dark:to-[#06B6D4] text-white dark:text-[#04251B] font-['Poppins'] text-[13px] sm:text-[14px] font-semibold border border-transparent shadow-xs transition-all duration-300 active:scale-95"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-[12px] bg-gradient-to-r from-[#009B69] to-[#007A8D] hover:from-[#00875A] hover:to-[#006979] dark:from-[#10B981] dark:to-[#06B6D4] text-white dark:text-[#04251B] font-['Poppins'] text-[13px] sm:text-[14px] font-semibold border border-transparent shadow-xs transition-all duration-300 active:scale-95"
               title="Join PunarTech WhatsApp Community for latest arrivals"
             >
               <WhatsAppIcon className="w-4 h-4 text-white dark:text-[#04251B]" />
-              <span className="hidden sm:inline">Join Group</span>
-              <span className="sm:hidden text-[11px]">Group</span>
+              <span>Join Group</span>
               <ExternalLink className="w-3.5 h-3.5 text-white/80 dark:text-[#04251B]/80" />
             </a>
 
@@ -283,7 +284,7 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               type="button"
               onClick={onOpenAdmin}
-              className="hidden sm:flex items-center gap-1.5 p-2 rounded-[12px] text-zinc-600 dark:text-zinc-300 hover:text-black dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 transition-all duration-300 cursor-pointer font-['Poppins'] text-[13px] font-medium"
+              className="hidden md:flex items-center gap-1.5 p-2 rounded-[12px] text-zinc-600 dark:text-zinc-300 hover:text-black dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 transition-all duration-300 cursor-pointer font-['Poppins'] text-[13px] font-medium"
               title="Store Admin & Inventory Management"
               aria-label="Admin Portal"
             >
@@ -295,7 +296,7 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-[12px] text-zinc-600 dark:text-zinc-300 hover:text-black dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 cursor-pointer transition-all duration-300"
+              className="lg:hidden p-2 rounded-[12px] text-zinc-700 dark:text-zinc-200 hover:text-black dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-zinc-200/80 dark:border-zinc-800 cursor-pointer transition-all duration-300"
               aria-label="Toggle navigation menu"
             >
               <Menu className="w-5 h-5" />
@@ -304,7 +305,7 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Mobile Search Input (Visible only on mobile) */}
-        <div className="md:hidden pb-3">
+        <div className="md:hidden pb-2.5">
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-zinc-400">
               <Search className="w-4 h-4" />
@@ -321,6 +322,7 @@ export const Header: React.FC<HeaderProps> = ({
                 type="button"
                 onClick={() => onSearchChange('')}
                 className="absolute inset-y-0 right-0 pr-2.5 flex items-center text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
+                aria-label="Clear search"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -331,6 +333,7 @@ export const Header: React.FC<HeaderProps> = ({
         {/* Mobile Expanded Drawer/Menu */}
         {mobileMenuOpen && (
           <div className="lg:hidden py-3 border-t border-zinc-200 dark:border-zinc-800 space-y-2.5 animate-in fade-in duration-150 font-['Poppins']">
+            {/* Hub Selector */}
             <div className="grid grid-cols-3 gap-1 bg-zinc-100 dark:bg-zinc-900 p-1.5 rounded-[14px] border border-zinc-200 dark:border-zinc-800">
               <button
                 type="button"
@@ -339,7 +342,9 @@ export const Header: React.FC<HeaderProps> = ({
                   setMobileMenuOpen(false);
                 }}
                 className={`py-2 text-center text-xs font-medium rounded-[10px] transition-all duration-300 ${
-                  selectedBranch === 'All' ? 'bg-gradient-to-r from-[#009B69] to-[#007A8D] text-white shadow-xs font-semibold dark:from-[#10B981] dark:to-[#06B6D4] dark:text-[#04251B]' : 'text-zinc-600 dark:text-zinc-400'
+                  selectedBranch === 'All'
+                    ? 'bg-gradient-to-r from-[#009B69] to-[#007A8D] text-white shadow-xs font-semibold dark:from-[#10B981] dark:to-[#06B6D4] dark:text-[#04251B]'
+                    : 'text-zinc-600 dark:text-zinc-400'
                 }`}
               >
                 All ({totalCount})
@@ -351,7 +356,9 @@ export const Header: React.FC<HeaderProps> = ({
                   setMobileMenuOpen(false);
                 }}
                 className={`py-2 text-center text-xs font-medium rounded-[10px] flex items-center justify-center gap-1 transition-all duration-300 ${
-                  selectedBranch === 'Pune' ? 'bg-gradient-to-r from-[#009B69] to-[#007A8D] text-white shadow-xs font-semibold dark:from-[#10B981] dark:to-[#06B6D4] dark:text-[#04251B]' : 'text-zinc-600 dark:text-zinc-400'
+                  selectedBranch === 'Pune'
+                    ? 'bg-gradient-to-r from-[#009B69] to-[#007A8D] text-white shadow-xs font-semibold dark:from-[#10B981] dark:to-[#06B6D4] dark:text-[#04251B]'
+                    : 'text-zinc-600 dark:text-zinc-400'
                 }`}
               >
                 <MapPin className="w-3.5 h-3.5" />
@@ -364,11 +371,58 @@ export const Header: React.FC<HeaderProps> = ({
                   setMobileMenuOpen(false);
                 }}
                 className={`py-2 text-center text-xs font-medium rounded-[10px] flex items-center justify-center gap-1 transition-all duration-300 ${
-                  selectedBranch === 'Delhi' ? 'bg-gradient-to-r from-[#009B69] to-[#007A8D] text-white shadow-xs font-semibold dark:from-[#10B981] dark:to-[#06B6D4] dark:text-[#04251B]' : 'text-zinc-600 dark:text-zinc-400'
+                  selectedBranch === 'Delhi'
+                    ? 'bg-gradient-to-r from-[#009B69] to-[#007A8D] text-white shadow-xs font-semibold dark:from-[#10B981] dark:to-[#06B6D4] dark:text-[#04251B]'
+                    : 'text-zinc-600 dark:text-zinc-400'
                 }`}
               >
                 <MapPin className="w-3.5 h-3.5" />
                 <span>Delhi ({delhiCount})</span>
+              </button>
+            </div>
+
+            {/* Mobile WhatsApp VIP Community Link */}
+            <a
+              href={WHATSAPP_CONFIG.groupInviteUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full p-3 rounded-[12px] bg-gradient-to-r from-[#009B69] to-[#007A8D] dark:from-[#10B981] dark:to-[#06B6D4] text-white dark:text-[#04251B] flex items-center justify-between shadow-xs transition-all duration-300 active:scale-98"
+            >
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full bg-white/20 dark:bg-[#04251B]/20 flex items-center justify-center shrink-0">
+                  <WhatsAppIcon className="w-4 h-4 text-white dark:text-[#04251B]" />
+                </div>
+                <div className="text-left">
+                  <div className="text-xs font-bold font-['Urbanist'] leading-tight">Join WhatsApp VIP Community</div>
+                  <div className="text-[10px] text-white/90 dark:text-[#04251B]/80 font-['Poppins']">Get instant stock arrivals &amp; alerts</div>
+                </div>
+              </div>
+              <ExternalLink className="w-4 h-4 text-white/90 dark:text-[#04251B]/90 shrink-0 ml-2" />
+            </a>
+
+            {/* Quick Actions (Compare & Wishlist) */}
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  onOpenCompare();
+                  setMobileMenuOpen(false);
+                }}
+                className="py-2.5 px-3 rounded-[12px] bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-white border border-zinc-200 dark:border-zinc-800 text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer transition-colors"
+              >
+                <Scale className="w-3.5 h-3.5 text-[#009B69] dark:text-[#10B981]" />
+                <span>Compare {comparedCount > 0 ? `(${comparedCount})` : ''}</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  onOpenWishlist();
+                  setMobileMenuOpen(false);
+                }}
+                className="py-2.5 px-3 rounded-[12px] bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-white border border-zinc-200 dark:border-zinc-800 text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer transition-colors"
+              >
+                <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />
+                <span>Wishlist {wishlistedCount > 0 ? `(${wishlistedCount})` : ''}</span>
               </button>
             </div>
 
