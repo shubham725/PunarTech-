@@ -1,0 +1,402 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  /* PunarTech Logo-Harmonized Design System - Light (White) Theme */
+  --background: #FFFFFF;
+  --background-secondary: #F8FBF7;
+  --background-section: #F8FBF7;
+  --card: #FFFFFF;
+  --card-border: #E8EFE4;
+  --elevated: #FFFFFF;
+  --foreground: #101828;
+  --text-primary: #333333;
+  --text-secondary: #777777;
+  --text-muted: #999999;
+  --border: #E8EFE4;
+  --border-secondary: #EDF3EC;
+  --divider: #E8EFE4;
+
+  /* Logo Palette: Punar Green (#009B69 / #86BB46), Dark Green (#0B5D1E), Accent (#6FBF44 / #16C878), Tech Teal (#007A8D) */
+  --primary: #009B69;
+  --primary-green: #009B69;
+  --primary-foreground: #FFFFFF;
+  --primary-hover: #0B5D1E;
+  --primary-accent: #007A8D;
+  --dark-green: #0B5D1E;
+  --accent-green: #6FBF44;
+  --light-green: #D6F0DD;
+  --tech-teal: #007A8D;
+  --brand-mint: #E8F7EE;
+  --brand-teal-tint: #E0F4F7;
+
+  /* Logo Image Gradients (Vibrant & Light Gradients) */
+  --logo-gradient: linear-gradient(135deg, #009B69 0%, #007A8D 100%);
+  --logo-gradient-light: linear-gradient(135deg, #E8F7EE 0%, #E0F4F7 100%);
+  --logo-gradient-subtle: linear-gradient(135deg, #F0F9F4 0%, #EBF7F9 100%);
+  --logo-gradient-surface: linear-gradient(135deg, rgba(0, 155, 105, 0.05) 0%, rgba(0, 122, 141, 0.05) 100%);
+  --logo-gradient-glow: linear-gradient(135deg, rgba(0, 155, 105, 0.15) 0%, rgba(0, 122, 141, 0.15) 100%);
+
+  /* Button Palette */
+  --btn-radius: 12px;
+  --secondary-btn-bg: #FFFFFF;
+  --secondary-btn-text: #0B5D1E;
+  --secondary-btn-border: #009B69;
+  --secondary-btn-hover: #E8F7EE;
+
+  /* Form & Interactive */
+  --input-radius: 12px;
+  --input-bg: #FFFFFF;
+  --input-text: #333333;
+  --input-placeholder: #999999;
+  --input-border: #E8EFE4;
+  --input-focus-border: #009B69;
+  --input-focus-ring: rgba(0, 155, 105, 0.2);
+  --table-header-bg: #F8FBF7;
+  --table-row-hover: #F0F9F4;
+  --disabled-bg: #F4F7F4;
+  --disabled-text: #999999;
+}
+
+.dark, [data-theme="dark"] {
+  /* PunarTech Logo-Harmonized Design System - Dark Theme */
+  --background: #090E11;
+  --background-secondary: #0E1519;
+  --background-section: #121A1F;
+  --card: #152227;
+  --card-border: #22353D;
+  --elevated: #1B2B32;
+  --foreground: #FFFFFF;
+  --text-primary: #F8FAFC;
+  --text-secondary: #CBD5E1;
+  --text-muted: #94A3B8;
+  --border: #22353D;
+  --border-secondary: #1C2B32;
+  --divider: #1A282E;
+
+  /* Logo Palette: Glowing Green (#10B981) & Neon Tech Teal (#06B6D4) */
+  --primary: #10B981;
+  --primary-green: #10B981;
+  --primary-foreground: #04251B;
+  --primary-hover: #059669;
+  --primary-accent: #06B6D4;
+  --dark-green: #04251B;
+  --accent-green: #34D399;
+  --light-green: rgba(16, 185, 129, 0.2);
+  --tech-teal: #06B6D4;
+  --brand-mint: rgba(16, 185, 129, 0.16);
+  --brand-teal-tint: rgba(6, 182, 212, 0.16);
+
+  /* Logo Image Gradients (Dark Mode Counterparts) */
+  --logo-gradient: linear-gradient(135deg, #10B981 0%, #06B6D4 100%);
+  --logo-gradient-light: linear-gradient(135deg, rgba(16, 185, 129, 0.18) 0%, rgba(6, 182, 212, 0.18) 100%);
+  --logo-gradient-subtle: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%);
+  --logo-gradient-surface: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(6, 182, 212, 0.08) 100%);
+  --logo-gradient-glow: linear-gradient(135deg, rgba(16, 185, 129, 0.25) 0%, rgba(6, 182, 212, 0.25) 100%);
+
+  /* Button Palette */
+  --btn-radius: 12px;
+  --secondary-btn-bg: #152227;
+  --secondary-btn-text: #34D399;
+  --secondary-btn-border: #10B981;
+  --secondary-btn-hover: rgba(16, 185, 129, 0.18);
+
+  /* Form & Interactive */
+  --input-radius: 12px;
+  --input-bg: #10191E;
+  --input-text: #FFFFFF;
+  --input-placeholder: #64748B;
+  --input-border: #22353D;
+  --input-focus-border: #10B981;
+  --input-focus-ring: rgba(16, 185, 129, 0.25);
+  --table-header-bg: #132025;
+  --table-row-hover: #19272D;
+  --disabled-bg: #141E22;
+  --disabled-text: #64748B;
+}
+
+@theme {
+  --font-sans: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Urbanist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Design System Tokens */
+  --color-bw-bg: var(--background);
+  --color-bw-secondary-bg: var(--background-secondary);
+  --color-bw-section-bg: var(--background-section);
+  --color-bw-card: var(--card);
+  --color-bw-elevated: var(--elevated);
+  --color-bw-text: var(--foreground);
+  --color-bw-text-secondary: var(--text-secondary);
+  --color-bw-text-muted: var(--text-muted);
+  --color-bw-border: var(--border);
+  --color-bw-border-secondary: var(--border-secondary);
+  --color-bw-divider: var(--divider);
+  --color-bw-primary: var(--primary);
+  --color-bw-primary-foreground: var(--primary-foreground);
+}
+
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: var(--text-primary);
+    background-color: var(--background);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  .dark body, [data-theme="dark"] body {
+    color: var(--text-primary);
+    background-color: var(--background);
+  }
+
+  /* Universal Strict Form Input Styling: 12px Radius, Poppins Typography, Green Focus Borders */
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="button"]):not([type="submit"]):not([type="hidden"]),
+  select,
+  textarea {
+    font-family: var(--font-sans) !important;
+    border-radius: 12px !important;
+    border: 1px solid var(--input-border);
+    background-color: var(--input-bg);
+    color: var(--input-text);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  }
+
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="button"]):not([type="submit"]):not([type="hidden"]):focus,
+  select:focus,
+  textarea:focus {
+    outline: none !important;
+    border-color: var(--input-focus-border) !important;
+    box-shadow: 0 0 0 3px var(--input-focus-ring) !important;
+  }
+
+  .dark input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="button"]):not([type="submit"]):not([type="hidden"]),
+  .dark select,
+  .dark textarea,
+  [data-theme="dark"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="button"]):not([type="submit"]):not([type="hidden"]),
+  [data-theme="dark"] select,
+  [data-theme="dark"] textarea {
+    border-color: var(--input-border);
+    background-color: var(--input-bg);
+    color: var(--input-text);
+  }
+
+  .dark input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="button"]):not([type="submit"]):not([type="hidden"]):focus,
+  .dark select:focus,
+  .dark textarea:focus,
+  [data-theme="dark"] input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="button"]):not([type="submit"]):not([type="hidden"]):focus,
+  [data-theme="dark"] select:focus,
+  [data-theme="dark"] textarea:focus {
+    border-color: #10B981 !important;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25) !important;
+  }
+}
+
+/* Navigation Standard */
+.punartech-nav-item {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+/* Punartech Green & White Outline Button */
+.btn-punartech-outline {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  background-color: var(--secondary-btn-bg);
+  border: 1.5px solid var(--secondary-btn-border);
+  color: var(--secondary-btn-text);
+  border-radius: 12px;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.btn-punartech-outline:hover {
+  background: var(--logo-gradient-light);
+  border-color: var(--primary);
+  color: var(--primary-hover);
+  box-shadow: 0 4px 12px rgba(0, 155, 105, 0.15);
+  transform: translateY(-1px);
+}
+
+.btn-punartech-outline:disabled {
+  background-color: var(--disabled-bg);
+  color: var(--disabled-text);
+  border-color: var(--border);
+  cursor: not-allowed;
+}
+
+/* Punartech Signature Solid Button with Logo Gradient */
+.btn-punartech-solid {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  background: var(--logo-gradient);
+  border: 1px solid transparent;
+  color: #FFFFFF;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(0, 155, 105, 0.25);
+}
+
+.btn-punartech-solid:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 155, 105, 0.35);
+}
+
+.btn-punartech-solid:disabled {
+  background: var(--disabled-bg);
+  color: var(--disabled-text);
+  border-color: var(--border);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Punartech Light Gradient Button */
+.btn-punartech-light {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  font-weight: 600;
+  background: var(--logo-gradient-light);
+  border: 1.5px solid rgba(0, 155, 105, 0.3);
+  color: var(--primary);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 155, 105, 0.08);
+}
+
+.btn-punartech-light:hover {
+  background: var(--logo-gradient);
+  color: #FFFFFF;
+  border-color: transparent;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 155, 105, 0.25);
+}
+
+/* Punartech Card Standard: 20-24px Radius, Soft Shadow & Subtle Borders */
+.punartech-card {
+  background-color: var(--card);
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.dark .punartech-card, [data-theme="dark"] .punartech-card {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+}
+
+.punartech-card:hover {
+  border-color: var(--primary);
+  box-shadow: 0 10px 28px -4px rgba(0, 155, 105, 0.16);
+  transform: translateY(-2px);
+}
+
+.dark .punartech-card:hover, [data-theme="dark"] .punartech-card:hover {
+  border-color: #10B981;
+  box-shadow: 0 10px 28px -4px rgba(16, 185, 129, 0.25);
+}
+
+/* Punartech Light Surface Card */
+.punartech-card-surface {
+  background: var(--logo-gradient-surface);
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  transition: all 0.2s ease;
+}
+
+/* Form Input Standard Utility */
+.punartech-input {
+  font-family: var(--font-sans) !important;
+  font-size: 14px;
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 12px !important;
+  color: var(--text-primary);
+  transition: background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.punartech-input:focus {
+  outline: none !important;
+  border-color: var(--input-focus-border) !important;
+  box-shadow: 0 0 0 3px var(--input-focus-ring) !important;
+}
+
+.dark .punartech-input:focus, [data-theme="dark"] .punartech-input:focus {
+  border-color: #10B981 !important;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.25) !important;
+}
+
+/* PunarTech Logo-Harmonized Gradient Utilities */
+.bg-logo-gradient {
+  background: var(--logo-gradient);
+}
+
+.bg-logo-gradient-light {
+  background: var(--logo-gradient-light);
+}
+
+.bg-logo-gradient-subtle {
+  background: var(--logo-gradient-subtle);
+}
+
+.bg-logo-gradient-surface {
+  background: var(--logo-gradient-surface);
+}
+
+.text-logo-gradient {
+  background: var(--logo-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Micro-animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-section);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D4D4D8;
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb, [data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #2D2D2D;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #777777;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover, [data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: #3A3A3A;
+}
