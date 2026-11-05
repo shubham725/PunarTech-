@@ -43,18 +43,18 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/80 backdrop-blur-xs overflow-y-auto">
       <div
-        className="relative w-full max-w-6xl bg-white dark:bg-zinc-900 rounded-[24px] shadow-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden flex flex-col max-h-[92vh] animate-in fade-in zoom-in-95 duration-200 transition-colors"
+        className="relative w-full max-w-6xl bg-white dark:bg-[#152227] rounded-[24px] shadow-2xl border border-[#E3EBE7] dark:border-[#22353D] overflow-hidden flex flex-col max-h-[92vh] animate-in fade-in zoom-in-95 duration-200 transition-colors"
         role="dialog"
         aria-modal="true"
         aria-labelledby="compare-modal-title"
       >
         {/* Header */}
-        <div className="px-5 sm:px-6 py-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between bg-zinc-50 dark:bg-zinc-950">
+        <div className="px-5 sm:px-6 py-4 border-b border-[#E3EBE7] dark:border-[#22353D] flex items-center justify-between bg-[#F8FBF9] dark:bg-[#0E1519]">
           <div className="flex items-center gap-2.5">
-            <h2 id="compare-modal-title" className="text-base sm:text-lg font-['Urbanist'] font-bold text-black dark:text-white">
+            <h2 id="compare-modal-title" className="text-base sm:text-lg font-['Urbanist'] font-bold text-zinc-950 dark:text-white">
               Laptop Specification Comparison
             </h2>
-            <span className="text-xs font-['Poppins'] font-bold text-black dark:text-white bg-zinc-200 dark:bg-zinc-800 px-2.5 py-0.5 rounded-full border border-zinc-300 dark:border-zinc-700">
+            <span className="text-xs font-['Poppins'] font-bold text-[#007A52] dark:text-[#34D399] bg-[#E8F7EE] dark:bg-[#10B981]/15 px-2.5 py-0.5 rounded-full border border-[#C8DFD4] dark:border-[#10B981]/30">
               {comparedLaptops.length}/4 Selected
             </span>
           </div>
@@ -71,7 +71,7 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="p-1.5 rounded-xl text-zinc-500 hover:text-black dark:hover:text-white hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all duration-300 cursor-pointer"
+              className="p-1.5 rounded-xl text-zinc-500 hover:text-zinc-950 dark:hover:text-white hover:bg-[#E8F7EE] dark:hover:bg-[#10B981]/15 transition-all duration-300 cursor-pointer"
               aria-label="Close comparison"
             >
               <X className="w-5 h-5" />
@@ -83,38 +83,38 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({
         <div className="p-4 sm:p-6 overflow-x-auto overflow-y-auto">
           <table className="w-full text-left border-collapse min-w-[700px]">
             <thead>
-              <tr className="border-b border-zinc-200 dark:border-zinc-800">
-                <th className="p-3 text-[11px] font-['Poppins'] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 w-1/5 bg-zinc-50 dark:bg-zinc-950 rounded-tl-xl">
+              <tr className="border-b border-[#E3EBE7] dark:border-[#22353D]">
+                <th className="p-3 text-[11px] font-['Poppins'] font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 w-1/5 bg-[#F8FBF9] dark:bg-[#0E1519] rounded-tl-xl">
                   Specification
                 </th>
                 {comparedLaptops.map((l) => (
                   <th key={l.id} className="p-3 align-top">
                     <div className="space-y-2">
-                      <div className="h-32 w-full rounded-[14px] overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 relative">
+                      <div className="h-32 w-full rounded-[14px] overflow-hidden border border-[#E3EBE7] dark:border-[#22353D] bg-[#F8FBF9] dark:bg-[#0E1519] relative">
                         <LaptopImage laptop={l} size="sm" />
                         <button
                           type="button"
                           onClick={() => onRemoveFromCompare(l.id)}
-                          className="absolute top-1.5 right-1.5 p-1 rounded-full bg-white/95 dark:bg-zinc-900/95 text-zinc-500 hover:text-rose-600 dark:hover:text-rose-400 shadow-xs border border-zinc-200 dark:border-zinc-700 cursor-pointer"
+                          className="absolute top-1.5 right-1.5 p-1 rounded-full bg-white/95 dark:bg-[#152227]/95 text-zinc-500 hover:text-rose-600 dark:hover:text-rose-400 shadow-xs border border-[#E3EBE7] dark:border-[#22353D] cursor-pointer"
                           title="Remove item"
                         >
                           <X className="w-3.5 h-3.5" />
                         </button>
                       </div>
 
-                      <div className="text-[10px] font-mono text-zinc-500 dark:text-zinc-400 font-bold">
+                      <div className="text-[10px] font-mono text-[#007A8D] dark:text-[#06B6D4] font-bold">
                         {l.stockId} • {l.branch} Hub
                       </div>
-                      <div className="text-xs font-['Urbanist'] font-bold text-black dark:text-white line-clamp-2">
+                      <div className="text-xs font-['Urbanist'] font-bold text-zinc-950 dark:text-white line-clamp-2">
                         {l.fullName}
                       </div>
 
                       <button
                         type="button"
                         onClick={() => onOpenWhatsApp(l)}
-                        className="w-full py-1.5 px-2 bg-black hover:bg-zinc-800 text-white dark:bg-white dark:hover:bg-zinc-200 dark:text-black rounded-xl font-['Poppins'] text-xs font-semibold flex items-center justify-center gap-1 cursor-pointer transition-all duration-300 shadow-sm"
+                        className="w-full py-1.5 px-2 bg-gradient-to-r from-[#009B69] to-[#007A8D] hover:from-[#008759] hover:to-[#00697a] text-white rounded-xl font-['Poppins'] text-xs font-semibold flex items-center justify-center gap-1 cursor-pointer transition-all duration-300 shadow-sm active:scale-95"
                       >
-                        <WhatsAppIcon className="w-3.5 h-3.5 text-[#25D366]" />
+                        <WhatsAppIcon className="w-3.5 h-3.5 text-white" />
                         <span>Enquire</span>
                       </button>
                     </div>
@@ -122,21 +122,21 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-200 dark:divide-zinc-800 text-xs font-['Poppins']">
+            <tbody className="divide-y divide-[#E3EBE7] dark:divide-[#22353D] text-xs font-['Poppins']">
               {/* Verified Price */}
-              <tr className="bg-zinc-50/50 dark:bg-zinc-900/50">
-                <td className="p-3 font-semibold text-black dark:text-white bg-zinc-50 dark:bg-zinc-950">Verified Price</td>
+              <tr className="bg-[#F8FBF9]/60 dark:bg-[#0E1519]/60">
+                <td className="p-3 font-semibold text-zinc-950 dark:text-white bg-[#F8FBF9] dark:bg-[#0E1519]">Verified Price</td>
                 {comparedLaptops.map((l) => {
                   const isLowest = minPrice !== null && l.sellingPrice === minPrice;
                   return (
                     <td key={l.id} className="p-3">
-                      <span className="text-sm font-black font-mono text-black dark:text-white block">
+                      <span className="text-sm font-black font-mono text-[#009B69] dark:text-[#10B981] block">
                         {l.hasPrice && l.sellingPrice !== null
                           ? `₹${l.sellingPrice.toLocaleString('en-IN')}`
                           : 'Contact for Price'}
                       </span>
                       {isLowest && (
-                        <span className="text-[10px] font-bold text-black dark:text-white bg-zinc-200 dark:bg-zinc-800 px-1.5 py-0.5 rounded-[6px] border border-zinc-300 dark:border-zinc-700 inline-block mt-0.5">
+                        <span className="text-[10px] font-bold text-[#007A52] dark:text-[#34D399] bg-[#E8F7EE] dark:bg-[#10B981]/15 px-1.5 py-0.5 rounded-[6px] border border-[#C8DFD4] dark:border-[#10B981]/30 inline-block mt-0.5">
                           ✓ Lowest Price
                         </span>
                       )}
@@ -147,12 +147,12 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({
 
               {/* Processor */}
               <tr>
-                <td className="p-3 font-semibold text-black dark:text-white bg-zinc-50 dark:bg-zinc-950">Processor</td>
+                <td className="p-3 font-semibold text-zinc-950 dark:text-white bg-[#F8FBF9] dark:bg-[#0E1519]">Processor</td>
                 {comparedLaptops.map((l) => (
                   <td key={l.id} className="p-3 font-medium text-zinc-900 dark:text-zinc-200">
                     {l.processor}
                     {l.generation && (
-                      <span className="block text-[10px] text-zinc-500 dark:text-zinc-400">
+                      <span className="block text-[10px] text-[#007A8D] dark:text-[#06B6D4]">
                         Intel {l.generation}th Gen
                       </span>
                     )}
@@ -162,14 +162,14 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({
 
               {/* RAM */}
               <tr>
-                <td className="p-3 font-semibold text-black dark:text-white bg-zinc-50 dark:bg-zinc-950">Memory (RAM)</td>
+                <td className="p-3 font-semibold text-zinc-950 dark:text-white bg-[#F8FBF9] dark:bg-[#0E1519]">Memory (RAM)</td>
                 {comparedLaptops.map((l) => {
                   const isMax = maxRam !== null && l.ramGb === maxRam;
                   return (
                     <td key={l.id} className="p-3 font-mono">
-                      <span className="font-bold text-black dark:text-zinc-200">{l.ram}</span>
+                      <span className="font-bold text-[#009B69] dark:text-[#10B981]">{l.ram}</span>
                       {isMax && (
-                        <span className="text-[10px] font-bold text-black dark:text-white bg-zinc-200 dark:bg-zinc-800 px-1.5 py-0.5 rounded-[6px] border border-zinc-300 dark:border-zinc-700 block w-fit mt-0.5">
+                        <span className="text-[10px] font-bold text-[#007A52] dark:text-[#34D399] bg-[#E8F7EE] dark:bg-[#10B981]/15 px-1.5 py-0.5 rounded-[6px] border border-[#C8DFD4] dark:border-[#10B981]/30 block w-fit mt-0.5">
                           ✓ Highest RAM
                         </span>
                       )}
@@ -180,15 +180,15 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({
 
               {/* Storage */}
               <tr>
-                <td className="p-3 font-semibold text-black dark:text-white bg-zinc-50 dark:bg-zinc-950">Storage Drive</td>
+                <td className="p-3 font-semibold text-zinc-950 dark:text-white bg-[#F8FBF9] dark:bg-[#0E1519]">Storage Drive</td>
                 {comparedLaptops.map((l) => {
                   const isMax = maxSsd !== null && l.ssdGb === maxSsd && (l.ssdGb || 0) > 0;
                   return (
                     <td key={l.id} className="p-3 font-mono">
-                      <span className="font-bold text-black dark:text-zinc-200">{l.storageRaw}</span>
+                      <span className="font-bold text-zinc-900 dark:text-zinc-200">{l.storageRaw}</span>
                       <span className="block text-[10px] text-zinc-500 dark:text-zinc-400">{l.storageType}</span>
                       {isMax && (
-                        <span className="text-[10px] font-bold text-black dark:text-white bg-zinc-200 dark:bg-zinc-800 px-1.5 py-0.5 rounded-[6px] border border-zinc-300 dark:border-zinc-700 block w-fit mt-0.5">
+                        <span className="text-[10px] font-bold text-[#007A52] dark:text-[#34D399] bg-[#E8F7EE] dark:bg-[#10B981]/15 px-1.5 py-0.5 rounded-[6px] border border-[#C8DFD4] dark:border-[#10B981]/30 block w-fit mt-0.5">
                           ✓ Highest SSD
                         </span>
                       )}
@@ -199,7 +199,7 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({
 
               {/* Display */}
               <tr>
-                <td className="p-3 font-semibold text-black dark:text-white bg-zinc-50 dark:bg-zinc-950">Display Screen</td>
+                <td className="p-3 font-semibold text-zinc-950 dark:text-white bg-[#F8FBF9] dark:bg-[#0E1519]">Display Screen</td>
                 {comparedLaptops.map((l) => (
                   <td key={l.id} className="p-3 text-zinc-900 dark:text-zinc-300">
                     {l.display !== 'Not listed' ? `${l.display} Display` : 'Standard Screen'}
@@ -209,12 +209,12 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({
 
               {/* Graphics */}
               <tr>
-                <td className="p-3 font-semibold text-black dark:text-white bg-zinc-50 dark:bg-zinc-950">Graphics (GPU)</td>
+                <td className="p-3 font-semibold text-zinc-950 dark:text-white bg-[#F8FBF9] dark:bg-[#0E1519]">Graphics (GPU)</td>
                 {comparedLaptops.map((l) => (
                   <td key={l.id} className="p-3 text-zinc-900 dark:text-zinc-300">
                     {l.graphicsRaw}
                     {l.hasDedicatedGraphics && (
-                      <span className="text-[10px] font-bold text-black dark:text-white block">
+                      <span className="text-[10px] font-bold text-[#009B69] dark:text-[#10B981] block">
                         ✓ Dedicated GPU
                       </span>
                     )}
@@ -224,10 +224,10 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({
 
               {/* Quality Grade */}
               <tr>
-                <td className="p-3 font-semibold text-black dark:text-white bg-zinc-50 dark:bg-zinc-950">Refurbished Grade</td>
+                <td className="p-3 font-semibold text-zinc-950 dark:text-white bg-[#F8FBF9] dark:bg-[#0E1519]">Refurbished Grade</td>
                 {comparedLaptops.map((l) => (
                   <td key={l.id} className="p-3">
-                    <span className="font-bold text-black dark:text-white">Grade A++</span>
+                    <span className="font-bold text-[#007A52] dark:text-[#34D399]">Grade A++</span>
                     <span className="block text-[10px] text-zinc-500 dark:text-zinc-400">Motherboard Verified</span>
                   </td>
                 ))}
@@ -235,10 +235,10 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({
 
               {/* Hub Availability */}
               <tr>
-                <td className="p-3 font-semibold text-black dark:text-white bg-zinc-50 dark:bg-zinc-950">Hub Availability</td>
+                <td className="p-3 font-semibold text-zinc-950 dark:text-white bg-[#F8FBF9] dark:bg-[#0E1519]">Hub Availability</td>
                 {comparedLaptops.map((l) => (
-                  <td key={l.id} className="p-3 font-semibold text-black dark:text-zinc-200">
-                    <span className="inline-flex items-center gap-1 text-black dark:text-white">
+                  <td key={l.id} className="p-3 font-semibold text-zinc-900 dark:text-zinc-200">
+                    <span className="inline-flex items-center gap-1 text-[#007A8D] dark:text-[#06B6D4]">
                       <MapPin className="w-3.5 h-3.5" />
                       <span>{l.branch} Hub Stock</span>
                     </span>
@@ -250,14 +250,14 @@ export const ComparisonModal: React.FC<ComparisonModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="p-4 border-t border-[#E3EBE7] dark:border-[#22353D] bg-[#F8FBF9] dark:bg-[#0E1519] flex flex-col sm:flex-row items-center justify-between gap-3">
           <span className="text-xs font-['Poppins'] text-zinc-500 dark:text-zinc-400">
-            Need live photos or testing report? WhatsApp helpline: <strong className="text-black dark:text-white">+91 80550 35502</strong>
+            Need live photos or testing report? WhatsApp helpline: <strong className="text-[#009B69] dark:text-[#10B981] font-mono">+91 80550 35502</strong>
           </span>
           <button
             type="button"
             onClick={onClose}
-            className="px-5 py-2 bg-zinc-100 hover:bg-zinc-200 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-200 font-['Poppins'] text-[13px] font-semibold rounded-xl transition-all duration-300 cursor-pointer shadow-xs"
+            className="px-5 py-2 bg-white hover:bg-[#E8F7EE] text-zinc-800 dark:bg-[#152227] dark:text-zinc-200 dark:hover:bg-[#1A2C33] border border-[#E3EBE7] dark:border-[#22353D] font-['Poppins'] text-[13px] font-semibold rounded-xl transition-all duration-300 cursor-pointer shadow-xs"
           >
             Close Comparison
           </button>

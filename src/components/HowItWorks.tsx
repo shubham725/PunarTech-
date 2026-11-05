@@ -40,13 +40,13 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onExploreClick }) => {
   ];
 
   return (
-    <section className="py-12 sm:py-16 bg-white dark:bg-[#09090b] border-b border-zinc-200 dark:border-zinc-800 transition-colors font-['Poppins']">
+    <section className="py-12 sm:py-16 bg-white dark:bg-[#090E11] border-b border-[#E3EBE7] dark:border-[#22353D] transition-colors font-['Poppins']">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12">
-          <span className="text-xs font-['Poppins'] font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 block mb-1">
+          <span className="text-xs font-['Poppins'] font-semibold uppercase tracking-wider text-[#007A52] dark:text-[#34D399] block mb-1">
             Simple &amp; Transparent Journey
           </span>
-          <h2 className="text-2xl sm:text-4xl font-['Urbanist'] font-bold text-black dark:text-white tracking-tight">
+          <h2 className="text-2xl sm:text-4xl font-['Urbanist'] font-bold text-zinc-950 dark:text-white tracking-tight">
             How Buying at PunarTech Works
           </h2>
           <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 mt-1 font-['Poppins']">
@@ -60,23 +60,23 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onExploreClick }) => {
             return (
               <div
                 key={idx}
-                className="bg-zinc-50 dark:bg-zinc-900 rounded-[22px] p-6 border border-zinc-200 dark:border-zinc-800 relative flex flex-col justify-between group hover:border-black dark:hover:border-white hover:-translate-y-1 hover:shadow-lg transition-all duration-300"
+                className="bg-[#F8FBF9] dark:bg-[#152227] rounded-[22px] p-6 border border-[#E3EBE7] dark:border-[#22353D] relative flex flex-col justify-between group hover:border-[#009B69] dark:hover:border-[#10B981] hover:-translate-y-1 hover:shadow-lg hover:shadow-[#009B69]/10 transition-all duration-300 shadow-2xs"
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 rounded-[14px] bg-zinc-200 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 text-black dark:text-white flex items-center justify-center group-hover:bg-black group-hover:text-white dark:group-hover:bg-white dark:group-hover:text-black transition-colors duration-300">
+                    <div className="w-12 h-12 rounded-[14px] bg-[#E8F7EE] dark:bg-[#10B981]/15 border border-[#C8DFD4] dark:border-[#10B981]/30 text-[#007A52] dark:text-[#34D399] flex items-center justify-center group-hover:bg-[#009B69] group-hover:text-white dark:group-hover:bg-[#10B981] dark:group-hover:text-[#04251B] transition-colors duration-300">
                       {item.isCustomIcon ? (
                         <WhatsAppIcon className="w-6 h-6 text-[#25D366]" />
                       ) : (
                         <Icon className="w-6 h-6" />
                       )}
                     </div>
-                    <span className="font-mono text-2xl font-black text-zinc-300 dark:text-zinc-700 group-hover:text-black dark:group-hover:text-white transition-colors">
+                    <span className="font-mono text-2xl font-black text-zinc-300 dark:text-zinc-700 group-hover:text-[#009B69] dark:group-hover:text-[#10B981] transition-colors">
                       {item.step}
                     </span>
                   </div>
 
-                  <h3 className="text-lg font-['Urbanist'] font-bold text-black dark:text-white mb-2">
+                  <h3 className="text-lg font-['Urbanist'] font-bold text-zinc-950 dark:text-white mb-2">
                     Step {idx + 1}: {item.title}
                   </h3>
                   <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-['Poppins']">
@@ -84,7 +84,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onExploreClick }) => {
                   </p>
                 </div>
 
-                <div className="pt-4 mt-4 border-t border-zinc-200 dark:border-zinc-800 flex items-center text-xs font-['Poppins'] font-semibold text-zinc-700 dark:text-zinc-300">
+                <div className="pt-4 mt-4 border-t border-[#E3EBE7] dark:border-[#22353D] flex items-center text-xs font-['Poppins'] font-semibold text-[#007A52] dark:text-[#34D399]">
                   <span>Step {item.step} of 04</span>
                 </div>
               </div>

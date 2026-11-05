@@ -7,23 +7,23 @@ export const FloatingWhatsAppButton: React.FC = () => {
   const [tooltipOpen, setTooltipOpen] = useState(false);
 
   const directChatUrl = `https://wa.me/918055035502?text=${encodeURIComponent(
-    'Hello PunarTech, I want to enquire about available laptops in your Pune / Delhi inventory.'
+    'Hello PunarTech, I am browsing your website https://punartech.vercel.app/ and want to enquire about available laptops in your inventory.'
   )}`;
 
   return (
     <div className="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 z-40 flex flex-col items-end">
       {/* Tooltip Card */}
       {tooltipOpen && (
-        <div className="mb-3 w-72 max-w-[calc(100vw-2rem)] bg-white dark:bg-zinc-900 rounded-[20px] shadow-2xl border border-zinc-200 dark:border-zinc-800 p-4 text-xs font-['Poppins'] text-zinc-800 dark:text-zinc-200 animate-in fade-in slide-in-from-bottom-2 duration-200 relative">
+        <div className="mb-3 w-72 max-w-[calc(100vw-2rem)] bg-white dark:bg-[#152227] rounded-[20px] shadow-2xl border border-[#E3EBE7] dark:border-[#22353D] p-4 text-xs font-['Poppins'] text-zinc-800 dark:text-zinc-200 animate-in fade-in slide-in-from-bottom-2 duration-200 relative">
           <button
             onClick={() => setTooltipOpen(false)}
-            className="absolute top-2.5 right-2.5 text-zinc-400 hover:text-black dark:hover:text-white p-1 cursor-pointer"
+            className="absolute top-2.5 right-2.5 text-zinc-400 hover:text-zinc-950 dark:hover:text-white p-1 cursor-pointer"
             aria-label="Close message"
           >
             <X className="w-3.5 h-3.5" />
           </button>
           <div className="flex items-center gap-2 mb-1.5">
-            <div className="w-7 h-7 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-black dark:text-white">
+            <div className="w-7 h-7 rounded-full bg-[#E8F7EE] dark:bg-[#10B981]/15 flex items-center justify-center text-[#007A52] dark:text-[#34D399]">
               <WhatsAppIcon className="w-4 h-4 text-[#25D366]" />
             </div>
             <div>

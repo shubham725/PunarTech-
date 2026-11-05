@@ -75,9 +75,9 @@ export const RentalEmiModal: React.FC<RentalEmiModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/70 backdrop-blur-xs font-['Poppins']">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/75 backdrop-blur-xs font-['Poppins']">
       <div
-        className="relative w-full max-w-lg bg-white dark:bg-zinc-900 rounded-[24px] shadow-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden flex flex-col max-h-[92vh] animate-in zoom-in-95 duration-150 transition-colors"
+        className="relative w-full max-w-lg bg-white dark:bg-[#152227] rounded-[24px] shadow-2xl border border-[#E3EBE7] dark:border-[#22353D] overflow-hidden flex flex-col max-h-[92vh] animate-in zoom-in-95 duration-150 transition-colors"
         role="dialog"
         aria-modal="true"
         aria-labelledby="rental-emi-title"
@@ -95,7 +95,7 @@ export const RentalEmiModal: React.FC<RentalEmiModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-[10px] text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-[#E8F7EE] dark:hover:bg-zinc-800 transition-colors cursor-pointer"
+            className="p-1.5 rounded-[10px] text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-[#E8F7EE] dark:hover:bg-[#10191E] transition-colors cursor-pointer"
             aria-label="Close"
           >
             <X className="w-5 h-5" />
@@ -131,7 +131,7 @@ export const RentalEmiModal: React.FC<RentalEmiModalProps> = ({
 
         {/* Mode Toggle Tabs */}
         <div className="p-3 bg-[#F8FBF9] dark:bg-[#0E1519] border-b border-[#E3EBE7] dark:border-[#22353D]">
-          <div className="grid grid-cols-2 gap-1.5 bg-[#E8F7EE]/60 dark:bg-zinc-800 p-1 rounded-[14px]">
+          <div className="grid grid-cols-2 gap-1.5 bg-[#E8F7EE]/60 dark:bg-[#10191E] p-1 rounded-[14px]">
             <button
               type="button"
               onClick={() => setActiveTab('rent')}
@@ -172,7 +172,7 @@ export const RentalEmiModal: React.FC<RentalEmiModalProps> = ({
                   <span className="text-xl sm:text-2xl font-bold font-['Urbanist'] text-[#009B69] dark:text-[#10B981]">
                     Rent on Request
                   </span>
-                  <span className="text-[10px] font-semibold text-zinc-600 dark:text-zinc-400 bg-[#E8F7EE] dark:bg-[#10B981]/15 px-2 py-0.5 rounded-[6px] border border-[#C8DFD4] dark:border-[#10B981]/30">
+                  <span className="text-[10px] font-semibold text-[#007A52] dark:text-[#34D399] bg-[#E8F7EE] dark:bg-[#10B981]/15 px-2 py-0.5 rounded-[6px] border border-[#C8DFD4] dark:border-[#10B981]/30">
                     Undisclosed Rent Amount
                   </span>
                 </div>
@@ -198,7 +198,7 @@ export const RentalEmiModal: React.FC<RentalEmiModalProps> = ({
                       className={`py-2 px-1 rounded-[12px] text-xs font-['Poppins'] font-semibold border transition-all duration-300 cursor-pointer text-center ${
                         rentalMonths === m
                           ? 'bg-gradient-to-r from-[#009B69] to-[#007A8D] text-white border-transparent shadow-xs font-bold'
-                          : 'bg-white hover:bg-[#F0F9F5] dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border-zinc-200 dark:border-zinc-700'
+                          : 'bg-white hover:bg-[#F0F9F5] dark:bg-[#10191E] dark:hover:bg-[#1A2C33] text-zinc-700 dark:text-zinc-300 border-[#E3EBE7] dark:border-[#22353D]'
                       }`}
                     >
                       {m} {m === 1 ? 'Month' : 'Months'}
@@ -282,7 +282,7 @@ export const RentalEmiModal: React.FC<RentalEmiModalProps> = ({
                       className={`p-2.5 rounded-[12px] text-center border transition-all duration-300 cursor-pointer ${
                         emiTenure === item.m
                           ? 'bg-gradient-to-r from-[#009B69] to-[#007A8D] text-white border-transparent shadow-xs font-bold'
-                          : 'bg-white hover:bg-[#F0F9F5] dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border-zinc-200 dark:border-zinc-700'
+                          : 'bg-white hover:bg-[#F0F9F5] dark:bg-[#10191E] dark:hover:bg-[#1A2C33] text-zinc-700 dark:text-zinc-300 border-[#E3EBE7] dark:border-[#22353D]'
                       }`}
                     >
                       <span className="text-xs font-semibold block">{item.m} Mo</span>
@@ -345,7 +345,7 @@ export const RentalEmiModal: React.FC<RentalEmiModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2.5 rounded-[12px] border border-zinc-300 dark:border-zinc-700 bg-white hover:bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 font-['Poppins'] font-semibold text-xs transition-colors cursor-pointer"
+            className="px-4 py-2.5 rounded-[12px] border border-[#C8DFD4] dark:border-[#26443B] bg-white hover:bg-[#F0F9F5] dark:bg-[#10191E] dark:hover:bg-[#1A2C33] text-zinc-700 dark:text-zinc-300 font-['Poppins'] font-semibold text-xs transition-colors cursor-pointer"
           >
             Cancel
           </button>

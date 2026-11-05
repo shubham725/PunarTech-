@@ -123,6 +123,7 @@ export function getRentalWhatsAppUrl(
 • Expected Rental Duration: ${durationMonths} Month(s)
 • Rental Rate: Requesting customized quote (Rent on Request)
 • Purpose: ${purpose}
+• Live Product Link: https://punartech.vercel.app/?laptop=${encodeURIComponent(laptop.stockId)}
 
 Please share your best customized rental rates, refundable deposit terms, and delivery options for Pune/Delhi.`;
   } else {
@@ -131,6 +132,7 @@ Please share your best customized rental rates, refundable deposit terms, and de
 • Purpose: ${purpose}
 • Preferred Hub: Pune / Delhi
 • Rental Rate: Requesting customized quote (Rent on Request)
+• Live Catalog: https://punartech.vercel.app/
 
 Please share available rental laptops in stock and customized pricing plans.`;
   }
@@ -158,6 +160,7 @@ export function getEmiWhatsAppUrl(
 • Hub: ${laptop.branch} Hub
 • Down Payment: ₹${downPayment.toLocaleString('en-IN')}
 • Requested Tenure: ${tenureMonths} Months (~₹${monthly.toLocaleString('en-IN')}/month)
+• Live Product Link: https://punartech.vercel.app/?laptop=${encodeURIComponent(laptop.stockId)}
 
 Please check my EMI eligibility (Credit Card / Debit Card / Cardless Finance) and guide me through the approval process.`;
 

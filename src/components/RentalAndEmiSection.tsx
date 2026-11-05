@@ -84,6 +84,7 @@ export const RentalAndEmiSection: React.FC<RentalAndEmiSectionProps> = ({ onOpen
 • Duration: ${rentalDuration} Month(s)
 • Rental Rate: Requesting customized quote (Rent on Request)
 • Preferred Hub: Pune / Delhi
+• Live Website: https://punartech.vercel.app/
 
 Please share available laptop models in this category and rental documentation requirements.`;
     window.open(`https://wa.me/918055035502?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
@@ -96,6 +97,7 @@ Please share available laptop models in this category and rental documentation r
 • Loan Amount: ₹${emiPrincipal.toLocaleString('en-IN')}
 • Desired Tenure: ${emiTenure} Months (~₹${monthlyEmi.toLocaleString('en-IN')}/month)
 • Finance Type: Cardless EMI / Credit Card / Debit Card
+• Live Website: https://punartech.vercel.app/
 
 Please guide me with the instant 15-minute approval process.`;
     window.open(`https://wa.me/918055035502?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
@@ -152,21 +154,21 @@ Please guide me with the instant 15-minute approval process.`;
                 </p>
               </div>
 
-              <ul className="space-y-2 text-xs text-zinc-700 dark:text-zinc-300 pt-2 border-t border-zinc-200 dark:border-zinc-800 font-['Poppins']">
+              <ul className="space-y-2 text-xs text-zinc-700 dark:text-zinc-300 pt-2 border-t border-[#E3EBE7] dark:border-[#22353D] font-['Poppins']">
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-zinc-900 dark:text-white shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-[#009B69] dark:text-[#10B981] shrink-0" />
                   <span>Low security deposit with simple KYC</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-zinc-900 dark:text-white shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-[#009B69] dark:text-[#10B981] shrink-0" />
                   <span>Free servicing &amp; instant doorstep replacement</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-zinc-900 dark:text-white shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-[#009B69] dark:text-[#10B981] shrink-0" />
                   <span>Pre-installed Windows 10/11 &amp; essential tools</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-zinc-900 dark:text-white shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-[#009B69] dark:text-[#10B981] shrink-0" />
                   <span>Same-day handover in Pune &amp; Delhi hubs</span>
                 </li>
               </ul>
@@ -176,19 +178,19 @@ Please guide me with the instant 15-minute approval process.`;
               <button
                 type="button"
                 onClick={handleRentalWhatsApp}
-                className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-[12px] bg-black hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-black border border-black dark:border-white text-[15px] font-['Poppins'] font-semibold shadow-xs transition-all duration-300 cursor-pointer active:scale-95"
+                className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-[12px] bg-gradient-to-r from-[#009B69] to-[#007A8D] hover:from-[#00875A] hover:to-[#006979] dark:from-[#10B981] dark:to-[#06B6D4] text-white dark:text-[#04251B] border border-transparent text-[15px] font-['Poppins'] font-semibold shadow-xs transition-all duration-300 cursor-pointer active:scale-95"
               >
-                <WhatsAppIcon className="w-4 h-4 text-[#25D366]" />
+                <WhatsAppIcon className="w-4 h-4 text-white dark:text-[#04251B]" />
                 <span>Enquire Rental on WhatsApp</span>
               </button>
             </div>
           </div>
 
           {/* 2. Easy EMI & Installment Purchases */}
-          <div className="bg-white dark:bg-zinc-900 rounded-[22px] p-6 sm:p-7 border border-zinc-200 dark:border-zinc-800 flex flex-col justify-between hover:shadow-lg dark:hover:shadow-black/50 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+          <div className="bg-white dark:bg-[#152227] rounded-[22px] p-6 sm:p-7 border border-[#E3EBE7] dark:border-[#22353D] flex flex-col justify-between hover:border-[#009B69] dark:hover:border-[#10B981] hover:shadow-xl hover:shadow-[#009B69]/10 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
             <div className="space-y-4">
-              <div className="w-12 h-12 rounded-[14px] bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-white flex items-center justify-center border border-zinc-200 dark:border-zinc-700 shadow-xs">
-                <CreditCard className="w-6 h-6 text-zinc-900 dark:text-white" />
+              <div className="w-12 h-12 rounded-[14px] bg-[#E8F7EE] dark:bg-[#10B981]/15 text-[#007A52] dark:text-[#34D399] flex items-center justify-center border border-[#C8DFD4] dark:border-[#10B981]/30 shadow-xs">
+                <CreditCard className="w-6 h-6 text-[#009B69] dark:text-[#10B981]" />
               </div>
 
               <div>
@@ -203,7 +205,7 @@ Please guide me with the instant 15-minute approval process.`;
               <div className="pt-1">
                 <div className="flex items-baseline gap-1">
                   <span className="text-xs text-zinc-500 dark:text-zinc-400">EMI starts at</span>
-                  <span className="text-2xl sm:text-3xl font-black text-zinc-950 dark:text-white font-mono">
+                  <span className="text-2xl sm:text-3xl font-black text-[#007A52] dark:text-[#34D399] font-mono">
                     ₹1,500
                   </span>
                   <span className="text-xs text-zinc-500 dark:text-zinc-400">/ month</span>
@@ -213,21 +215,21 @@ Please guide me with the instant 15-minute approval process.`;
                 </p>
               </div>
 
-              <ul className="space-y-2 text-xs text-zinc-700 dark:text-zinc-300 pt-2 border-t border-zinc-200 dark:border-zinc-800 font-['Poppins']">
+              <ul className="space-y-2 text-xs text-zinc-700 dark:text-zinc-300 pt-2 border-t border-[#E3EBE7] dark:border-[#22353D] font-['Poppins']">
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-zinc-900 dark:text-white shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-[#009B69] dark:text-[#10B981] shrink-0" />
                   <span>0% No-Cost EMI on leading Credit Cards</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-zinc-900 dark:text-white shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-[#009B69] dark:text-[#10B981] shrink-0" />
                   <span>Cardless EMI via Bajaj Finserv / ZestMoney / Snapmint</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-zinc-900 dark:text-white shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-[#009B69] dark:text-[#10B981] shrink-0" />
                   <span>Instant 15-minute digital approval</span>
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-zinc-900 dark:text-white shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-[#009B69] dark:text-[#10B981] shrink-0" />
                   <span>Full ownership of laptop from day one</span>
                 </li>
               </ul>
@@ -296,7 +298,7 @@ Please guide me with the instant 15-minute approval process.`;
 
             <div className="pt-6">
               <a
-                href="https://wa.me/918055035502?text=Hello%20PunarTech,%20I%20am%20looking%20for%20Corporate%20Bulk%20Laptop%20Rental%20/%20Lease%20for%20our%20company.%20Please%20share%20B2B%20catalog%20and%20quotation."
+                href="https://wa.me/918055035502?text=Hello%20PunarTech,%20I%20am%20browsing%20https://punartech.vercel.app/%20and%20looking%20for%20Corporate%20Bulk%20Laptop%20Rental%20/%20Lease%20for%20our%20company.%20Please%20share%20B2B%20catalog%20and%20quotation."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-[12px] bg-gradient-to-r from-[#009B69] to-[#007A8D] hover:from-[#00875A] hover:to-[#006979] dark:from-[#10B981] dark:to-[#06B6D4] text-white dark:text-[#04251B] text-[15px] font-['Poppins'] font-semibold shadow-xs transition-all duration-300 cursor-pointer active:scale-95 border border-transparent"
@@ -491,7 +493,7 @@ Please guide me with the instant 15-minute approval process.`;
                       className={`p-2 rounded-[12px] text-center border transition-all duration-300 cursor-pointer ${
                         emiTenure === item.m
                           ? 'bg-gradient-to-r from-[#009B69] to-[#007A8D] text-white border-transparent shadow-xs font-bold'
-                          : 'bg-white hover:bg-[#F0F9F5] dark:bg-zinc-800 dark:hover:bg-zinc-700/60 text-zinc-700 dark:text-zinc-300 border-zinc-200 dark:border-zinc-700'
+                          : 'bg-white hover:bg-[#F0F9F5] dark:bg-[#10191E] dark:hover:bg-[#1A2C33] text-zinc-700 dark:text-zinc-300 border-[#E3EBE7] dark:border-[#22353D]'
                       }`}
                     >
                       <span className="text-xs font-['Poppins'] font-semibold block">{item.m} Mo</span>

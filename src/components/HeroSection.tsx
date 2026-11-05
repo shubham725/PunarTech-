@@ -54,7 +54,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
               </button>
 
               <a
-                href="https://wa.me/918055035502?text=Hello%20PunarTech,%20I%20am%20looking%20for%20a%20refurbished%20laptop.%20Please%20share%20current%20options."
+                href="https://wa.me/918055035502?text=Hello%20PunarTech,%20I%20am%20browsing%20https://punartech.vercel.app/%20and%20looking%20for%20a%20refurbished%20laptop.%20Please%20share%20current%20options."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-[12px] bg-white hover:bg-[#E8F7EE] dark:bg-[#152227] dark:hover:bg-[#10B981]/15 text-[#007A52] dark:text-[#34D399] font-['Poppins'] text-[15px] font-semibold transition-all duration-300 border border-[#C8DFD4] dark:border-[#26443B] shadow-xs hover:shadow-md active:scale-95"

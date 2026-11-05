@@ -77,7 +77,7 @@ export const Header: React.FC<HeaderProps> = ({
   }, []);
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 dark:bg-[#050505]/95 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800 shadow-2xs transition-colors duration-300">
+    <header className="sticky top-0 z-40 bg-white/95 dark:bg-[#090E11]/95 backdrop-blur-md border-b border-[#E3EBE7] dark:border-[#22353D] shadow-2xs transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between gap-2 sm:gap-4 h-14 sm:h-18 md:h-20">
           {/* LEFT: Logo & Brand Tagline */}
@@ -104,7 +104,7 @@ export const Header: React.FC<HeaderProps> = ({
           >
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400">
-                <Search className="w-4 h-4 text-zinc-500 dark:text-zinc-400" />
+                <Search className="w-4 h-4 text-[#007A52] dark:text-[#34D399]" />
               </div>
               <input
                 type="text"
@@ -115,7 +115,7 @@ export const Header: React.FC<HeaderProps> = ({
                   setIsSearchFocused(true);
                 }}
                 placeholder="Search laptops by brand, model or processor..."
-                className="w-full pl-10 pr-9 py-2.5 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-[12px] text-sm font-['Poppins'] text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-hidden focus:border-[#009B69] dark:focus:border-[#10B981] focus:bg-white dark:focus:bg-zinc-950 focus:ring-2 focus:ring-[#009B69]/15 dark:focus:ring-[#10B981]/20 transition-all duration-300"
+                className="w-full pl-10 pr-9 py-2.5 bg-[#F8FBF9] dark:bg-[#10191E] border border-[#E3EBE7] dark:border-[#22353D] rounded-[12px] text-sm font-['Poppins'] text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-hidden focus:border-[#009B69] dark:focus:border-[#10B981] focus:bg-white dark:focus:bg-[#152227] focus:ring-2 focus:ring-[#009B69]/15 dark:focus:ring-[#10B981]/20 transition-all duration-300"
               />
               {searchQuery && (
                 <button
@@ -131,8 +131,8 @@ export const Header: React.FC<HeaderProps> = ({
 
             {/* Smart Autocomplete Dropdown */}
             {isSearchFocused && autocompleteResults.length > 0 && (
-              <div className="absolute top-full left-0 right-0 mt-1.5 bg-white dark:bg-zinc-900 rounded-[20px] shadow-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-150">
-                <div className="px-3.5 py-2 bg-zinc-50 dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between text-[11px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider font-['Poppins']">
+              <div className="absolute top-full left-0 right-0 mt-1.5 bg-white dark:bg-[#152227] rounded-[20px] shadow-xl border border-[#E3EBE7] dark:border-[#22353D] overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-150">
+                <div className="px-3.5 py-2 bg-[#F8FBF9] dark:bg-[#0E1519] border-b border-[#E3EBE7] dark:border-[#22353D] flex items-center justify-between text-[11px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider font-['Poppins']">
                   <span>Suggested Matches ({autocompleteResults.length})</span>
                   <span className="text-[#007A52] dark:text-[#34D399] font-mono">PunarTech Stock</span>
                 </div>
@@ -178,7 +178,7 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
 
           {/* NAVIGATION: Hub Tabs & Quick Actions (Poppins, 16px, weight 500) */}
-          <nav className="hidden lg:flex items-center gap-1.5 bg-zinc-100 dark:bg-zinc-900/90 p-1 rounded-[14px] border border-zinc-200 dark:border-zinc-800 font-['Poppins'] text-[15px] font-medium">
+          <nav className="hidden lg:flex items-center gap-1.5 bg-[#F6F9F8] dark:bg-[#0E1519] p-1 rounded-[14px] border border-[#E3EBE7] dark:border-[#22353D] font-['Poppins'] text-[15px] font-medium">
             <button
               type="button"
               onClick={() => onSelectBranch('All')}
@@ -220,7 +220,7 @@ export const Header: React.FC<HeaderProps> = ({
                 const el = document.getElementById('rental-emi');
                 el?.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="px-3 py-1.5 rounded-[10px] text-[14px] font-medium text-zinc-700 dark:text-zinc-300 hover:text-[#007A8D] dark:hover:text-[#38BDF8] hover:bg-zinc-200/70 dark:hover:bg-zinc-800 transition-all duration-300 cursor-pointer flex items-center gap-1"
+              className="px-3 py-1.5 rounded-[10px] text-[14px] font-medium text-zinc-700 dark:text-zinc-300 hover:text-[#007A8D] dark:hover:text-[#38BDF8] hover:bg-[#E8F7EE] dark:hover:bg-[#10B981]/15 transition-all duration-300 cursor-pointer flex items-center gap-1"
               title="Explore monthly rental and easy EMI plans"
             >
               <Percent className="w-3.5 h-3.5 text-[#007A8D] dark:text-[#38BDF8]" />
@@ -237,7 +237,7 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               type="button"
               onClick={onOpenWishlist}
-              className="relative p-2 rounded-[12px] text-zinc-600 dark:text-zinc-300 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all duration-300 border border-zinc-200/70 dark:border-zinc-800 cursor-pointer"
+              className="relative p-2 rounded-[12px] text-zinc-600 dark:text-zinc-300 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-[#E8F7EE] dark:hover:bg-[#10B981]/15 transition-all duration-300 border border-[#E3EBE7] dark:border-[#22353D] cursor-pointer"
               title="View saved laptops"
               aria-label="Wishlist"
             >
@@ -255,11 +255,11 @@ export const Header: React.FC<HeaderProps> = ({
               onClick={onOpenCompare}
               className={`${
                 comparedCount > 0 ? 'flex' : 'hidden sm:flex'
-              } items-center relative p-2 rounded-[12px] text-zinc-600 dark:text-zinc-300 hover:text-[#009B69] dark:hover:text-[#10B981] hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-all duration-300 border border-zinc-200/70 dark:border-zinc-800 cursor-pointer`}
+              } items-center relative p-2 rounded-[12px] text-zinc-600 dark:text-zinc-300 hover:text-[#009B69] dark:hover:text-[#10B981] hover:bg-[#E8F7EE] dark:hover:bg-[#10B981]/15 transition-all duration-300 border border-[#E3EBE7] dark:border-[#22353D] cursor-pointer`}
               title="Compare laptops side-by-side"
               aria-label="Compare laptops"
             >
-              <Scale className="w-4 h-4 sm:w-5 sm:h-5" />
+              <Scale className="w-4 h-4 sm:w-5 sm:h-5 text-[#007A52] dark:text-[#34D399]" />
               {comparedCount > 0 && (
                 <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#009B69] text-white dark:bg-[#10B981] dark:text-[#04251B] text-[10px] font-bold flex items-center justify-center shadow-xs">
                   {comparedCount}
@@ -284,11 +284,11 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               type="button"
               onClick={onOpenAdmin}
-              className="hidden md:flex items-center gap-1.5 p-2 rounded-[12px] text-zinc-600 dark:text-zinc-300 hover:text-black dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-800 transition-all duration-300 cursor-pointer font-['Poppins'] text-[13px] font-medium"
+              className="hidden md:flex items-center gap-1.5 p-2 rounded-[12px] text-zinc-600 dark:text-zinc-300 hover:text-[#007A52] dark:hover:text-[#34D399] hover:bg-[#E8F7EE] dark:hover:bg-[#10B981]/15 border border-[#E3EBE7] dark:border-[#22353D] transition-all duration-300 cursor-pointer font-['Poppins'] text-[13px] font-medium"
               title="Store Admin & Inventory Management"
               aria-label="Admin Portal"
             >
-              <Shield className="w-3.5 h-3.5 text-zinc-900 dark:text-white" />
+              <Shield className="w-3.5 h-3.5 text-[#007A52] dark:text-[#34D399]" />
               <span className="hidden xl:inline">Staff</span>
             </button>
 
@@ -296,7 +296,7 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-[12px] text-zinc-700 dark:text-zinc-200 hover:text-black dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-zinc-200/80 dark:border-zinc-800 cursor-pointer transition-all duration-300"
+              className="lg:hidden p-2 rounded-[12px] text-zinc-700 dark:text-zinc-200 hover:text-[#007A52] dark:hover:text-[#34D399] hover:bg-[#E8F7EE] dark:hover:bg-[#10B981]/15 border border-[#E3EBE7] dark:border-[#22353D] cursor-pointer transition-all duration-300"
               aria-label="Toggle navigation menu"
             >
               <Menu className="w-5 h-5" />
@@ -308,14 +308,14 @@ export const Header: React.FC<HeaderProps> = ({
         <div className="md:hidden pb-2.5">
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-zinc-400">
-              <Search className="w-4 h-4" />
+              <Search className="w-4 h-4 text-[#007A52] dark:text-[#34D399]" />
             </div>
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder="Search by model, brand, processor..."
-              className="w-full pl-9 pr-8 py-2 bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-[12px] font-['Poppins'] text-xs text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-hidden focus:border-[#009B69] dark:focus:border-[#10B981] focus:ring-2 focus:ring-[#009B69]/15 dark:focus:ring-[#10B981]/20 focus:bg-white dark:focus:bg-zinc-950 transition-all duration-300"
+              className="w-full pl-9 pr-8 py-2 bg-[#F8FBF9] dark:bg-[#10191E] border border-[#E3EBE7] dark:border-[#22353D] rounded-[12px] font-['Poppins'] text-xs text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-hidden focus:border-[#009B69] dark:focus:border-[#10B981] focus:ring-2 focus:ring-[#009B69]/15 dark:focus:ring-[#10B981]/20 focus:bg-white dark:focus:bg-[#152227] transition-all duration-300"
             />
             {searchQuery && (
               <button
@@ -332,9 +332,9 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Mobile Expanded Drawer/Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden py-3 border-t border-zinc-200 dark:border-zinc-800 space-y-2.5 animate-in fade-in duration-150 font-['Poppins']">
+          <div className="lg:hidden py-3 border-t border-[#E3EBE7] dark:border-[#22353D] space-y-2.5 animate-in fade-in duration-150 font-['Poppins']">
             {/* Hub Selector */}
-            <div className="grid grid-cols-3 gap-1 bg-zinc-100 dark:bg-zinc-900 p-1.5 rounded-[14px] border border-zinc-200 dark:border-zinc-800">
+            <div className="grid grid-cols-3 gap-1 bg-[#F6F9F8] dark:bg-[#0E1519] p-1.5 rounded-[14px] border border-[#E3EBE7] dark:border-[#22353D]">
               <button
                 type="button"
                 onClick={() => {
@@ -408,7 +408,7 @@ export const Header: React.FC<HeaderProps> = ({
                   onOpenCompare();
                   setMobileMenuOpen(false);
                 }}
-                className="py-2.5 px-3 rounded-[12px] bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-white border border-zinc-200 dark:border-zinc-800 text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer transition-colors"
+                className="py-2.5 px-3 rounded-[12px] bg-white dark:bg-[#152227] text-zinc-900 dark:text-white border border-[#E3EBE7] dark:border-[#22353D] text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer transition-colors hover:border-[#009B69] dark:hover:border-[#10B981]"
               >
                 <Scale className="w-3.5 h-3.5 text-[#009B69] dark:text-[#10B981]" />
                 <span>Compare {comparedCount > 0 ? `(${comparedCount})` : ''}</span>
@@ -419,7 +419,7 @@ export const Header: React.FC<HeaderProps> = ({
                   onOpenWishlist();
                   setMobileMenuOpen(false);
                 }}
-                className="py-2.5 px-3 rounded-[12px] bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-white border border-zinc-200 dark:border-zinc-800 text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer transition-colors"
+                className="py-2.5 px-3 rounded-[12px] bg-white dark:bg-[#152227] text-zinc-900 dark:text-white border border-[#E3EBE7] dark:border-[#22353D] text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer transition-colors hover:border-rose-400"
               >
                 <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />
                 <span>Wishlist {wishlistedCount > 0 ? `(${wishlistedCount})` : ''}</span>
@@ -434,19 +434,19 @@ export const Header: React.FC<HeaderProps> = ({
                 el?.scrollIntoView({ behavior: 'smooth' });
                 setMobileMenuOpen(false);
               }}
-              className="w-full py-2.5 px-3 rounded-[12px] bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-white border border-zinc-200 dark:border-zinc-800 text-xs font-semibold flex items-center justify-between cursor-pointer transition-all duration-300"
+              className="w-full py-2.5 px-3 rounded-[12px] bg-white dark:bg-[#152227] text-zinc-900 dark:text-white border border-[#E3EBE7] dark:border-[#22353D] text-xs font-semibold flex items-center justify-between cursor-pointer transition-all duration-300 hover:border-[#009B69] dark:hover:border-[#10B981]"
             >
               <span className="flex items-center gap-1.5">
-                <Percent className="w-3.5 h-3.5 text-zinc-900 dark:text-white" />
+                <Percent className="w-3.5 h-3.5 text-[#007A52] dark:text-[#34D399]" />
                 <span>Laptop Rentals &amp; Easy EMI Plans</span>
               </span>
-              <span className="text-[10px] bg-black text-white dark:bg-white dark:text-black px-2 py-0.5 rounded-[6px] font-bold">
+              <span className="text-[10px] bg-[#E8F7EE] text-[#007A52] dark:bg-[#10B981]/20 dark:text-[#34D399] px-2 py-0.5 rounded-[6px] font-bold border border-[#C8DFD4] dark:border-[#10B981]/30">
                 From ₹999/mo
               </span>
             </button>
 
             {/* Mobile Theme Toggle Row */}
-            <div className="flex items-center justify-between p-2.5 rounded-[12px] bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
+            <div className="flex items-center justify-between p-2.5 rounded-[12px] bg-[#F8FBF9] dark:bg-[#10191E] border border-[#E3EBE7] dark:border-[#22353D]">
               <span className="text-xs font-medium text-zinc-900 dark:text-zinc-200">Appearance Theme:</span>
               <ThemeToggle showLabel={true} />
             </div>
@@ -460,15 +460,15 @@ export const Header: React.FC<HeaderProps> = ({
                 }}
                 className="inline-flex items-center gap-1.5 text-zinc-900 dark:text-white font-semibold py-1.5 hover:underline"
               >
-                <Shield className="w-4 h-4" />
+                <Shield className="w-4 h-4 text-[#007A52] dark:text-[#34D399]" />
                 <span>Coordinator Staff Portal</span>
               </button>
 
               <a
-                href="https://wa.me/918055035502"
+                href="https://wa.me/918055035502?text=Hello%20PunarTech,%20I%20am%20browsing%20https://punartech.vercel.app/%20and%20need%20assistance."
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-zinc-500 dark:text-zinc-400 hover:text-black dark:hover:text-white font-mono text-[11px]"
+                className="text-zinc-500 dark:text-zinc-400 hover:text-[#007A52] dark:hover:text-[#34D399] font-mono text-[11px]"
               >
                 Help: +91 80550 35502
               </a>

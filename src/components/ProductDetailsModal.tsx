@@ -84,7 +84,9 @@ RAM: ${laptop.ram}
 Storage: ${laptop.storageRaw}
 Display: ${laptop.display !== 'Not listed' ? laptop.display : 'Standard Screen'}
 Graphics: ${laptop.graphicsRaw}
-Direct WhatsApp: https://wa.me/918055035502?text=Enquiry%20for%20${encodeURIComponent(laptop.stockId)}`;
+Live Website Deal: https://punartech.vercel.app/?laptop=${encodeURIComponent(laptop.stockId)}
+Direct WhatsApp: https://wa.me/918055035502?text=Enquiry%20for%20${encodeURIComponent(laptop.stockId)}
+Website: https://punartech.vercel.app/`;
 
     navigator.clipboard.writeText(specsSummary);
     setCopiedSpecs(true);
@@ -94,7 +96,7 @@ Direct WhatsApp: https://wa.me/918055035502?text=Enquiry%20for%20${encodeURIComp
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-5 bg-black/75 backdrop-blur-xs overflow-y-auto font-['Poppins']">
       <div
-        className="relative w-full max-w-4xl bg-white dark:bg-zinc-900 rounded-t-[24px] sm:rounded-[24px] shadow-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden flex flex-col max-h-[94vh] sm:max-h-[92vh] animate-in fade-in slide-in-from-bottom-4 sm:zoom-in-95 duration-200 transition-colors"
+        className="relative w-full max-w-4xl bg-white dark:bg-[#152227] rounded-t-[24px] sm:rounded-[24px] shadow-2xl border border-[#E3EBE7] dark:border-[#22353D] overflow-hidden flex flex-col max-h-[94vh] sm:max-h-[92vh] animate-in fade-in slide-in-from-bottom-4 sm:zoom-in-95 duration-200 transition-colors"
         role="dialog"
         aria-modal="true"
         aria-labelledby="laptop-detail-title"
@@ -116,7 +118,7 @@ Direct WhatsApp: https://wa.me/918055035502?text=Enquiry%20for%20${encodeURIComp
 
           <button
             onClick={onClose}
-            className="p-1.5 sm:p-2 rounded-[10px] text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-[#E8F7EE] dark:hover:bg-zinc-800 transition-colors cursor-pointer shrink-0"
+            className="p-1.5 sm:p-2 rounded-[10px] text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-[#E8F7EE] dark:hover:bg-[#10191E] transition-colors cursor-pointer shrink-0"
             aria-label="Close dialog"
           >
             <X className="w-5 h-5" />
@@ -169,13 +171,13 @@ Direct WhatsApp: https://wa.me/918055035502?text=Enquiry%20for%20${encodeURIComp
                               key={idx}
                               type="button"
                               onClick={() => setActiveImageIndex(idx)}
-                              className={`group/thumb rounded-xl overflow-hidden border-2 p-1 bg-white dark:bg-zinc-900 text-left transition-all cursor-pointer ${
+                              className={`group/thumb rounded-xl overflow-hidden border-2 p-1 bg-white dark:bg-[#152227] text-left transition-all cursor-pointer ${
                                 activeImageIndex === idx
                                   ? 'border-[#009B69] dark:border-[#10B981] ring-2 ring-[#009B69]/20 dark:ring-[#10B981]/20 shadow-xs'
-                                  : 'border-zinc-200 dark:border-zinc-700 hover:border-zinc-400 opacity-70 hover:opacity-100'
+                                  : 'border-[#E3EBE7] dark:border-[#22353D] hover:border-[#009B69] opacity-70 hover:opacity-100'
                               }`}
                             >
-                              <div className="h-12 w-full flex items-center justify-center overflow-hidden bg-zinc-50 dark:bg-zinc-800 rounded-lg">
+                              <div className="h-12 w-full flex items-center justify-center overflow-hidden bg-[#F8FBF9] dark:bg-[#10191E] rounded-lg">
                                 <img
                                   src={img.url}
                                   alt={img.label}
@@ -326,7 +328,7 @@ Direct WhatsApp: https://wa.me/918055035502?text=Enquiry%20for%20${encodeURIComp
 
                 <button
                   onClick={() => onShareLaptop(laptop)}
-                  className="inline-flex items-center justify-center gap-2 py-3.5 px-3 rounded-[12px] bg-white dark:bg-[#152227] hover:bg-[#F0F9F5] dark:hover:bg-zinc-800 text-zinc-900 dark:text-white border border-[#E3EBE7] dark:border-[#22353D] font-['Poppins'] text-[15px] font-semibold transition-all duration-300 shadow-2xs cursor-pointer active:scale-95"
+                  className="inline-flex items-center justify-center gap-2 py-3.5 px-3 rounded-[12px] bg-white dark:bg-[#152227] hover:bg-[#F0F9F5] dark:hover:bg-[#1A2C33] text-zinc-900 dark:text-white border border-[#E3EBE7] dark:border-[#22353D] font-['Poppins'] text-[15px] font-semibold transition-all duration-300 shadow-2xs cursor-pointer active:scale-95"
                 >
                   <Share2 className="w-4 h-4 text-[#007A8D] dark:text-[#06B6D4]" />
                   <span>Share Deal</span>
@@ -337,7 +339,7 @@ Direct WhatsApp: https://wa.me/918055035502?text=Enquiry%20for%20${encodeURIComp
               <button
                 type="button"
                 onClick={handleCopySpecs}
-                className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-3 rounded-[12px] bg-[#F8FBF9] dark:bg-[#0E1519] hover:bg-[#E8F7EE] dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border border-[#E3EBE7] dark:border-[#22353D] text-xs font-['Poppins'] font-semibold transition-all duration-300 cursor-pointer shadow-2xs"
+                className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-3 rounded-[12px] bg-[#F8FBF9] dark:bg-[#0E1519] hover:bg-[#E8F7EE] dark:hover:bg-[#1A2C33] text-zinc-700 dark:text-zinc-300 border border-[#E3EBE7] dark:border-[#22353D] text-xs font-['Poppins'] font-semibold transition-all duration-300 cursor-pointer shadow-2xs"
               >
                 {copiedSpecs ? (
                   <>
@@ -568,7 +570,7 @@ Direct WhatsApp: https://wa.me/918055035502?text=Enquiry%20for%20${encodeURIComp
           <div className="flex items-center gap-2 shrink-0">
             <button
               onClick={onClose}
-              className="px-4 py-2.5 rounded-xl bg-[#F8FBF9] hover:bg-[#E8F7EE] text-zinc-700 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700 text-xs font-['Poppins'] font-semibold transition-all duration-300 cursor-pointer border border-[#E3EBE7] dark:border-[#22353D]"
+              className="px-4 py-2.5 rounded-xl bg-[#F8FBF9] hover:bg-[#E8F7EE] text-zinc-700 dark:bg-[#10191E] dark:text-[#E3EBE7] dark:hover:bg-[#1A2C33] text-xs font-['Poppins'] font-semibold transition-all duration-300 cursor-pointer border border-[#E3EBE7] dark:border-[#22353D]"
             >
               Close
             </button>

@@ -63,6 +63,8 @@ export interface InventoryStats {
 }
 
 export const WHATSAPP_CONFIG = {
+  // Official PunarTech Website Live URL
+  websiteUrl: 'https://punartech.vercel.app',
   // Official PunarTech WhatsApp Community Group Link
   groupInviteUrl: 'https://chat.whatsapp.com/LGPhmaRzif3I91VUUa628L',
   // Direct business number
@@ -87,6 +89,7 @@ export function getLaptopWhatsAppUrl(laptop: Laptop): string {
 💾 RAM: ${laptop.ram}
 📦 Storage: ${laptop.storageRaw}
 🖥️ Display: ${laptop.display !== 'Not listed' ? laptop.display : 'Standard'}
+🌐 View on Website: https://punartech.vercel.app/?laptop=${encodeURIComponent(laptop.stockId)}
 
 Is this laptop currently available? Please share actual photos, battery health, and details.`;
 
@@ -108,6 +111,12 @@ export function getLaptopShareText(laptop: Laptop): string {
 🔹 Display: ${laptop.display !== 'Not listed' ? laptop.display : 'Standard display'}
 💰 Price: ${priceText}
 📍 Branch: ${laptop.branch} Hub | Stock ID: ${laptop.stockId}
+
+🔗 *View Laptop on Live Website:*
+https://punartech.vercel.app/?laptop=${encodeURIComponent(laptop.stockId)}
+
+🌐 *Explore Full Inventory (91 Laptops):*
+https://punartech.vercel.app/
 
 📲 *Enquire directly on WhatsApp (+91 80550 35502):*
 https://wa.me/918055035502

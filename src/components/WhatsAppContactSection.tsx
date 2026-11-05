@@ -50,7 +50,7 @@ export const WhatsAppContactSection: React.FC = () => {
             <div className="lg:col-span-5 space-y-3">
               {/* Direct Chat Card */}
               <a
-                href="https://wa.me/918055035502?text=Hello%20PunarTech,%20I%20want%20to%20enquire%20about%20your%20laptops%20inventory."
+                href="https://wa.me/918055035502?text=Hello%20PunarTech,%20I%20am%20browsing%20your%20website%20https://punartech.vercel.app/%20and%20want%20to%20enquire%20about%20your%20laptop%20inventory."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-4 bg-white text-zinc-950 rounded-[16px] shadow-lg border border-[#E3EBE7] flex items-center justify-between gap-4 hover:border-[#009B69] hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 cursor-pointer group active:scale-98"

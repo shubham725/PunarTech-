@@ -5,28 +5,28 @@
 :root {
   /* PunarTech Logo-Harmonized Design System - Light (White) Theme */
   --background: #FFFFFF;
-  --background-secondary: #F8FBF7;
-  --background-section: #F8FBF7;
+  --background-secondary: #F8FBF9;
+  --background-section: #F8FBF9;
   --card: #FFFFFF;
-  --card-border: #E8EFE4;
+  --card-border: #E3EBE7;
   --elevated: #FFFFFF;
   --foreground: #101828;
-  --text-primary: #333333;
-  --text-secondary: #777777;
-  --text-muted: #999999;
-  --border: #E8EFE4;
+  --text-primary: #1F2923;
+  --text-secondary: #526058;
+  --text-muted: #829288;
+  --border: #E3EBE7;
   --border-secondary: #EDF3EC;
-  --divider: #E8EFE4;
+  --divider: #E3EBE7;
 
-  /* Logo Palette: Punar Green (#009B69 / #86BB46), Dark Green (#0B5D1E), Accent (#6FBF44 / #16C878), Tech Teal (#007A8D) */
+  /* Logo Palette: Punar Green (#009B69), Dark Green (#007A52 / #0B5D1E), Accent (#10B981), Tech Teal (#007A8D) */
   --primary: #009B69;
   --primary-green: #009B69;
   --primary-foreground: #FFFFFF;
-  --primary-hover: #0B5D1E;
+  --primary-hover: #00875A;
   --primary-accent: #007A8D;
-  --dark-green: #0B5D1E;
-  --accent-green: #6FBF44;
-  --light-green: #D6F0DD;
+  --dark-green: #007A52;
+  --accent-green: #10B981;
+  --light-green: #E8F7EE;
   --tech-teal: #007A8D;
   --brand-mint: #E8F7EE;
   --brand-teal-tint: #E0F4F7;
@@ -34,27 +34,27 @@
   /* Logo Image Gradients (Vibrant & Light Gradients) */
   --logo-gradient: linear-gradient(135deg, #009B69 0%, #007A8D 100%);
   --logo-gradient-light: linear-gradient(135deg, #E8F7EE 0%, #E0F4F7 100%);
-  --logo-gradient-subtle: linear-gradient(135deg, #F0F9F4 0%, #EBF7F9 100%);
-  --logo-gradient-surface: linear-gradient(135deg, rgba(0, 155, 105, 0.05) 0%, rgba(0, 122, 141, 0.05) 100%);
+  --logo-gradient-subtle: linear-gradient(135deg, #F2FAF5 0%, #EDF7F9 100%);
+  --logo-gradient-surface: linear-gradient(135deg, rgba(0, 155, 105, 0.04) 0%, rgba(0, 122, 141, 0.04) 100%);
   --logo-gradient-glow: linear-gradient(135deg, rgba(0, 155, 105, 0.15) 0%, rgba(0, 122, 141, 0.15) 100%);
 
   /* Button Palette */
   --btn-radius: 12px;
   --secondary-btn-bg: #FFFFFF;
-  --secondary-btn-text: #0B5D1E;
-  --secondary-btn-border: #009B69;
+  --secondary-btn-text: #007A52;
+  --secondary-btn-border: #C8DFD4;
   --secondary-btn-hover: #E8F7EE;
 
   /* Form & Interactive */
   --input-radius: 12px;
   --input-bg: #FFFFFF;
-  --input-text: #333333;
-  --input-placeholder: #999999;
-  --input-border: #E8EFE4;
+  --input-text: #1F2923;
+  --input-placeholder: #829288;
+  --input-border: #E3EBE7;
   --input-focus-border: #009B69;
   --input-focus-ring: rgba(0, 155, 105, 0.2);
-  --table-header-bg: #F8FBF7;
-  --table-row-hover: #F0F9F4;
+  --table-header-bg: #F8FBF9;
+  --table-row-hover: #F2FAF5;
   --disabled-bg: #F4F7F4;
   --disabled-text: #999999;
 }
@@ -99,7 +99,7 @@
   --btn-radius: 12px;
   --secondary-btn-bg: #152227;
   --secondary-btn-text: #34D399;
-  --secondary-btn-border: #10B981;
+  --secondary-btn-border: #26443B;
   --secondary-btn-hover: rgba(16, 185, 129, 0.18);
 
   /* Form & Interactive */

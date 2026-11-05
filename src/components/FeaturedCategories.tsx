@@ -29,12 +29,12 @@ export const FeaturedCategories: React.FC<FeaturedCategoriesProps> = ({
   onSelectCategory,
 }) => {
   return (
-    <section className="py-8 sm:py-10 bg-zinc-50 dark:bg-[#09090b] border-b border-zinc-200 dark:border-zinc-800 transition-colors duration-300 font-['Poppins']">
+    <section className="py-8 sm:py-10 bg-[#F8FBF9] dark:bg-[#090E11] border-b border-[#E3EBE7] dark:border-[#22353D] transition-colors duration-300 font-['Poppins']">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-6">
           <div>
-            <div className="flex items-center gap-1.5 text-xs font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider mb-1">
-              <Sparkles className="w-3.5 h-3.5 text-zinc-900 dark:text-zinc-100" />
+            <div className="flex items-center gap-1.5 text-xs font-semibold text-[#007A52] dark:text-[#34D399] uppercase tracking-wider mb-1">
+              <Sparkles className="w-3.5 h-3.5 text-[#009B69] dark:text-[#10B981]" />
               <span>Catalog By Workflow &amp; Spec</span>
             </div>
             <h2 className="text-xl sm:text-2xl font-bold text-zinc-950 dark:text-white tracking-tight font-['Urbanist']">
@@ -60,14 +60,14 @@ export const FeaturedCategories: React.FC<FeaturedCategoriesProps> = ({
                 className={`p-3.5 rounded-[20px] border text-left transition-all duration-300 cursor-pointer flex flex-col justify-between group active:scale-95 hover:-translate-y-1 ${
                   isSelected
                     ? 'bg-gradient-to-r from-[#009B69] to-[#007A8D] text-white border-transparent shadow-md shadow-[#009B69]/20 dark:from-[#10B981] dark:to-[#06B6D4] dark:text-[#04251B] ring-2 ring-[#009B69]/30 dark:ring-[#10B981]/40'
-                    : 'bg-white dark:bg-[#152227] hover:bg-[#F6F9F8] dark:hover:bg-[#1B2B32] text-zinc-900 dark:text-zinc-100 border-[#E3EBE7] dark:border-[#22353D] hover:border-[#009B69] dark:hover:border-[#10B981] shadow-xs'
+                    : 'bg-white dark:bg-[#152227] hover:bg-[#F6F9F8] dark:hover:bg-[#1B2B32] text-zinc-900 dark:text-zinc-100 border-[#E3EBE7] dark:border-[#22353D] hover:border-[#009B69] dark:hover:border-[#10B981] shadow-2xs'
                 }`}
               >
                 <div
                   className={`w-8 h-8 rounded-[12px] flex items-center justify-center mb-2.5 transition-colors duration-300 ${
                     isSelected
                       ? 'bg-white/20 text-white dark:bg-black/15 dark:text-[#04251B]'
-                      : 'bg-[#F0FDF4] dark:bg-[#0E1519] text-[#007A52] dark:text-[#34D399] group-hover:bg-[#E8F7EE] dark:group-hover:bg-[#10B981]/20'
+                      : 'bg-[#E8F7EE] dark:bg-[#10B981]/15 text-[#007A52] dark:text-[#34D399] group-hover:bg-[#009B69] group-hover:text-white dark:group-hover:bg-[#10B981] dark:group-hover:text-[#04251B]'
                   }`}
                 >
                   <Icon className="w-4 h-4" />

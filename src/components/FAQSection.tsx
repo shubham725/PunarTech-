@@ -60,14 +60,14 @@ export const FAQSection: React.FC = () => {
   };
 
   return (
-    <section id="faq" className="py-12 sm:py-16 bg-white dark:bg-[#09090b] border-b border-zinc-200 dark:border-zinc-800 transition-colors font-['Poppins']">
+    <section id="faq" className="py-12 sm:py-16 bg-white dark:bg-[#090E11] border-b border-[#E3EBE7] dark:border-[#22353D] transition-colors font-['Poppins']">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-1.5 text-xs font-['Poppins'] font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1">
-            <HelpCircle className="w-4 h-4 text-black dark:text-white" />
+          <div className="inline-flex items-center gap-1.5 text-xs font-['Poppins'] font-semibold uppercase tracking-wider text-[#007A52] dark:text-[#34D399] mb-1">
+            <HelpCircle className="w-4 h-4 text-[#009B69] dark:text-[#10B981]" />
             <span>Transparency &amp; Answers</span>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-['Urbanist'] font-bold text-black dark:text-white tracking-tight">
+          <h2 className="text-2xl sm:text-4xl font-['Urbanist'] font-bold text-zinc-950 dark:text-white tracking-tight">
             Frequently Asked Questions
           </h2>
           <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 mt-1 font-['Poppins']">
@@ -81,17 +81,17 @@ export const FAQSection: React.FC = () => {
             return (
               <div
                 key={index}
-                className="bg-zinc-50 dark:bg-zinc-900 rounded-[16px] border border-zinc-200 dark:border-zinc-800 overflow-hidden transition-all duration-300 shadow-2xs"
+                className="bg-[#F8FBF9] dark:bg-[#152227] rounded-[16px] border border-[#E3EBE7] dark:border-[#22353D] overflow-hidden transition-all duration-300 shadow-2xs"
               >
                 <button
                   type="button"
                   onClick={() => toggle(index)}
-                  className="w-full py-4 px-5 text-left flex items-center justify-between gap-4 cursor-pointer hover:bg-zinc-100 dark:hover:bg-zinc-800/60 transition-colors duration-300"
+                  className="w-full py-4 px-5 text-left flex items-center justify-between gap-4 cursor-pointer hover:bg-[#E8F7EE] dark:hover:bg-[#1B2B32] transition-colors duration-300"
                 >
-                  <span className="text-base font-['Urbanist'] font-bold text-black dark:text-white">
+                  <span className="text-base font-['Urbanist'] font-bold text-zinc-950 dark:text-white">
                     {faq.q}
                   </span>
-                  <div className="w-7 h-7 rounded-full bg-zinc-200 dark:bg-zinc-800 flex items-center justify-center shrink-0 text-black dark:text-white">
+                  <div className="w-7 h-7 rounded-full bg-[#E8F7EE] dark:bg-[#10B981]/15 text-[#007A52] dark:text-[#34D399] flex items-center justify-center shrink-0">
                     {isOpen ? (
                       <ChevronUp className="w-4 h-4" />
                     ) : (
@@ -101,7 +101,7 @@ export const FAQSection: React.FC = () => {
                 </button>
 
                 {isOpen && (
-                  <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed border-t border-zinc-200 dark:border-zinc-800 font-['Poppins']">
+                  <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed border-t border-[#E3EBE7] dark:border-[#22353D] font-['Poppins']">
                     <p>{faq.a}</p>
                   </div>
                 )}

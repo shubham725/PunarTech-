@@ -198,7 +198,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         <button
           type="button"
           onClick={() => toggleSection('price')}
-          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-black dark:text-white cursor-pointer font-['Urbanist']"
+          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-zinc-950 dark:text-white cursor-pointer font-['Urbanist']"
         >
           <span>Budget Range (INR)</span>
           {openSections.price ? <ChevronUp className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" /> : <ChevronDown className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />}
@@ -216,27 +216,27 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
             ].map((p) => (
               <label
                 key={p.id}
-                className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer hover:text-black dark:hover:text-white select-none"
+                className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer hover:text-[#009B69] dark:hover:text-[#10B981] select-none"
               >
                 <input
                   type="checkbox"
                   checked={filters.pricePreset === p.id}
                   onChange={() => handlePricePreset(p.id)}
-                  className="rounded border-zinc-300 dark:border-zinc-700 text-black focus:ring-black w-3.5 h-3.5 accent-[#009B69] dark:accent-[#10B981]"
+                  className="rounded border-[#E3EBE7] dark:border-[#22353D] text-[#009B69] focus:ring-[#009B69] w-3.5 h-3.5 accent-[#009B69] dark:accent-[#10B981]"
                 />
                 <span className="font-mono text-zinc-700 dark:text-zinc-300">{p.label}</span>
               </label>
             ))}
 
-            <div className="pt-2 border-t border-zinc-200 dark:border-zinc-800">
-              <label className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400 cursor-pointer select-none hover:text-black dark:hover:text-white">
+            <div className="pt-2 border-t border-[#E3EBE7] dark:border-[#22353D]">
+              <label className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400 cursor-pointer select-none hover:text-[#009B69] dark:hover:text-[#10B981]">
                 <input
                   type="checkbox"
                   checked={filters.includeUnpriced}
                   onChange={(e) =>
                     onFilterChange({ ...filters, includeUnpriced: e.target.checked })
                   }
-                  className="rounded border-zinc-300 dark:border-zinc-700 text-black focus:ring-black w-3.5 h-3.5 accent-[#009B69] dark:accent-[#10B981]"
+                  className="rounded border-[#E3EBE7] dark:border-[#22353D] text-[#009B69] focus:ring-[#009B69] w-3.5 h-3.5 accent-[#009B69] dark:accent-[#10B981]"
                 />
                 <span>Include "Contact for Price"</span>
               </label>
@@ -250,7 +250,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         <button
           type="button"
           onClick={() => toggleSection('brand')}
-          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-black dark:text-white cursor-pointer font-['Urbanist']"
+          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-zinc-950 dark:text-white cursor-pointer font-['Urbanist']"
         >
           <span>Brand</span>
           {openSections.brand ? <ChevronUp className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" /> : <ChevronDown className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />}
@@ -269,14 +269,14 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
             ].map((b) => (
               <label
                 key={b.name}
-                className="flex items-center justify-between text-xs text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white cursor-pointer select-none"
+                className="flex items-center justify-between text-xs text-zinc-700 dark:text-zinc-300 hover:text-[#009B69] dark:hover:text-[#10B981] cursor-pointer select-none"
               >
                 <div className="flex items-center gap-2">
                   <input
                     type="checkbox"
                     checked={filters.brands.includes(b.name)}
                     onChange={() => toggleArrayItem(filters.brands, b.name, 'brands')}
-                    className="rounded border-zinc-300 dark:border-zinc-700 text-black focus:ring-black w-3.5 h-3.5 accent-[#009B69] dark:accent-[#10B981]"
+                    className="rounded border-[#E3EBE7] dark:border-[#22353D] text-[#009B69] focus:ring-[#009B69] w-3.5 h-3.5 accent-[#009B69] dark:accent-[#10B981]"
                   />
                   <span>{b.name}</span>
                 </div>
@@ -292,7 +292,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         <button
           type="button"
           onClick={() => toggleSection('processor')}
-          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-black dark:text-white cursor-pointer font-['Urbanist']"
+          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-zinc-950 dark:text-white cursor-pointer font-['Urbanist']"
         >
           <span>Processor Series</span>
           {openSections.processor ? <ChevronUp className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" /> : <ChevronDown className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />}
@@ -309,13 +309,13 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
             ].map((p) => (
               <label
                 key={p.name}
-                className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white cursor-pointer select-none"
+                className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 hover:text-[#009B69] dark:hover:text-[#10B981] cursor-pointer select-none"
               >
                 <input
                   type="checkbox"
                   checked={filters.processors.includes(p.name)}
                   onChange={() => toggleArrayItem(filters.processors, p.name, 'processors')}
-                  className="rounded border-zinc-300 dark:border-zinc-700 text-black focus:ring-black w-3.5 h-3.5 accent-[#009B69] dark:accent-[#10B981]"
+                  className="rounded border-[#E3EBE7] dark:border-[#22353D] text-[#009B69] focus:ring-[#009B69] w-3.5 h-3.5 accent-[#009B69] dark:accent-[#10B981]"
                 />
                 <span>{p.name}</span>
               </label>
@@ -329,7 +329,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         <button
           type="button"
           onClick={() => toggleSection('ram')}
-          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-black dark:text-white cursor-pointer font-['Urbanist']"
+          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-zinc-950 dark:text-white cursor-pointer font-['Urbanist']"
         >
           <span>Memory (RAM)</span>
           {openSections.ram ? <ChevronUp className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" /> : <ChevronDown className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />}
@@ -363,7 +363,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         <button
           type="button"
           onClick={() => toggleSection('storage')}
-          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-black dark:text-white cursor-pointer font-['Urbanist']"
+          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-zinc-950 dark:text-white cursor-pointer font-['Urbanist']"
         >
           <span>Storage Architecture</span>
           {openSections.storage ? <ChevronUp className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" /> : <ChevronDown className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />}
@@ -374,13 +374,13 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
             {['SSD only', 'SSD + HDD', 'HDD only'].map((st) => (
               <label
                 key={st}
-                className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white cursor-pointer select-none"
+                className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 hover:text-[#009B69] dark:hover:text-[#10B981] cursor-pointer select-none"
               >
                 <input
                   type="checkbox"
                   checked={filters.storageTypes.includes(st)}
                   onChange={() => toggleArrayItem(filters.storageTypes, st, 'storageTypes')}
-                  className="rounded border-zinc-300 dark:border-zinc-700 text-black focus:ring-black w-3.5 h-3.5 accent-[#009B69] dark:accent-[#10B981]"
+                  className="rounded border-[#E3EBE7] dark:border-[#22353D] text-[#009B69] focus:ring-[#009B69] w-3.5 h-3.5 accent-[#009B69] dark:accent-[#10B981]"
                 />
                 <span>{st}</span>
               </label>
@@ -394,7 +394,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         <button
           type="button"
           onClick={() => toggleSection('graphics')}
-          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-black dark:text-white cursor-pointer font-['Urbanist']"
+          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-zinc-950 dark:text-white cursor-pointer font-['Urbanist']"
         >
           <span>Graphics GPU</span>
           {openSections.graphics ? <ChevronUp className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" /> : <ChevronDown className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />}
@@ -402,7 +402,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
 
         {openSections.graphics && (
           <div className="mt-2.5 space-y-1.5">
-            <label className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white cursor-pointer select-none">
+            <label className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 hover:text-[#009B69] dark:hover:text-[#10B981] cursor-pointer select-none">
               <input
                 type="checkbox"
                 checked={filters.hasDedicatedGraphics === true}
@@ -412,7 +412,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                     hasDedicatedGraphics: e.target.checked ? true : null,
                   })
                 }
-                className="rounded border-zinc-300 dark:border-zinc-700 text-black focus:ring-black w-3.5 h-3.5 accent-[#009B69] dark:accent-[#10B981]"
+                className="rounded border-[#E3EBE7] dark:border-[#22353D] text-[#009B69] focus:ring-[#009B69] w-3.5 h-3.5 accent-[#009B69] dark:accent-[#10B981]"
               />
               <span className="font-semibold">Dedicated GPU Only (NVIDIA / Radeon)</span>
             </label>
@@ -425,7 +425,7 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         <button
           type="button"
           onClick={() => toggleSection('display')}
-          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-black dark:text-white cursor-pointer font-['Urbanist']"
+          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-zinc-950 dark:text-white cursor-pointer font-['Urbanist']"
         >
           <span>Screen Size</span>
           {openSections.display ? <ChevronUp className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" /> : <ChevronDown className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />}
@@ -436,13 +436,13 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
             {['13-inch class', '14-inch class', '15.6-inch class'].map((dc) => (
               <label
                 key={dc}
-                className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white cursor-pointer select-none"
+                className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 hover:text-[#009B69] dark:hover:text-[#10B981] cursor-pointer select-none"
               >
                 <input
                   type="checkbox"
                   checked={filters.displayClasses.includes(dc)}
                   onChange={() => toggleArrayItem(filters.displayClasses, dc, 'displayClasses')}
-                  className="rounded border-zinc-300 dark:border-zinc-700 text-black focus:ring-black w-3.5 h-3.5 accent-[#009B69] dark:accent-[#10B981]"
+                  className="rounded border-[#E3EBE7] dark:border-[#22353D] text-[#009B69] focus:ring-[#009B69] w-3.5 h-3.5 accent-[#009B69] dark:accent-[#10B981]"
                 />
                 <span>{dc}</span>
               </label>

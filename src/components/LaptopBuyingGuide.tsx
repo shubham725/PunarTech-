@@ -42,14 +42,14 @@ export const LaptopBuyingGuide: React.FC<BuyingGuideProps> = ({ onSelectCategory
   ];
 
   return (
-    <section className="py-12 bg-zinc-50 dark:bg-[#050505] border-t border-zinc-200 dark:border-zinc-800 transition-colors">
+    <section className="py-12 sm:py-16 bg-white dark:bg-[#090E11] border-t border-[#E3EBE7] dark:border-[#22353D] transition-colors font-['Poppins']">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1">
-            <BookOpen className="w-4 h-4 text-black dark:text-white" />
+          <div className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#007A8D] dark:text-[#06B6D4] mb-1 font-['Urbanist']">
+            <BookOpen className="w-4 h-4 text-[#009B69] dark:text-[#10B981]" />
             <span>Buyer Decision Framework</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-black dark:text-white tracking-tight">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-950 dark:text-white tracking-tight font-['Urbanist']">
             How to Choose the Right Laptop
           </h2>
           <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 mt-1">
@@ -61,40 +61,40 @@ export const LaptopBuyingGuide: React.FC<BuyingGuideProps> = ({ onSelectCategory
           {recommendations.map((rec, i) => (
             <div
               key={i}
-              className="bg-white dark:bg-zinc-900 rounded-2xl p-5 border border-zinc-200 dark:border-zinc-800 shadow-xs flex flex-col justify-between space-y-4 hover:-translate-y-1 hover:shadow-xl transition-all duration-300"
+              className="bg-[#F8FBF9] dark:bg-[#152227] rounded-2xl p-5 border border-[#E3EBE7] dark:border-[#22353D] shadow-xs flex flex-col justify-between space-y-4 hover:-translate-y-1 hover:border-[#009B69] dark:hover:border-[#10B981] hover:shadow-lg transition-all duration-300"
             >
               <div className="space-y-3">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-600 dark:text-zinc-300 bg-zinc-100 dark:bg-zinc-800 px-2 py-0.5 rounded">
+                <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#007A52] dark:text-[#34D399] bg-[#E8F7EE] dark:bg-[#10B981]/15 px-2 py-0.5 rounded border border-[#C8DFD4] dark:border-[#10B981]/30">
                   Use Case 0{i + 1}
                 </span>
-                <h3 className="text-sm font-bold text-black dark:text-white leading-snug">
+                <h3 className="text-sm font-bold text-zinc-950 dark:text-white leading-snug font-['Urbanist']">
                   {rec.category}
                 </h3>
-                <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
+                <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-['Poppins']">
                   {rec.idealFor}
                 </p>
 
-                <div className="pt-2 border-t border-zinc-100 dark:border-zinc-800 space-y-1.5 text-xs">
+                <div className="pt-2 border-t border-[#E3EBE7] dark:border-[#22353D] space-y-1.5 text-xs">
                   <div>
-                    <span className="text-[11px] font-semibold text-zinc-400 dark:text-zinc-500 block">Recommended Specs:</span>
+                    <span className="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400 block">Recommended Specs:</span>
                     <span className="text-zinc-800 dark:text-zinc-200 font-medium">{rec.suggestedConfig}</span>
                   </div>
                   <div>
-                    <span className="text-[11px] font-semibold text-zinc-400 dark:text-zinc-500 block">Typical Budget:</span>
-                    <span className="font-mono font-bold text-black dark:text-white">{rec.priceRange}</span>
+                    <span className="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400 block">Typical Budget:</span>
+                    <span className="font-mono font-bold text-[#007A52] dark:text-[#34D399]">{rec.priceRange}</span>
                   </div>
                   <div>
-                    <span className="text-[11px] font-semibold text-zinc-400 dark:text-zinc-500 block">In-Stock Models:</span>
+                    <span className="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400 block">In-Stock Models:</span>
                     <span className="text-zinc-500 dark:text-zinc-400 text-[11px]">{rec.examples}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="pt-3 border-t border-zinc-100 dark:border-zinc-800">
+              <div className="pt-3 border-t border-[#E3EBE7] dark:border-[#22353D]">
                 <button
                   type="button"
                   onClick={() => onSelectCategory(rec.actionKey)}
-                  className="w-full inline-flex items-center justify-between text-xs font-semibold text-black dark:text-white hover:underline py-1 cursor-pointer transition-colors"
+                  className="w-full inline-flex items-center justify-between text-xs font-semibold text-[#007A52] dark:text-[#34D399] hover:text-[#009B69] dark:hover:text-[#10B981] hover:underline py-1 cursor-pointer transition-colors"
                 >
                   <span>Filter matching models</span>
                   <ArrowRight className="w-3.5 h-3.5" />

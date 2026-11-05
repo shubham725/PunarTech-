@@ -85,6 +85,30 @@ export default function App() {
     }
   }, [wishlistedLaptopIds]);
 
+  // Deep-link handler: auto-open laptop modal when visited via https://punartech.vercel.app/?laptop=PT/P001
+  useEffect(() => {
+    try {
+      const searchParams = new URLSearchParams(window.location.search);
+      const laptopQuery = searchParams.get('laptop') || searchParams.get('id');
+      const hashQuery = window.location.hash ? window.location.hash.replace('#laptop-', '') : null;
+      const target = (laptopQuery || hashQuery)?.trim().toLowerCase();
+
+      if (target) {
+        const found = LAPTOP_INVENTORY.find(
+          (l) =>
+            l.id.toLowerCase() === target ||
+            l.stockId.toLowerCase() === target ||
+            l.stockId.toLowerCase().replace(/[^a-z0-9]/g, '') === target.replace(/[^a-z0-9]/g, '')
+        );
+        if (found) {
+          setActiveDetailsLaptop(found);
+        }
+      }
+    } catch {
+      // Ignore URL parsing errors
+    }
+  }, []);
+
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 3000);
@@ -615,7 +639,7 @@ export default function App() {
                         </p>
                       </div>
                       <a
-                        href="https://wa.me/918055035502?text=Hello%20PunarTech,%20I%20want%20to%20enquire%20about%20your%20unpriced%20laptop%20inventory."
+                        href="https://wa.me/918055035502?text=Hello%20PunarTech,%20I%20am%20browsing%20https://punartech.vercel.app/%20and%20want%20to%20enquire%20about%20your%20unpriced%20laptop%20inventory."
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#009B69] to-[#007A8D] hover:from-[#00875A] hover:to-[#006979] dark:from-[#10B981] dark:to-[#06B6D4] text-white dark:text-[#04251B] font-bold text-xs transition-colors self-start sm:self-auto shadow-xs"
@@ -693,7 +717,7 @@ export default function App() {
       {/* Mobile Bottom Sticky Navigation Action Bar */}
       <nav
         aria-label="Mobile quick actions"
-        className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-white/95 dark:bg-[#050505]/95 backdrop-blur-md border-t border-zinc-200 dark:border-zinc-800 px-3 py-2.5 flex items-center justify-between gap-2 shadow-lg transition-colors"
+        className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-white/95 dark:bg-[#090E11]/95 backdrop-blur-md border-t border-[#E3EBE7] dark:border-[#22353D] px-3 py-2.5 flex items-center justify-between gap-2 shadow-lg transition-colors"
       >
         <div className="flex items-center gap-1.5 flex-1">
           <button
@@ -706,8 +730,8 @@ export default function App() {
             }
             className={`flex-1 py-2 px-1.5 rounded-[12px] text-center text-[11px] font-['Poppins'] font-semibold border transition-all duration-300 cursor-pointer truncate ${
               filters.branch === 'Pune'
-                ? 'bg-black text-white dark:bg-white dark:text-black border-black dark:border-white shadow-xs'
-                : 'bg-white hover:bg-zinc-100 dark:bg-zinc-900 dark:text-zinc-200 text-zinc-800 border-zinc-300 dark:border-zinc-700'
+                ? 'bg-gradient-to-r from-[#009B69] to-[#007A8D] text-white dark:from-[#10B981] dark:to-[#06B6D4] dark:text-[#04251B] border-transparent shadow-xs font-semibold'
+                : 'bg-white hover:bg-[#E8F7EE] dark:bg-[#152227] dark:hover:bg-[#1B2B32] dark:text-zinc-200 text-zinc-800 border-[#E3EBE7] dark:border-[#22353D]'
             }`}
           >
             <span>Pune (60)</span>
@@ -722,8 +746,8 @@ export default function App() {
             }
             className={`flex-1 py-2 px-1.5 rounded-[12px] text-center text-[11px] font-['Poppins'] font-semibold border transition-all duration-300 cursor-pointer truncate ${
               filters.branch === 'Delhi'
-                ? 'bg-black text-white dark:bg-white dark:text-black border-black dark:border-white shadow-xs'
-                : 'bg-white hover:bg-zinc-100 dark:bg-zinc-900 dark:text-zinc-200 text-zinc-800 border-zinc-300 dark:border-zinc-700'
+                ? 'bg-gradient-to-r from-[#009B69] to-[#007A8D] text-white dark:from-[#10B981] dark:to-[#06B6D4] dark:text-[#04251B] border-transparent shadow-xs font-semibold'
+                : 'bg-white hover:bg-[#E8F7EE] dark:bg-[#152227] dark:hover:bg-[#1B2B32] dark:text-zinc-200 text-zinc-800 border-[#E3EBE7] dark:border-[#22353D]'
             }`}
           >
             <span>Delhi (31)</span>
@@ -731,7 +755,7 @@ export default function App() {
         </div>
 
         <a
-          href="https://wa.me/918055035502?text=Hello%20PunarTech,%20I%20want%20to%20enquire%20about%20your%20laptops%20inventory."
+          href="https://wa.me/918055035502?text=Hello%20PunarTech,%20I%20am%20browsing%20https://punartech.vercel.app/%20and%20want%20to%20enquire%20about%20your%20laptop%20inventory."
           target="_blank"
           rel="noopener noreferrer"
           className="flex-[1.4] inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-[12px] bg-gradient-to-r from-[#009B69] to-[#007A8D] hover:opacity-95 text-white dark:from-[#10B981] dark:to-[#06B6D4] dark:text-[#04251B] text-xs font-['Poppins'] font-semibold shadow-md active:scale-95 transition-all truncate"
@@ -821,14 +845,14 @@ export default function App() {
             aria-hidden="true"
           />
 
-          <div className="relative w-full max-w-xs sm:max-w-sm bg-white dark:bg-[#181818] h-full flex flex-col shadow-2xl z-10 animate-in slide-in-from-right duration-200 border-l border-[#E5E5E5] dark:border-[#2D2D2D]">
+          <div className="relative w-full max-w-xs sm:max-w-sm bg-white dark:bg-[#152227] h-full flex flex-col shadow-2xl z-10 animate-in slide-in-from-right duration-200 border-l border-[#E3EBE7] dark:border-[#22353D]">
             {/* Sticky Drawer Header */}
-            <div className="sticky top-0 z-20 px-4 py-3.5 bg-white/95 dark:bg-[#181818]/95 backdrop-blur-md border-b border-[#E5E5E5] dark:border-[#2D2D2D] flex items-center justify-between shrink-0 shadow-2xs">
+            <div className="sticky top-0 z-20 px-4 py-3.5 bg-white/95 dark:bg-[#152227]/95 backdrop-blur-md border-b border-[#E3EBE7] dark:border-[#22353D] flex items-center justify-between shrink-0 shadow-2xs">
               <div className="flex items-center gap-2">
-                <SlidersHorizontal className="w-4 h-4 text-[#111111] dark:text-white" />
-                <span className="font-['Urbanist'] font-bold text-base text-[#111111] dark:text-white">Filter Laptops</span>
+                <SlidersHorizontal className="w-4 h-4 text-[#009B69] dark:text-[#10B981]" />
+                <span className="font-['Urbanist'] font-bold text-base text-zinc-950 dark:text-white">Filter Laptops</span>
                 {hasActiveFilters && (
-                  <span className="text-[10px] font-mono font-bold text-[#111111] dark:text-white bg-[#F7F7F7] dark:bg-[#252525] px-2 py-0.5 rounded-full border border-[#D9D9D9] dark:border-[#3A3A3A]">
+                  <span className="text-[10px] font-mono font-bold text-[#007A52] dark:text-[#34D399] bg-[#E8F7EE] dark:bg-[#10B981]/15 px-2 py-0.5 rounded-full border border-[#C8DFD4] dark:border-[#10B981]/30">
                     Active
                   </span>
                 )}
@@ -838,7 +862,7 @@ export default function App() {
                   <button
                     type="button"
                     onClick={handleResetFilters}
-                    className="text-xs font-['Poppins'] font-semibold text-[#777777] dark:text-[#999999] hover:text-[#111111] dark:hover:text-white transition-colors flex items-center gap-1 cursor-pointer"
+                    className="text-xs font-['Poppins'] font-semibold text-[#007A52] dark:text-[#34D399] hover:underline transition-colors flex items-center gap-1 cursor-pointer"
                   >
                     <RotateCcw className="w-3 h-3" />
                     <span>Reset</span>
@@ -847,7 +871,7 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => setIsMobileFilterDrawerOpen(false)}
-                  className="p-1.5 rounded-[10px] text-[#777777] dark:text-[#999999] hover:text-[#111111] dark:hover:text-white hover:bg-[#F2F2F2] dark:hover:bg-[#252525] transition-colors cursor-pointer"
+                  className="p-1.5 rounded-[10px] text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-[#E8F7EE] dark:hover:bg-[#10B981]/15 transition-colors cursor-pointer"
                   aria-label="Close filters drawer"
                 >
                   <X className="w-5 h-5" />
@@ -869,13 +893,13 @@ export default function App() {
             </div>
 
             {/* Sticky Drawer Footer with Live Match Count */}
-            <div className="sticky bottom-0 z-20 bg-white/95 dark:bg-[#181818]/95 backdrop-blur-md border-t border-[#E5E5E5] dark:border-[#2D2D2D] p-4 shadow-[0_-6px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_-6px_20px_rgba(0,0,0,0.3)] shrink-0 space-y-2.5">
+            <div className="sticky bottom-0 z-20 bg-white/95 dark:bg-[#152227]/95 backdrop-blur-md border-t border-[#E3EBE7] dark:border-[#22353D] p-4 shadow-[0_-6px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_-6px_20px_rgba(0,0,0,0.3)] shrink-0 space-y-2.5">
               <div className="flex items-center justify-between text-xs font-['Poppins']">
                 <div className="flex items-center gap-1.5">
-                  <span className="inline-block w-2 h-2 rounded-full bg-[#111111] dark:bg-white animate-pulse" />
-                  <span className="text-[#777777] dark:text-[#999999] font-medium">Matching inventory:</span>
+                  <span className="inline-block w-2 h-2 rounded-full bg-[#009B69] dark:bg-[#10B981] animate-pulse" />
+                  <span className="text-zinc-600 dark:text-zinc-400 font-medium">Matching inventory:</span>
                 </div>
-                <span className="font-mono font-bold text-xs sm:text-sm text-[#111111] dark:text-white bg-[#F7F7F7] dark:bg-[#252525] px-2.5 py-0.5 rounded-[8px] border border-[#E5E5E5] dark:border-[#2D2D2D] tabular-nums">
+                <span className="font-mono font-bold text-xs sm:text-sm text-[#007A52] dark:text-[#34D399] bg-[#E8F7EE] dark:bg-[#10B981]/15 px-2.5 py-0.5 rounded-[8px] border border-[#C8DFD4] dark:border-[#10B981]/30 tabular-nums">
                   {sortedLaptops.length} {sortedLaptops.length === 1 ? 'laptop' : 'laptops'}
                 </span>
               </div>
@@ -885,7 +909,7 @@ export default function App() {
                   <button
                     type="button"
                     onClick={handleResetFilters}
-                    className="py-3 px-3.5 rounded-[12px] border border-[#D9D9D9] dark:border-[#3A3A3A] hover:bg-[#F2F2F2] dark:hover:bg-[#252525] text-[#111111] dark:text-white font-['Poppins'] font-semibold text-xs transition-all duration-300 shrink-0 cursor-pointer"
+                    className="py-3 px-3.5 rounded-[12px] border border-[#C8DFD4] dark:border-[#22353D] hover:bg-[#E8F7EE] dark:hover:bg-[#10B981]/15 text-[#007A52] dark:text-[#34D399] font-['Poppins'] font-semibold text-xs transition-all duration-300 shrink-0 cursor-pointer"
                     title="Reset all filters"
                   >
                     Clear
@@ -898,7 +922,7 @@ export default function App() {
                     setIsMobileFilterDrawerOpen(false);
                     document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="flex-1 py-3 px-4 bg-[#111111] hover:bg-[#333333] dark:bg-white dark:hover:bg-[#E6E6E6] active:scale-[0.98] text-white dark:text-[#111111] font-['Poppins'] text-[15px] font-semibold rounded-[12px] shadow-sm transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer"
+                  className="flex-1 py-3 px-4 bg-gradient-to-r from-[#009B69] to-[#007A8D] hover:from-[#00875A] hover:to-[#006979] dark:from-[#10B981] dark:to-[#06B6D4] text-white dark:text-[#04251B] font-['Poppins'] text-[15px] font-semibold rounded-[12px] shadow-sm transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98]"
                 >
                   <span>
                     {sortedLaptops.length === 0

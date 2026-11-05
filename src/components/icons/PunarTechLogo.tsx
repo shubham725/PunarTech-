@@ -15,15 +15,21 @@ export const PunarTechLogo: React.FC<LogoProps> = ({ className = '', size = 'md'
       : 'h-6 sm:h-8 md:h-10';
 
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
-      <div className="dark:bg-white/95 dark:px-2 dark:py-0.5 sm:dark:px-2.5 sm:dark:py-1 rounded-lg sm:rounded-xl dark:shadow-xs transition-all duration-200 inline-flex items-center shrink-0">
-        <img
-          src="/logo.png"
-          alt="पुनरTech - PunarTech Laptops"
-          className={`${heightClass} w-auto object-contain transition-all duration-200`}
-          loading="eager"
-        />
-      </div>
+    <div className={`flex items-center gap-2 shrink-0 ${className}`}>
+      {/* Light Theme Logo */}
+      <img
+        src="/logo.png"
+        alt="पुनरTech - PunarTech Laptops"
+        className={`${heightClass} w-auto object-contain dark:hidden transition-all duration-200 select-none`}
+        loading="eager"
+      />
+      {/* Dark Theme Logo (Transparent logo provided by user) */}
+      <img
+        src="/assets/aistudio/transparent_logo_1a40ff06.png"
+        alt="पुनरTech - PunarTech Laptops"
+        className={`${heightClass} w-auto object-contain hidden dark:block transition-all duration-200 select-none drop-shadow-[0_1px_8px_rgba(16,185,129,0.25)]`}
+        loading="eager"
+      />
     </div>
   );
 };

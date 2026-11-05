@@ -135,18 +135,18 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 bg-black/80 backdrop-blur-xs font-['Poppins']">
       <div
-        className="relative w-full max-w-5xl bg-white dark:bg-zinc-900 rounded-[24px] shadow-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden flex flex-col max-h-[92vh] animate-in fade-in zoom-in-95 duration-200"
+        className="relative w-full max-w-5xl bg-white dark:bg-[#152227] rounded-[24px] shadow-2xl border border-[#E3EBE7] dark:border-[#22353D] overflow-hidden flex flex-col max-h-[92vh] animate-in fade-in zoom-in-95 duration-200"
         role="dialog"
         aria-modal="true"
       >
         {/* Modal Top Header */}
-        <div className="px-6 py-4 border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950 flex items-center justify-between">
+        <div className="px-6 py-4 border-b border-[#E3EBE7] dark:border-[#22353D] bg-[#F8FBF9] dark:bg-[#0E1519] flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-[10px] bg-black text-white dark:bg-white dark:text-black flex items-center justify-center shadow-xs">
+            <div className="w-8 h-8 rounded-[10px] bg-[#E8F7EE] dark:bg-[#10B981]/15 text-[#007A52] dark:text-[#34D399] border border-[#C8DFD4] dark:border-[#10B981]/30 flex items-center justify-center shadow-xs">
               <Shield className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-base sm:text-lg font-['Urbanist'] font-bold text-black dark:text-white">
+              <h2 className="text-base sm:text-lg font-['Urbanist'] font-bold text-zinc-950 dark:text-white">
                 PunarTech Staff &amp; Inventory Coordinator Portal
               </h2>
               <span className="text-[11px] text-zinc-500 dark:text-zinc-400">
@@ -157,7 +157,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-xl text-zinc-400 hover:text-black dark:hover:text-white hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-all duration-300 cursor-pointer"
+            className="p-1.5 rounded-xl text-zinc-400 hover:text-zinc-950 dark:hover:text-white hover:bg-[#E8F7EE] dark:hover:bg-[#10B981]/15 transition-all duration-300 cursor-pointer"
             aria-label="Close portal"
           >
             <X className="w-5 h-5" />
@@ -171,7 +171,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
               <Lock className="w-7 h-7" />
             </div>
             <div>
-              <h3 className="text-lg font-['Urbanist'] font-bold text-black dark:text-white">
+              <h3 className="text-lg font-['Urbanist'] font-bold text-zinc-950 dark:text-white">
                 Coordinator Authentication Required
               </h3>
               <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
@@ -188,7 +188,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                   setPinError(false);
                 }}
                 placeholder="Enter Staff Passcode (e.g. 2026)"
-                className="w-full px-4 py-3 bg-zinc-50 dark:bg-zinc-950 border border-zinc-300 dark:border-zinc-700 rounded-[12px] text-center text-sm font-['Poppins'] font-mono tracking-widest text-black dark:text-white focus:outline-hidden focus:border-[#009B69] dark:focus:border-[#10B981] focus:ring-2 focus:ring-[#009B69]/15 dark:focus:ring-[#10B981]/20"
+                className="w-full px-4 py-3 bg-[#F8FBF9] dark:bg-[#10191E] border border-[#E3EBE7] dark:border-[#22353D] rounded-[12px] text-center text-sm font-['Poppins'] font-mono tracking-widest text-zinc-900 dark:text-white focus:outline-hidden focus:border-[#009B69] dark:focus:border-[#10B981] focus:ring-2 focus:ring-[#009B69]/15 dark:focus:ring-[#10B981]/20"
                 autoFocus
               />
 
@@ -210,7 +210,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
         ) : (
           <div className="flex-1 flex flex-col overflow-hidden">
             {/* Tab Navigation */}
-            <div className="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 px-6 bg-white dark:bg-zinc-900 overflow-x-auto">
+            <div className="flex items-center justify-between border-b border-[#E3EBE7] dark:border-[#22353D] px-6 bg-white dark:bg-[#152227] overflow-x-auto">
               <div className="flex items-center gap-4 text-xs font-['Poppins'] font-semibold">
                 <button
                   type="button"
@@ -310,15 +310,15 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                   </div>
 
                   {/* Brand Breakdown */}
-                  <div className="bg-zinc-50 dark:bg-zinc-950 p-5 rounded-2xl border border-zinc-200 dark:border-zinc-800">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-black dark:text-white mb-3">
+                  <div className="bg-[#F8FBF9] dark:bg-[#0E1519] p-5 rounded-2xl border border-[#E3EBE7] dark:border-[#22353D]">
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-950 dark:text-white mb-3 font-['Urbanist']">
                       Brand Distribution Breakdown
                     </h3>
                     <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2.5">
                       {Object.entries(INVENTORY_STATS.brands).map(([brand, count]) => (
-                        <div key={brand} className="bg-white dark:bg-zinc-900 p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 text-center">
-                          <span className="text-xs font-bold text-black dark:text-white block">{brand}</span>
-                          <span className="text-sm font-black font-mono text-zinc-600 dark:text-zinc-300">{count}</span>
+                        <div key={brand} className="bg-white dark:bg-[#152227] p-2.5 rounded-xl border border-[#E3EBE7] dark:border-[#22353D] text-center">
+                          <span className="text-xs font-bold text-zinc-950 dark:text-white block font-['Urbanist']">{brand}</span>
+                          <span className="text-sm font-black font-mono text-[#007A52] dark:text-[#34D399]">{count}</span>
                         </div>
                       ))}
                     </div>
@@ -453,7 +453,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                         <select
                           value={newBrand}
                           onChange={(e) => setNewBrand(e.target.value as any)}
-                          className="w-full p-2 bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-[12px] font-['Poppins'] text-xs text-black dark:text-white focus:outline-hidden focus:border-[#009B69] dark:focus:border-[#10B981] focus:ring-2 focus:ring-[#009B69]/15 dark:focus:ring-[#10B981]/20"
+                          className="w-full p-2 bg-white dark:bg-[#10191E] border border-[#E3EBE7] dark:border-[#22353D] rounded-[12px] font-['Poppins'] text-xs text-zinc-950 dark:text-white focus:outline-hidden focus:border-[#009B69] dark:focus:border-[#10B981] focus:ring-2 focus:ring-[#009B69]/15 dark:focus:ring-[#10B981]/20"
                         >
                           <option value="Dell">Dell</option>
                           <option value="HP">HP</option>
@@ -469,7 +469,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                         <select
                           value={newBranch}
                           onChange={(e) => setNewBranch(e.target.value as any)}
-                          className="w-full p-2 bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-[12px] font-['Poppins'] text-xs text-black dark:text-white focus:outline-hidden focus:border-[#009B69] dark:focus:border-[#10B981] focus:ring-2 focus:ring-[#009B69]/15 dark:focus:ring-[#10B981]/20"
+                          className="w-full p-2 bg-white dark:bg-[#10191E] border border-[#E3EBE7] dark:border-[#22353D] rounded-[12px] font-['Poppins'] text-xs text-zinc-950 dark:text-white focus:outline-hidden focus:border-[#009B69] dark:focus:border-[#10B981] focus:ring-2 focus:ring-[#009B69]/15 dark:focus:ring-[#10B981]/20"
                         >
                           <option value="Pune">Pune Hub</option>
                           <option value="Delhi">Delhi Hub</option>
@@ -484,7 +484,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                         value={newModel}
                         onChange={(e) => setNewModel(e.target.value)}
                         placeholder="e.g. Latitude 5410 Core i5 10th Gen"
-                        className="w-full p-2 bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-[12px] font-['Poppins'] text-xs text-black dark:text-white focus:outline-hidden focus:border-[#009B69] dark:focus:border-[#10B981] focus:ring-2 focus:ring-[#009B69]/15 dark:focus:ring-[#10B981]/20"
+                        className="w-full p-2 bg-white dark:bg-[#10191E] border border-[#E3EBE7] dark:border-[#22353D] rounded-[12px] font-['Poppins'] text-xs text-zinc-950 dark:text-white focus:outline-hidden focus:border-[#009B69] dark:focus:border-[#10B981] focus:ring-2 focus:ring-[#009B69]/15 dark:focus:ring-[#10B981]/20"
                         required
                       />
                     </div>
@@ -497,7 +497,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                           value={newCpu}
                           onChange={(e) => setNewCpu(e.target.value)}
                           placeholder="e.g. Core i5 10th Gen"
-                          className="w-full p-2 bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-[12px] font-['Poppins'] text-xs text-black dark:text-white focus:outline-hidden focus:border-[#009B69] dark:focus:border-[#10B981] focus:ring-2 focus:ring-[#009B69]/15 dark:focus:ring-[#10B981]/20"
+                          className="w-full p-2 bg-white dark:bg-[#10191E] border border-[#E3EBE7] dark:border-[#22353D] rounded-[12px] font-['Poppins'] text-xs text-zinc-950 dark:text-white focus:outline-hidden focus:border-[#009B69] dark:focus:border-[#10B981] focus:ring-2 focus:ring-[#009B69]/15 dark:focus:ring-[#10B981]/20"
                         />
                       </div>
                       <div>
@@ -506,7 +506,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                           type="text"
                           value={newRam}
                           onChange={(e) => setNewRam(e.target.value)}
-                          className="w-full p-2 bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-[12px] font-['Poppins'] text-xs text-black dark:text-white focus:outline-hidden focus:border-[#009B69] dark:focus:border-[#10B981] focus:ring-2 focus:ring-[#009B69]/15 dark:focus:ring-[#10B981]/20"
+                          className="w-full p-2 bg-white dark:bg-[#10191E] border border-[#E3EBE7] dark:border-[#22353D] rounded-[12px] font-['Poppins'] text-xs text-zinc-950 dark:text-white focus:outline-hidden focus:border-[#009B69] dark:focus:border-[#10B981] focus:ring-2 focus:ring-[#009B69]/15 dark:focus:ring-[#10B981]/20"
                         />
                       </div>
                       <div>
@@ -516,7 +516,7 @@ export const AdminDashboardModal: React.FC<AdminDashboardModalProps> = ({
                           value={newPrice}
                           onChange={(e) => setNewPrice(e.target.value)}
                           placeholder="24500"
-                          className="w-full p-2 bg-white dark:bg-zinc-900 border border-zinc-300 dark:border-zinc-700 rounded-[12px] font-['Poppins'] text-xs text-black dark:text-white focus:outline-hidden focus:border-[#009B69] dark:focus:border-[#10B981] focus:ring-2 focus:ring-[#009B69]/15 dark:focus:ring-[#10B981]/20"
+                          className="w-full p-2 bg-white dark:bg-[#10191E] border border-[#E3EBE7] dark:border-[#22353D] rounded-[12px] font-['Poppins'] text-xs text-zinc-950 dark:text-white focus:outline-hidden focus:border-[#009B69] dark:focus:border-[#10B981] focus:ring-2 focus:ring-[#009B69]/15 dark:focus:ring-[#10B981]/20"
                         />
                       </div>
                     </div>

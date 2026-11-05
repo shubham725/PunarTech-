@@ -119,7 +119,7 @@ export const Footer: React.FC<FooterProps> = ({
             <ul className="space-y-2 text-xs">
               <li>
                 <a
-                  href="https://wa.me/918055035502"
+                  href="https://wa.me/918055035502?text=Hello%20PunarTech,%20I%20am%20browsing%20https://punartech.vercel.app/%20and%20need%20support."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-[#10B981] transition-colors flex items-center gap-1.5 text-zinc-200 font-semibold"
@@ -182,6 +182,9 @@ export const Footer: React.FC<FooterProps> = ({
                 <span>Dispatch: Multi-layer Protective Packaging</span>
               </li>
               <li>
+                <span>Official Live Website: <a href="https://punartech.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-[#10B981] hover:underline font-mono">punartech.vercel.app</a></span>
+              </li>
+              <li>
                 <span className="text-zinc-500 text-[11px]">Privacy Policy • Terms of Sale</span>
               </li>
             </ul>
@@ -193,7 +196,7 @@ export const Footer: React.FC<FooterProps> = ({
           <div className="flex flex-wrap items-center gap-3">
             <span className="text-white font-bold">PunarTech</span>
             <span>•</span>
-            <span>Refurbished &amp; Pre-Owned Laptops</span>
+            <a href="https://punartech.vercel.app/" className="hover:text-[#10B981] transition-colors font-mono">punartech.vercel.app</a>
             <span>•</span>
             <span>Pune &amp; Delhi Hubs</span>
             <span>•</span>

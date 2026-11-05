@@ -44,7 +44,7 @@ export const AnnouncementBar: React.FC<AnnouncementBarProps> = ({ onSelectHub })
       badge: 'WhatsApp',
       linkText: 'Chat Now',
       action: () => {
-        window.open('https://wa.me/918055035502', '_blank', 'noopener,noreferrer');
+        window.open('https://wa.me/918055035502?text=Hello%20PunarTech,%20I%20am%20browsing%20https://punartech.vercel.app/%20and%20want%20to%20connect%20with%20a%20coordinator.', '_blank', 'noopener,noreferrer');
       },
     },
   ];
@@ -61,7 +61,7 @@ export const AnnouncementBar: React.FC<AnnouncementBarProps> = ({ onSelectHub })
   const active = announcements[currentIdx];
 
   return (
-    <div className="bg-[#07130F] text-white text-[11px] sm:text-xs py-2 px-3 sm:px-6 border-b border-[#143026] font-['Poppins'] transition-all select-none">
+    <div className="bg-[#0B1512] text-white text-[11px] sm:text-xs py-2 px-3 sm:px-6 border-b border-[#1A2E25] font-['Poppins'] transition-all select-none">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
         {/* Left: Message with smooth fade */}
         <div className="flex items-center gap-2 overflow-hidden truncate">
@@ -84,10 +84,10 @@ export const AnnouncementBar: React.FC<AnnouncementBarProps> = ({ onSelectHub })
         {/* Right: Quick actions & dismiss */}
         <div className="flex items-center gap-3 shrink-0">
           <a
-            href="https://wa.me/918055035502"
+            href="https://wa.me/918055035502?text=Hello%20PunarTech,%20I%20am%20browsing%20https://punartech.vercel.app/%20and%20want%20to%20connect%20with%20a%20coordinator."
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:flex items-center gap-1 text-[#38BDF8] hover:text-white transition-colors font-mono font-medium"
+            className="hidden sm:flex items-center gap-1 text-[#34D399] hover:text-white transition-colors font-mono font-medium"
           >
             <PhoneCall className="w-3 h-3" />
             <span>80550 35502</span>

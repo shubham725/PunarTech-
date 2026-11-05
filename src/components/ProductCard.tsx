@@ -102,8 +102,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
         {/* Bottom-Left: Real Photos Indicator Tag */}
         <div className="absolute bottom-2 left-2 sm:left-2.5 z-10 pointer-events-none">
-          <span className="inline-flex items-center gap-1 text-[9px] sm:text-[10px] font-semibold text-zinc-700 dark:text-zinc-200 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-xs px-2 py-0.5 rounded-[6px] border border-zinc-200 dark:border-zinc-700 shadow-2xs">
-            <Camera className="w-3 h-3 text-zinc-500" />
+          <span className="inline-flex items-center gap-1 text-[9px] sm:text-[10px] font-semibold text-zinc-700 dark:text-zinc-200 bg-white/95 dark:bg-[#152227]/95 backdrop-blur-xs px-2 py-0.5 rounded-[6px] border border-[#E3EBE7] dark:border-[#22353D] shadow-2xs">
+            <Camera className="w-3 h-3 text-[#007A8D] dark:text-[#06B6D4]" />
             <span>{gallery.length} Views</span>
           </span>
         </div>
@@ -118,8 +118,8 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             }}
             className={`absolute bottom-2 right-2 sm:right-2.5 z-10 px-2 py-1 rounded-[6px] text-[10px] font-semibold shadow-xs border transition-all cursor-pointer flex items-center gap-1 active:scale-95 ${
               isCompared
-                ? 'bg-black text-white border-black dark:bg-white dark:text-black dark:border-white'
-                : 'bg-white/95 dark:bg-zinc-900/95 text-zinc-700 dark:text-zinc-300 hover:text-black dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-700'
+                ? 'bg-gradient-to-r from-[#009B69] to-[#007A8D] text-white border-transparent'
+                : 'bg-white/95 dark:bg-[#152227]/95 text-zinc-700 dark:text-zinc-300 hover:text-[#009B69] dark:hover:text-[#10B981] hover:bg-[#F0F9F5] dark:hover:bg-[#1A2C33] border border-[#E3EBE7] dark:border-[#22353D]'
             }`}
             title="Add to laptop comparison"
           >

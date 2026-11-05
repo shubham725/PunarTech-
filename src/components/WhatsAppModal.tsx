@@ -24,7 +24,8 @@ export const WhatsAppModal: React.FC<WhatsAppModalProps> = ({
     ? `₹${laptop.sellingPrice.toLocaleString('en-IN')}`
     : 'Contact for Price';
 
-  const enquiryText = `Hello PunarTech, I am interested in the ${laptop.fullName}, stock ID ${laptop.stockId}, listed at ${priceText}. Is this laptop available? Please share its current condition, battery health, and warranty details if applicable.`;
+  const liveProductUrl = `https://punartech.vercel.app/?laptop=${encodeURIComponent(laptop.stockId)}`;
+  const enquiryText = `Hello PunarTech, I am interested in the ${laptop.fullName} (Stock ID: ${laptop.stockId}, ${priceText}) seen on your website: ${liveProductUrl}\n\nIs this laptop available? Please share real photos, current condition, battery health, and warranty details.`;
 
   const handleCopy = () => {
     navigator.clipboard.writeText(enquiryText);
@@ -49,7 +50,7 @@ export const WhatsAppModal: React.FC<WhatsAppModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs">
       <div
-        className="relative w-full max-w-lg bg-white dark:bg-zinc-900 rounded-[24px] shadow-2xl border border-zinc-200 dark:border-zinc-800 overflow-hidden transform transition-all animate-in fade-in zoom-in-95 duration-200"
+        className="relative w-full max-w-lg bg-white dark:bg-[#152227] rounded-[24px] shadow-2xl border border-[#E3EBE7] dark:border-[#22353D] overflow-hidden transform transition-all animate-in fade-in zoom-in-95 duration-200"
         role="dialog"
         aria-modal="true"
         aria-labelledby="whatsapp-modal-title"
@@ -154,7 +155,7 @@ export const WhatsAppModal: React.FC<WhatsAppModalProps> = ({
             </button>
             <button
               onClick={handleCopy}
-              className="px-4 py-2.5 rounded-xl bg-[#F8FBF9] hover:bg-[#E8F7EE] text-zinc-800 dark:bg-zinc-800 dark:text-white dark:hover:bg-zinc-700 font-['Poppins'] font-semibold text-[15px] transition-all duration-300 border border-[#E3EBE7] dark:border-[#22353D] flex items-center justify-center gap-2 cursor-pointer active:scale-98 shadow-xs"
+              className="px-4 py-2.5 rounded-xl bg-[#F8FBF9] hover:bg-[#E8F7EE] text-zinc-800 dark:bg-[#10191E] dark:text-[#E3EBE7] dark:hover:bg-[#1A2C33] font-['Poppins'] font-semibold text-[15px] transition-all duration-300 border border-[#E3EBE7] dark:border-[#22353D] flex items-center justify-center gap-2 cursor-pointer active:scale-98 shadow-xs"
             >
               {copied ? <Check className="w-4 h-4 text-[#009B69] dark:text-[#10B981]" /> : <Copy className="w-4 h-4" />}
               <span>{copied ? 'Copied' : 'Copy Message'}</span>
