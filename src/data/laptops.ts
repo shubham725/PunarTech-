@@ -68,7 +68,9 @@ export const WHATSAPP_CONFIG = {
   // Official PunarTech WhatsApp Community Group Link
   groupInviteUrl: 'https://chat.whatsapp.com/LGPhmaRzif3I91VUUa628L',
   // Direct business number
-  businessNumber: '918055035502', 
+  businessNumber: '918055035502',
+  number: '918055035502',
+  displayPhone: '+91 80550 35502',
   // PunarTech branding
   brandName: 'PunarTech',
   tagline: 'PunarTech On Top'

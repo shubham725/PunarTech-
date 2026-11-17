@@ -11,38 +11,37 @@ import { Header } from './components/Header';
 import { HeroSection } from './components/HeroSection';
 import { FeaturedCategories } from './components/FeaturedCategories';
 import { DealsSection } from './components/DealsSection';
+import { MobileBottomNav } from './components/MobileBottomNav';
 import { FilterSidebar, FilterState, INITIAL_FILTERS } from './components/FilterSidebar';
 import { ProductCard } from './components/ProductCard';
+import { getModelSpecificLaptopImage } from './components/LaptopImage';
+import { WhyChooseUs } from './components/WhyChooseUs';
+import { PunarTrustSection } from './components/PunarTrustSection';
+import { PinCodeChecker } from './components/PinCodeChecker';
+import { FAQSection } from './components/FAQSection';
+import { BranchSection } from './components/BranchSection';
+import { RentalAndEmiSection } from './components/RentalAndEmiSection';
+import { WhatsAppContactSection } from './components/WhatsAppContactSection';
+import { Footer } from './components/Footer';
 import { ProductDetailsModal } from './components/ProductDetailsModal';
 import { ComparisonModal } from './components/ComparisonModal';
 import { CompareBar } from './components/CompareBar';
 import { WishlistDrawer } from './components/WishlistDrawer';
 import { ShareModal } from './components/ShareModal';
-import { WhyChooseUs } from './components/WhyChooseUs';
-import { HowItWorks } from './components/HowItWorks';
-import { TestimonialsSection } from './components/TestimonialsSection';
-import { FAQSection } from './components/FAQSection';
-import { RentalAndEmiSection } from './components/RentalAndEmiSection';
 import { RentalEmiModal } from './components/RentalEmiModal';
-import { WhatsAppContactSection } from './components/WhatsAppContactSection';
 import { AdminDashboardModal } from './components/AdminDashboardModal';
-import { Footer } from './components/Footer';
 import { FloatingWhatsAppButton } from './components/FloatingWhatsAppButton';
 import { Toast } from './components/Toast';
 import {
-  Search,
   X,
   RotateCcw,
   SlidersHorizontal,
   Inbox,
-  ArrowUpDown,
-  Sparkles,
   Laptop as LaptopIcon,
   Briefcase,
   GraduationCap,
   Gamepad2,
   Cpu,
-  MapPin,
 } from 'lucide-react';
 import { WhatsAppIcon } from './components/icons/WhatsAppIcon';
 
@@ -109,12 +108,68 @@ export default function App() {
     }
   }, []);
 
+  // Keep dynamic Open Graph, Twitter Card, and Canonical metadata synced with active view/origin
+  useEffect(() => {
+    try {
+      const origin = window.location.origin;
+      const baseUrl = origin + window.location.pathname;
+      const defaultTitle = 'PunarTech - Premium Refurbished Laptops Pune & Delhi';
+      const defaultDescription =
+        "Explore PunarTech's verified inventory of quality refurbished laptops in Pune and Delhi. Compare specs, view prices, Rent & EMI, or enquire on WhatsApp.";
+      const defaultImage = `${origin}/og-preview.jpg`;
+
+      const title = activeDetailsLaptop
+        ? `${activeDetailsLaptop.fullName} (${activeDetailsLaptop.stockId}) | PunarTech`
+        : defaultTitle;
+      const description = activeDetailsLaptop
+        ? `${activeDetailsLaptop.fullName} — ${activeDetailsLaptop.processor}, ${activeDetailsLaptop.ram}, ${activeDetailsLaptop.storageRaw}. ${
+            activeDetailsLaptop.hasPrice && activeDetailsLaptop.sellingPrice
+              ? `₹${activeDetailsLaptop.sellingPrice.toLocaleString('en-IN')}`
+              : 'Contact for Price'
+          } at PunarTech ${activeDetailsLaptop.branch}.`
+        : defaultDescription;
+      const shareUrl = activeDetailsLaptop
+        ? `${baseUrl}?laptop=${encodeURIComponent(activeDetailsLaptop.stockId)}`
+        : baseUrl;
+      const shareImage = activeDetailsLaptop
+        ? `${origin}${getModelSpecificLaptopImage(activeDetailsLaptop)}`
+        : defaultImage;
+
+      document.title = title;
+
+      const setMetaTag = (attr: 'name' | 'property', key: string, value: string) => {
+        const el = document.querySelector(`meta[${attr}="${key}"]`);
+        if (el) {
+          el.setAttribute('content', value);
+        }
+      };
+
+      const canonicalEl = document.querySelector('link[rel="canonical"]');
+      if (canonicalEl) {
+        canonicalEl.setAttribute('href', shareUrl);
+      }
+
+      setMetaTag('name', 'description', description);
+      setMetaTag('property', 'og:url', shareUrl);
+      setMetaTag('property', 'og:title', title);
+      setMetaTag('property', 'og:description', description);
+      setMetaTag('property', 'og:image', shareImage);
+      setMetaTag('property', 'og:image:secure_url', shareImage);
+      setMetaTag('name', 'twitter:url', shareUrl);
+      setMetaTag('name', 'twitter:title', title);
+      setMetaTag('name', 'twitter:description', description);
+      setMetaTag('name', 'twitter:image', shareImage);
+    } catch {
+      // Ignore metadata update errors
+    }
+  }, [activeDetailsLaptop]);
+
   const showToast = (msg: string) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 3000);
   };
 
-  // Direct WhatsApp Enquiry Handler: opens WhatsApp with pre-filled details
+  // Direct WhatsApp Enquiry Handler
   const handleDirectWhatsAppEnquiry = (laptop: Laptop) => {
     const url = getLaptopWhatsAppUrl(laptop);
     window.open(url, '_blank', 'noopener,noreferrer');
@@ -140,7 +195,7 @@ export default function App() {
   const handleToggleWishlist = (laptop: Laptop) => {
     setWishlistedLaptopIds((prev) => {
       if (prev.includes(laptop.id)) {
-        showToast(`Removed from saved laptops.`);
+        showToast('Removed from saved laptops.');
         return prev.filter((id) => id !== laptop.id);
       }
       showToast(`Saved ${laptop.model} to your wishlist.`);
@@ -148,7 +203,7 @@ export default function App() {
     });
   };
 
-  // Open Rent & EMI modal for a specific laptop or generic
+  // Open Rent & EMI modal
   const handleOpenRentEmi = (laptop: Laptop, mode: 'rent' | 'emi') => {
     setRentEmiModalLaptop(laptop);
     setRentEmiModalMode(mode);
@@ -158,7 +213,6 @@ export default function App() {
   // Quick category switch
   const handleSelectCategory = (categoryId: string) => {
     setSelectedCategory(categoryId);
-    // Smooth scroll down to catalog
     const catalogEl = document.getElementById('catalog');
     catalogEl?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -186,43 +240,38 @@ export default function App() {
       { id: 'all', name: 'All Laptops', count: counts.all, icon: LaptopIcon, description: 'Complete verified stock' },
       { id: 'business', name: 'Business Laptops', count: counts.business, icon: Briefcase, description: 'Latitude, ThinkPad & EliteBook' },
       { id: 'student', name: 'Student Laptops', count: counts.student, icon: GraduationCap, description: 'Under ₹18,000 budget' },
-      { id: 'gaming', name: 'Gaming / GPU', count: counts.gaming, icon: Gamepad2, description: 'Dedicated NVIDIA/Radeon' },
+      { id: 'gaming', name: 'Gaming / GPU', count: counts.gaming, icon: Gamepad2, description: 'Dedicated NVIDIA / Radeon' },
       { id: 'i3', name: 'Intel Core i3', count: counts.i3, icon: Cpu, description: 'Everyday computing' },
-      { id: 'i5', name: 'Intel Core i5', count: counts.i5, icon: Cpu, description: 'Workhorse multitasking' },
+      { id: 'i5', name: 'Intel Core i5', count: counts.i5, icon: Cpu, description: 'Office multitasking' },
       { id: 'i7', name: 'Intel Core i7', count: counts.i7, icon: Cpu, description: 'High performance' },
-      { id: 'ryzen', name: 'AMD Ryzen', count: counts.ryzen, icon: Cpu, description: 'Fast multicore speed' },
+      { id: 'ryzen', name: 'AMD Ryzen', count: counts.ryzen, icon: Cpu, description: 'Multicore speed' },
     ];
   }, []);
 
-  // Today's Best Deals: Curated high value picks from inventory
+  // Featured Deals (4 spotlight units)
   const dealLaptops = useMemo(() => {
     return LAPTOP_INVENTORY.filter(
       (l) =>
-        (l.stockId === 'PT/P017' || // Latitude 7490 i7 16GB
-          l.stockId === 'PT/D001' || // ThinkBook 14 G2 i5 11th Gen
-          l.stockId === 'PT/P007' || // Latitude 5400 i5 8th Gen
-          l.stockId === 'PT/P038') // EliteBook 840 G5
+        l.stockId === 'PT/P017' ||
+        l.stockId === 'PT/D001' ||
+        l.stockId === 'PT/P007' ||
+        l.stockId === 'PT/P038'
     ).slice(0, 4);
   }, []);
 
   // Filtered Inventory
   const filteredLaptops = useMemo(() => {
     return LAPTOP_INVENTORY.filter((laptop) => {
-      // 1. Search Query
       if (searchQuery.trim()) {
         const queryTerms = searchQuery.toLowerCase().trim().split(/\s+/);
-        const matchesAll = queryTerms.every((term) =>
-          laptop.searchableText.includes(term)
-        );
+        const matchesAll = queryTerms.every((term) => laptop.searchableText.includes(term));
         if (!matchesAll) return false;
       }
 
-      // 2. Hub / Branch
       if (filters.branch !== 'All' && laptop.branch !== filters.branch) {
         return false;
       }
 
-      // 3. Category
       if (selectedCategory !== 'all') {
         if (selectedCategory === 'business') {
           const m = laptop.model.toLowerCase();
@@ -251,20 +300,14 @@ export default function App() {
         }
       }
 
-      // 4. Brands
       if (filters.brands.length > 0 && !filters.brands.includes(laptop.brand)) {
         return false;
       }
 
-      // 5. Processor Series
-      if (
-        filters.processors.length > 0 &&
-        !filters.processors.includes(laptop.processorCategory)
-      ) {
+      if (filters.processors.length > 0 && !filters.processors.includes(laptop.processorCategory)) {
         return false;
       }
 
-      // 6. Generations
       if (
         filters.generations.length > 0 &&
         (laptop.generation === null || !filters.generations.includes(laptop.generation))
@@ -272,33 +315,22 @@ export default function App() {
         return false;
       }
 
-      // 7. RAM
       if (filters.ram.length > 0 && !filters.ram.includes(laptop.ramGb)) {
         return false;
       }
 
-      // 8. Storage Types
-      if (
-        filters.storageTypes.length > 0 &&
-        !filters.storageTypes.includes(laptop.storageType)
-      ) {
+      if (filters.storageTypes.length > 0 && !filters.storageTypes.includes(laptop.storageType)) {
         return false;
       }
 
-      // 9. Dedicated Graphics
       if (filters.hasDedicatedGraphics === true && !laptop.hasDedicatedGraphics) {
         return false;
       }
 
-      // 10. Display Classes
-      if (
-        filters.displayClasses.length > 0 &&
-        !filters.displayClasses.includes(laptop.displayClass)
-      ) {
+      if (filters.displayClasses.length > 0 && !filters.displayClasses.includes(laptop.displayClass)) {
         return false;
       }
 
-      // 11. Price Preset & Unpriced
       if (!filters.includeUnpriced && !laptop.hasPrice) {
         return false;
       }
@@ -342,7 +374,6 @@ export default function App() {
       if (sortOption === 'brand-asc') {
         return a.brand.localeCompare(b.brand);
       }
-      // 'recommended' default: prioritize newer generation & complete specs
       return (b.generation || 0) - (a.generation || 0);
     });
   }, [filteredLaptops, sortOption]);
@@ -355,17 +386,14 @@ export default function App() {
     };
   }, [sortedLaptops]);
 
-  // Compared laptops array
   const comparedLaptops = useMemo(() => {
     return LAPTOP_INVENTORY.filter((l) => comparedLaptopIds.includes(l.id));
   }, [comparedLaptopIds]);
 
-  // Wishlisted laptops array
   const wishlistedLaptops = useMemo(() => {
     return LAPTOP_INVENTORY.filter((l) => wishlistedLaptopIds.includes(l.id));
   }, [wishlistedLaptopIds]);
 
-  // Reset Filters
   const handleResetFilters = () => {
     setSearchQuery('');
     setFilters(INITIAL_FILTERS);
@@ -384,21 +412,22 @@ export default function App() {
     filters.storageTypes.length > 0 ||
     filters.hasDedicatedGraphics !== null ||
     filters.displayClasses.length > 0 ||
+    !filters.includeUnpriced ||
     selectedCategory !== 'all';
 
   return (
-    <div className="min-h-screen bg-[#F8FBF9] dark:bg-[#090E11] flex flex-col font-['Poppins'] text-[#101828] dark:text-[#F8FAFC] antialiased selection:bg-[#009B69] selection:text-white dark:selection:bg-[#10B981] dark:selection:text-[#04251B] transition-colors duration-300">
+    <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#0B1116] flex flex-col text-[#17212B] dark:text-[#F1F5F9] antialiased selection:bg-[#059669] selection:text-white transition-colors pb-16 md:pb-0">
       {/* Toast Notification */}
       <Toast message={toastMessage} onClose={() => setToastMessage(null)} />
 
-      {/* 1. Announcement Bar (Section 4) */}
+      {/* 1. Minimal Announcement Bar */}
       <AnnouncementBar
         onSelectHub={(hub) => {
           setFilters((prev) => ({ ...prev, branch: hub }));
         }}
       />
 
-      {/* 2. Main Navigation Header (Section 5) */}
+      {/* 2. Clean Professional Navigation */}
       <Header
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -415,130 +444,254 @@ export default function App() {
         onSelectLaptopFromSearch={(laptop) => {
           setActiveDetailsLaptop(laptop);
         }}
+        onSelectCategory={handleSelectCategory}
+        onSelectBudget={(preset) => {
+          setFilters((prev) => ({
+            ...prev,
+            pricePreset: prev.pricePreset === preset ? null : preset,
+          }));
+          document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' });
+        }}
       />
 
-      {/* 3. Hero Section (Section 6) */}
+      {/* 3. Hero Section */}
       <HeroSection
         onExploreClick={() => {
-          const el = document.getElementById('catalog');
-          el?.scrollIntoView({ behavior: 'smooth' });
+          document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' });
         }}
         totalLaptops={INVENTORY_STATS.total}
         puneCount={INVENTORY_STATS.puneCount}
         delhiCount={INVENTORY_STATS.delhiCount}
         onSelectHub={(hub) => {
           setFilters((prev) => ({ ...prev, branch: hub }));
-          const el = document.getElementById('catalog');
-          el?.scrollIntoView({ behavior: 'smooth' });
+          document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' });
         }}
       />
 
-      {/* 4. Featured Laptop Categories (Section 7) */}
+      {/* 4. Shop by Category */}
       <FeaturedCategories
         categories={categoryList}
         selectedCategory={selectedCategory}
         onSelectCategory={handleSelectCategory}
       />
 
-      {/* 5. Today's Best Deals (Section 14) */}
+      {/* 6. Featured Laptop Deals */}
       <DealsSection
         dealLaptops={dealLaptops}
         onViewDetails={setActiveDetailsLaptop}
         onOpenWhatsApp={handleDirectWhatsAppEnquiry}
+        onShareLaptop={setActiveShareLaptop}
+        comparedLaptopIds={comparedLaptopIds}
+        onToggleCompare={handleToggleCompare}
+        wishlistedLaptopIds={wishlistedLaptopIds}
+        onToggleWishlist={handleToggleWishlist}
+        onOpenRentEmi={handleOpenRentEmi}
       />
 
-      {/* 6. Main Laptop Inventory & Advanced Filter Section (Section 8, 9, 10, 11) */}
-      <main id="catalog" className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 space-y-6">
-        {/* Catalog Section Header & Sorting Bar */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-[#152227] p-5 sm:p-6 rounded-[22px] border border-[#E3EBE7] dark:border-[#22353D] shadow-sm transition-all duration-300">
+      {/* 7. Main Laptop Inventory */}
+      <main
+        id="catalog"
+        className="flex-1 w-full border-b border-[#E2E8F0] dark:border-[#1E2D38] py-14 sm:py-16"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-12 gap-6 items-start">
+        {/* Catalog Header & Sorting Toolbar */}
+        <div className="col-span-12 flex flex-col md:flex-row md:items-center justify-between gap-4 bg-white dark:bg-[#121B22] p-5 sm:p-6 rounded-xl border border-[#E2E8F0] dark:border-[#1E2D38]">
           <div>
-            <div className="flex items-center gap-2.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#009B69] dark:bg-[#10B981] animate-pulse" />
-              <h2 className="text-xl sm:text-2xl font-['Urbanist'] font-bold text-zinc-950 dark:text-white tracking-tight">
-                All Verified Laptop Inventory
-              </h2>
-            </div>
-            <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 font-['Poppins']">
-              Showing <strong className="text-[#007A52] dark:text-[#34D399] font-mono font-bold">{sortedLaptops.length}</strong> of{' '}
-              <strong className="text-zinc-700 dark:text-zinc-300 font-mono font-semibold">{LAPTOP_INVENTORY.length}</strong> units in physical stock
+            <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#0D9488] dark:text-[#14B8A6]">
+              Live Physical Stock
+            </p>
+            <h2 className="text-xl sm:text-2xl font-bold text-[#17212B] dark:text-white tracking-tight mt-0.5">
+              All Verified Refurbished Laptops
+            </h2>
+            <p className="text-xs text-[#475569] dark:text-[#94A3B8] mt-1">
+              Showing{' '}
+              <strong className="text-[#17212B] dark:text-white font-mono font-bold tabular-nums">
+                {sortedLaptops.length}
+              </strong>{' '}
+              of{' '}
+              <strong className="text-[#17212B] dark:text-white font-mono font-semibold tabular-nums">
+                {LAPTOP_INVENTORY.length}
+              </strong>{' '}
+              units across Pune &amp; Delhi showrooms
             </p>
           </div>
 
-          <div className="flex items-center gap-2.5 self-start md:self-auto">
-            {/* Mobile Filter Sheet Trigger Button */}
+          <div className="flex flex-wrap items-center gap-2.5 self-start md:self-auto">
+            {/* Mobile Filter Drawer Trigger */}
             <button
               type="button"
               onClick={() => setIsMobileFilterDrawerOpen(true)}
-              className="lg:hidden inline-flex items-center gap-1.5 px-4 py-2.5 rounded-[12px] bg-white hover:bg-[#E8F7EE] dark:bg-[#152227] dark:hover:bg-[#1B2B32] text-[#007A52] dark:text-[#34D399] font-['Poppins'] font-semibold text-xs border border-[#C8DFD4] dark:border-[#26443B] cursor-pointer transition-all duration-300 shadow-xs"
+              className="lg:hidden h-10 inline-flex items-center gap-2 px-4 rounded-lg bg-[#F8FAFC] hover:bg-[#F1F5F9] dark:bg-[#18242D] dark:hover:bg-[#1E2D38] text-[#17212B] dark:text-white font-semibold text-xs border border-[#CBD5E1] dark:border-[#2C3F4E] cursor-pointer transition-colors"
             >
-              <SlidersHorizontal className="w-3.5 h-3.5 text-[#009B69] dark:text-[#10B981]" />
-              <span>Filters</span>
+              <SlidersHorizontal className="w-3.5 h-3.5 text-[#059669] dark:text-[#10B981]" />
+              <span>Filters{hasActiveFilters ? ' (Active)' : ''}</span>
             </button>
 
             {/* Sorting Dropdown */}
             <div className="flex items-center gap-2 text-xs">
-              <span className="text-zinc-500 dark:text-zinc-400 font-medium whitespace-nowrap hidden sm:inline">Sort:</span>
-              <div className="relative">
-                <select
-                  value={sortOption}
-                  onChange={(e) => setSortOption(e.target.value)}
-                  className="bg-white dark:bg-[#10191E] border border-[#D1DFD8] dark:border-[#273E47] rounded-[12px] px-3.5 py-2.5 text-zinc-900 dark:text-white font-['Poppins'] font-medium text-xs focus:ring-2 focus:ring-[#009B69] dark:focus:ring-[#10B981] focus:border-[#009B69] dark:focus:border-[#10B981] outline-none cursor-pointer transition-all duration-300 shadow-xs"
-                >
-                  <option value="recommended">Recommended Picks</option>
-                  <option value="price-asc">Price: Low to High</option>
-                  <option value="price-desc">Price: High to Low</option>
-                  <option value="gen-desc">Generation: Newest First</option>
-                  <option value="ram-desc">RAM: Highest First</option>
-                  <option value="brand-asc">Brand: A–Z</option>
-                </select>
-              </div>
+              <label htmlFor="catalog-sort" className="text-[#64748B] dark:text-[#94A3B8] font-medium hidden sm:inline">
+                Sort
+              </label>
+              <select
+                id="catalog-sort"
+                value={sortOption}
+                onChange={(e) => setSortOption(e.target.value)}
+                className="h-10 bg-white dark:bg-[#18242D] border border-[#CBD5E1] dark:border-[#2C3F4E] rounded-lg px-3.5 text-[#17212B] dark:text-white font-semibold text-xs cursor-pointer transition-colors"
+              >
+                <option value="recommended">Recommended</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="gen-desc">Generation: Newest First</option>
+                <option value="ram-desc">RAM: Highest First</option>
+                <option value="brand-asc">Brand: A–Z</option>
+              </select>
             </div>
 
             {hasActiveFilters && (
               <button
                 type="button"
                 onClick={handleResetFilters}
-                className="inline-flex items-center gap-1 px-3 py-2.5 rounded-[12px] bg-[#E8F7EE] dark:bg-[#10B981]/15 hover:bg-[#D5EFE0] dark:hover:bg-[#10B981]/25 text-[#007A52] dark:text-[#34D399] font-['Poppins'] font-semibold text-xs border border-[#C8DFD4] dark:border-[#10B981]/30 transition-all duration-300 cursor-pointer"
+                className="h-10 inline-flex items-center gap-1.5 px-3.5 rounded-lg bg-[#F8FAFC] dark:bg-[#18242D] hover:bg-[#F1F5F9] dark:hover:bg-[#1E2D38] text-[#059669] dark:text-[#10B981] font-semibold text-xs border border-[#CBD5E1] dark:border-[#2C3F4E] transition-colors cursor-pointer"
                 title="Clear all filters"
               >
-                <RotateCcw className="w-3 h-3" />
+                <RotateCcw className="w-3.5 h-3.5" />
                 <span className="hidden sm:inline">Reset</span>
               </button>
             )}
           </div>
         </div>
 
-        {/* Active Filter Chips Row */}
+        {/* Quick Segment Tabs */}
+        <div className="col-span-12 flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar text-xs">
+          {[
+            {
+              id: 'all-stock',
+              label: 'All Stock',
+              count: LAPTOP_INVENTORY.length,
+              active: selectedCategory === 'all' && filters.branch === 'All',
+              action: () => {
+                setSelectedCategory('all');
+                setFilters((prev) => ({ ...prev, branch: 'All' }));
+              },
+            },
+            {
+              id: 'pune-hub',
+              label: 'Pune Showroom',
+              count: INVENTORY_STATS.puneCount,
+              active: filters.branch === 'Pune',
+              action: () => setFilters((prev) => ({ ...prev, branch: prev.branch === 'Pune' ? 'All' : 'Pune' })),
+            },
+            {
+              id: 'delhi-hub',
+              label: 'Delhi Showroom',
+              count: INVENTORY_STATS.delhiCount,
+              active: filters.branch === 'Delhi',
+              action: () => setFilters((prev) => ({ ...prev, branch: prev.branch === 'Delhi' ? 'All' : 'Delhi' })),
+            },
+            {
+              id: 'business-tab',
+              label: 'Business Laptops',
+              count: categoryList.find((c) => c.id === 'business')?.count || 0,
+              active: selectedCategory === 'business',
+              action: () => setSelectedCategory((prev) => (prev === 'business' ? 'all' : 'business')),
+            },
+            {
+              id: 'student-tab',
+              label: 'Under ₹18,000',
+              count: categoryList.find((c) => c.id === 'student')?.count || 0,
+              active: selectedCategory === 'student',
+              action: () => setSelectedCategory((prev) => (prev === 'student' ? 'all' : 'student')),
+            },
+            {
+              id: 'i7-tab',
+              label: 'Core i7',
+              count: categoryList.find((c) => c.id === 'i7')?.count || 0,
+              active: selectedCategory === 'i7',
+              action: () => setSelectedCategory((prev) => (prev === 'i7' ? 'all' : 'i7')),
+            },
+            {
+              id: 'gpu-tab',
+              label: 'Dedicated GPU',
+              count: categoryList.find((c) => c.id === 'gaming')?.count || 0,
+              active: selectedCategory === 'gaming',
+              action: () => setSelectedCategory((prev) => (prev === 'gaming' ? 'all' : 'gaming')),
+            },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              onClick={tab.action}
+              className={`h-9 px-3.5 rounded-lg font-semibold whitespace-nowrap transition-colors cursor-pointer inline-flex items-center gap-2 shrink-0 border ${
+                tab.active
+                  ? 'bg-[#17212B] dark:bg-[#059669] text-white border-transparent'
+                  : 'bg-white hover:bg-[#F1F5F9] dark:bg-[#121B22] dark:hover:bg-[#18242D] text-[#334155] dark:text-[#CBD5E1] border-[#E2E8F0] dark:border-[#1E2D38]'
+              }`}
+            >
+              <span>{tab.label}</span>
+              <span
+                className={`text-[11px] font-mono tabular-nums ${
+                  tab.active ? 'text-white/80' : 'text-[#64748B] dark:text-[#94A3B8]'
+                }`}
+              >
+                {tab.count}
+              </span>
+            </button>
+          ))}
+        </div>
+
+        {/* Active Filter Chips */}
         {hasActiveFilters && (
-          <div className="flex flex-wrap items-center gap-1.5 text-xs py-1">
-            <span className="text-xs text-zinc-500 dark:text-zinc-400 font-medium mr-1">Active Filters:</span>
+          <div className="col-span-12 flex flex-wrap items-center gap-2 text-xs">
+            <span className="text-[#64748B] dark:text-[#94A3B8] font-medium">Active:</span>
+
             {filters.branch !== 'All' && (
-              <span className="inline-flex items-center gap-1 bg-[#E8F7EE] dark:bg-[#10B981]/15 border border-[#C8DFD4] dark:border-[#10B981]/30 text-[#007A52] dark:text-[#34D399] px-3 py-1 rounded-[10px] font-medium shadow-xs">
-                Hub: {filters.branch}
+              <span className="inline-flex items-center gap-1.5 bg-white dark:bg-[#121B22] border border-[#CBD5E1] dark:border-[#263846] text-[#17212B] dark:text-white px-2.5 py-1 rounded-md font-medium">
+                <span>Hub: {filters.branch}</span>
                 <button
                   type="button"
                   onClick={() => setFilters((prev) => ({ ...prev, branch: 'All' }))}
-                  className="hover:text-red-500 ml-1 cursor-pointer"
+                  className="text-[#64748B] hover:text-rose-600 cursor-pointer"
+                  aria-label="Remove location filter"
                 >
                   <X className="w-3 h-3" />
                 </button>
               </span>
             )}
+
             {selectedCategory !== 'all' && (
-              <span className="inline-flex items-center gap-1 bg-[#E8F7EE] dark:bg-[#10B981]/15 border border-[#C8DFD4] dark:border-[#10B981]/30 text-[#007A52] dark:text-[#34D399] px-3 py-1 rounded-[10px] font-medium shadow-xs">
-                Category: {selectedCategory}
+              <span className="inline-flex items-center gap-1.5 bg-white dark:bg-[#121B22] border border-[#CBD5E1] dark:border-[#263846] text-[#17212B] dark:text-white px-2.5 py-1 rounded-md font-medium">
+                <span>Category: {selectedCategory}</span>
                 <button
                   type="button"
                   onClick={() => setSelectedCategory('all')}
-                  className="hover:text-red-500 ml-1 cursor-pointer"
+                  className="text-[#64748B] hover:text-rose-600 cursor-pointer"
+                  aria-label="Remove category filter"
                 >
                   <X className="w-3 h-3" />
                 </button>
               </span>
             )}
+
+            {filters.pricePreset && (
+              <span className="inline-flex items-center gap-1.5 bg-white dark:bg-[#121B22] border border-[#CBD5E1] dark:border-[#263846] text-[#17212B] dark:text-white px-2.5 py-1 rounded-md font-medium">
+                <span>Budget: {filters.pricePreset}</span>
+                <button
+                  type="button"
+                  onClick={() => setFilters((prev) => ({ ...prev, pricePreset: null }))}
+                  className="text-[#64748B] hover:text-rose-600 cursor-pointer"
+                  aria-label="Remove budget filter"
+                >
+                  <X className="w-3 h-3" />
+                </button>
+              </span>
+            )}
+
             {filters.brands.map((b) => (
-              <span key={b} className="inline-flex items-center gap-1 bg-[#E8F7EE] dark:bg-[#10B981]/15 border border-[#C8DFD4] dark:border-[#10B981]/30 text-[#007A52] dark:text-[#34D399] px-3 py-1 rounded-[10px] font-medium shadow-xs">
-                Brand: {b}
+              <span
+                key={b}
+                className="inline-flex items-center gap-1.5 bg-white dark:bg-[#121B22] border border-[#CBD5E1] dark:border-[#263846] text-[#17212B] dark:text-white px-2.5 py-1 rounded-md font-medium"
+              >
+                <span>Brand: {b}</span>
                 <button
                   type="button"
                   onClick={() =>
@@ -547,160 +700,177 @@ export default function App() {
                       brands: prev.brands.filter((x) => x !== b),
                     }))
                   }
-                  className="hover:text-red-500 ml-1 cursor-pointer"
+                  className="text-[#64748B] hover:text-rose-600 cursor-pointer"
+                  aria-label={`Remove brand filter ${b}`}
                 >
                   <X className="w-3 h-3" />
                 </button>
               </span>
             ))}
+
             {searchQuery && (
-              <span className="inline-flex items-center gap-1 bg-[#E8F7EE] dark:bg-[#10B981]/15 border border-[#C8DFD4] dark:border-[#10B981]/30 text-[#007A52] dark:text-[#34D399] px-3 py-1 rounded-[10px] font-medium shadow-xs">
-                Search: "{searchQuery}"
-                <button type="button" onClick={() => setSearchQuery('')} className="hover:text-red-500 ml-1 cursor-pointer">
+              <span className="inline-flex items-center gap-1.5 bg-white dark:bg-[#121B22] border border-[#CBD5E1] dark:border-[#263846] text-[#17212B] dark:text-white px-2.5 py-1 rounded-md font-medium">
+                <span>Search: &ldquo;{searchQuery}&rdquo;</span>
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="text-[#64748B] hover:text-rose-600 cursor-pointer"
+                  aria-label="Clear search query"
+                >
                   <X className="w-3 h-3" />
                 </button>
               </span>
             )}
+
             <button
               type="button"
               onClick={handleResetFilters}
-              className="text-xs text-[#009B69] dark:text-[#10B981] hover:underline font-semibold ml-1 cursor-pointer transition-colors"
+              className="text-xs text-[#059669] dark:text-[#10B981] hover:underline font-semibold ml-1 cursor-pointer"
             >
               Clear All
             </button>
           </div>
         )}
 
-        {/* 2-Column Split: Filter Sidebar (Desktop) + Product Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-          {/* Desktop Filter Sidebar (3 cols) */}
-          <div className="hidden lg:block lg:col-span-3 sticky top-24">
-            <FilterSidebar
-              filters={filters}
-              onFilterChange={setFilters}
-              onReset={handleResetFilters}
-              totalMatches={sortedLaptops.length}
-            />
-          </div>
+        {/* Desktop Filter Sidebar (3 Columns) */}
+        <div className="hidden lg:block lg:col-span-3 sticky top-20">
+          <FilterSidebar
+            filters={filters}
+            onFilterChange={setFilters}
+            onReset={handleResetFilters}
+            totalMatches={sortedLaptops.length}
+          />
+        </div>
 
-          {/* Product Grid (9 cols) */}
-          <div className="lg:col-span-9 space-y-8">
-            {sortedLaptops.length === 0 ? (
-              <div className="bg-white dark:bg-[#152227] rounded-[22px] border border-[#E3EBE7] dark:border-[#22353D] p-12 text-center space-y-4 shadow-sm">
-                <div className="w-16 h-16 bg-[#E8F7EE] dark:bg-[#10B981]/15 text-[#007A52] dark:text-[#34D399] rounded-full flex items-center justify-center mx-auto border border-[#C8DFD4] dark:border-[#10B981]/30">
-                  <Inbox className="w-8 h-8 text-[#009B69] dark:text-[#10B981]" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-['Urbanist'] font-bold text-zinc-950 dark:text-white">No matching laptops found</h3>
-                  <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 max-w-md mx-auto mt-1 font-['Poppins']">
-                    No laptops match your selected filters or search keywords. Clear your filters to explore all 91 laptops in our Pune and Delhi inventory.
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={handleResetFilters}
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-[12px] bg-gradient-to-r from-[#009B69] to-[#007A8D] hover:from-[#00875A] hover:to-[#006979] dark:from-[#10B981] dark:to-[#06B6D4] text-white dark:text-[#04251B] font-['Poppins'] text-[15px] font-semibold transition-all duration-300 cursor-pointer shadow-xs"
-                >
-                  <RotateCcw className="w-4 h-4" />
-                  <span>Reset All Filters</span>
-                </button>
+        {/* Product Catalog Grid Column (9 Columns Desktop / 12 Columns Mobile) */}
+        <div className="col-span-12 lg:col-span-9 space-y-6">
+          {sortedLaptops.length === 0 ? (
+            <div className="bg-white dark:bg-[#121B22] rounded-xl border border-[#E2E8F0] dark:border-[#1E2D38] p-12 text-center space-y-4">
+              <div className="w-14 h-14 bg-[#F1F5F9] dark:bg-[#18242D] text-[#059669] dark:text-[#10B981] rounded-lg flex items-center justify-center mx-auto border border-[#E2E8F0] dark:border-[#263846]">
+                <Inbox className="w-7 h-7" />
               </div>
-            ) : (
-              <>
-                {/* Available Stock Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5 items-stretch">
-                  {pricedLaptops.map((laptop) => (
-                    <ProductCard
-                      key={laptop.id}
-                      laptop={laptop}
-                      onViewDetails={setActiveDetailsLaptop}
-                      onOpenWhatsApp={handleDirectWhatsAppEnquiry}
-                      onShareLaptop={setActiveShareLaptop}
-                      isCompared={comparedLaptopIds.includes(laptop.id)}
-                      onToggleCompare={handleToggleCompare}
-                      isWishlisted={wishlistedLaptopIds.includes(laptop.id)}
-                      onToggleWishlist={handleToggleWishlist}
-                      onOpenRentEmi={handleOpenRentEmi}
-                    />
-                  ))}
-                </div>
-
-                {/* Unpriced Section */}
-                {unpricedLaptops.length > 0 && (
-                  <div className="pt-8 border-t border-[#E3EBE7] dark:border-[#22353D] space-y-4">
-                    <div className="bg-[#F8FBF9] dark:bg-[#152227] border border-[#E3EBE7] dark:border-[#22353D] p-5 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs transition-colors">
-                      <div>
-                        <h3 className="text-sm sm:text-base font-bold text-zinc-950 dark:text-white flex items-center gap-2">
-                          <Sparkles className="w-4 h-4 text-[#009B69] dark:text-[#10B981]" />
-                          <span>Unpriced Physical Stock ({unpricedLaptops.length} Units)</span>
-                        </h3>
-                        <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 font-['Poppins']">
-                          Physically in showroom stock. Price is quoted immediately on WhatsApp based on your preferred configuration.
-                        </p>
-                      </div>
-                      <a
-                        href="https://wa.me/918055035502?text=Hello%20PunarTech,%20I%20am%20browsing%20https://punartech.vercel.app/%20and%20want%20to%20enquire%20about%20your%20unpriced%20laptop%20inventory."
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#009B69] to-[#007A8D] hover:from-[#00875A] hover:to-[#006979] dark:from-[#10B981] dark:to-[#06B6D4] text-white dark:text-[#04251B] font-bold text-xs transition-colors self-start sm:self-auto shadow-xs"
-                      >
-                        <WhatsAppIcon className="w-4 h-4 text-white dark:text-[#04251B] shrink-0" />
-                        <span>Enquire All Prices</span>
-                      </a>
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 sm:gap-5 items-stretch">
-                      {unpricedLaptops.map((laptop) => (
-                        <ProductCard
-                          key={laptop.id}
-                          laptop={laptop}
-                          onViewDetails={setActiveDetailsLaptop}
-                          onOpenWhatsApp={handleDirectWhatsAppEnquiry}
-                          onShareLaptop={setActiveShareLaptop}
-                          isCompared={comparedLaptopIds.includes(laptop.id)}
-                          onToggleCompare={handleToggleCompare}
-                          isWishlisted={wishlistedLaptopIds.includes(laptop.id)}
-                          onToggleWishlist={handleToggleWishlist}
-                          onOpenRentEmi={handleOpenRentEmi}
-                        />
-                      ))}
+              <div>
+                <h3 className="text-lg font-bold text-[#17212B] dark:text-white">
+                  No matching laptops found
+                </h3>
+                <p className="text-xs sm:text-sm text-[#475569] dark:text-[#94A3B8] max-w-md mx-auto mt-1">
+                  Adjust or reset your active filters to view all {LAPTOP_INVENTORY.length} verified laptops across Pune and Delhi.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={handleResetFilters}
+                className="h-10 inline-flex items-center gap-2 px-5 rounded-lg bg-[#059669] hover:bg-[#047857] text-white text-xs sm:text-sm font-semibold transition-colors cursor-pointer"
+              >
+                <RotateCcw className="w-4 h-4" />
+                <span>Reset All Filters</span>
+              </button>
+            </div>
+          ) : (
+            <>
+              {/* Priced Inventory Grid (Uniform 24px Vertical & Horizontal Gutters) */}
+              <div className="grid grid-cols-12 gap-6 items-stretch">
+                {pricedLaptops.map((laptop) => (
+                  <div
+                    key={laptop.id}
+                    className="col-span-12 sm:col-span-6 xl:col-span-4 flex"
+                  >
+                    <div className="w-full">
+                      <ProductCard
+                        laptop={laptop}
+                        onViewDetails={setActiveDetailsLaptop}
+                        onOpenWhatsApp={handleDirectWhatsAppEnquiry}
+                        onShareLaptop={setActiveShareLaptop}
+                        isCompared={comparedLaptopIds.includes(laptop.id)}
+                        onToggleCompare={handleToggleCompare}
+                        isWishlisted={wishlistedLaptopIds.includes(laptop.id)}
+                        onToggleWishlist={handleToggleWishlist}
+                        onOpenRentEmi={handleOpenRentEmi}
+                      />
                     </div>
                   </div>
-                )}
-              </>
-            )}
-          </div>
+                ))}
+              </div>
+
+              {/* Unpriced Physical Stock Section (Uniform 24px Gutters) */}
+              {unpricedLaptops.length > 0 && (
+                <div className="pt-6 border-t border-[#E2E8F0] dark:border-[#1E2D38] space-y-6">
+                  <div className="bg-white dark:bg-[#121B22] border border-[#E2E8F0] dark:border-[#1E2D38] p-5 sm:p-6 rounded-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                      <h3 className="text-base font-bold text-[#17212B] dark:text-white">
+                        Additional Physical Stock ({unpricedLaptops.length} Units)
+                      </h3>
+                      <p className="text-xs text-[#475569] dark:text-[#94A3B8] mt-1">
+                        Available at Pune &amp; Delhi showrooms. Contact WhatsApp for configured pricing based on RAM and SSD options.
+                      </p>
+                    </div>
+                    <a
+                      href={`https://wa.me/${WHATSAPP_CONFIG.number}?text=${encodeURIComponent(
+                        'Hello PunarTech, I am browsing https://punartech.vercel.app/ and want to enquire about your unpriced laptop inventory.'
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="h-10 inline-flex items-center gap-2 px-4 rounded-lg bg-[#059669] hover:bg-[#047857] text-white font-semibold text-xs transition-colors self-start sm:self-auto shrink-0"
+                    >
+                      <WhatsAppIcon className="w-4 h-4 text-white shrink-0" />
+                      <span>Request Stock Prices</span>
+                    </a>
+                  </div>
+
+                  <div className="grid grid-cols-12 gap-6 items-stretch">
+                    {unpricedLaptops.map((laptop) => (
+                      <div
+                        key={laptop.id}
+                        className="col-span-12 sm:col-span-6 xl:col-span-4 flex"
+                      >
+                        <div className="w-full">
+                          <ProductCard
+                            laptop={laptop}
+                            onViewDetails={setActiveDetailsLaptop}
+                            onOpenWhatsApp={handleDirectWhatsAppEnquiry}
+                            onShareLaptop={setActiveShareLaptop}
+                            isCompared={comparedLaptopIds.includes(laptop.id)}
+                            onToggleCompare={handleToggleCompare}
+                            isWishlisted={wishlistedLaptopIds.includes(laptop.id)}
+                            onToggleWishlist={handleToggleWishlist}
+                            onOpenRentEmi={handleOpenRentEmi}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+        </div>
         </div>
       </main>
 
-      {/* 7. Why Choose PunarTech? (Section 15) */}
+      {/* 8. Why Choose PunarTech, Quality Testing, Delivery Check & FAQ */}
       <WhyChooseUs />
+      <PunarTrustSection />
+      <PinCodeChecker />
 
-      {/* 8. How It Works (Section 16) */}
-      <HowItWorks
-        onExploreClick={() => {
-          const el = document.getElementById('catalog');
-          el?.scrollIntoView({ behavior: 'smooth' });
-        }}
+      {/* 9. Pune & Delhi Showroom Information + Rent & EMI */}
+      <BranchSection
+        onSelectBranch={(branch) => setFilters((prev) => ({ ...prev, branch }))}
+        puneCount={INVENTORY_STATS.puneCount}
+        delhiCount={INVENTORY_STATS.delhiCount}
       />
 
-      {/* 9. Laptop Rental & Easy EMI Plans (New Core Feature) */}
       <RentalAndEmiSection
         onOpenRentModal={(mode, laptop) =>
           handleOpenRentEmi(laptop || LAPTOP_INVENTORY[0], mode)
         }
       />
 
-      {/* 10. Customer Feedback & Testimonials (Section 17) */}
-      <TestimonialsSection />
-
-      {/* 10. Frequently Asked Questions (Section 18) */}
       <FAQSection />
 
-      {/* 11. WhatsApp Contact Section (Section 19) */}
+      {/* 10. WhatsApp Support Section */}
       <WhatsAppContactSection />
 
-      {/* 12. Professional Footer (Section 24) */}
+      {/* 11. Professional Footer */}
       <Footer
         onSelectBranch={(b) => {
           setFilters((prev) => ({ ...prev, branch: b }));
@@ -714,57 +884,6 @@ export default function App() {
         onOpenAdmin={() => setIsAdminModalOpen(true)}
       />
 
-      {/* Mobile Bottom Sticky Navigation Action Bar */}
-      <nav
-        aria-label="Mobile quick actions"
-        className="md:hidden fixed bottom-0 left-0 right-0 z-30 bg-white/95 dark:bg-[#090E11]/95 backdrop-blur-md border-t border-[#E3EBE7] dark:border-[#22353D] px-3 py-2.5 flex items-center justify-between gap-2 shadow-lg transition-colors"
-      >
-        <div className="flex items-center gap-1.5 flex-1">
-          <button
-            type="button"
-            onClick={() =>
-              setFilters((prev) => ({
-                ...prev,
-                branch: prev.branch === 'Pune' ? 'All' : 'Pune',
-              }))
-            }
-            className={`flex-1 py-2 px-1.5 rounded-[12px] text-center text-[11px] font-['Poppins'] font-semibold border transition-all duration-300 cursor-pointer truncate ${
-              filters.branch === 'Pune'
-                ? 'bg-gradient-to-r from-[#009B69] to-[#007A8D] text-white dark:from-[#10B981] dark:to-[#06B6D4] dark:text-[#04251B] border-transparent shadow-xs font-semibold'
-                : 'bg-white hover:bg-[#E8F7EE] dark:bg-[#152227] dark:hover:bg-[#1B2B32] dark:text-zinc-200 text-zinc-800 border-[#E3EBE7] dark:border-[#22353D]'
-            }`}
-          >
-            <span>Pune (60)</span>
-          </button>
-          <button
-            type="button"
-            onClick={() =>
-              setFilters((prev) => ({
-                ...prev,
-                branch: prev.branch === 'Delhi' ? 'All' : 'Delhi',
-              }))
-            }
-            className={`flex-1 py-2 px-1.5 rounded-[12px] text-center text-[11px] font-['Poppins'] font-semibold border transition-all duration-300 cursor-pointer truncate ${
-              filters.branch === 'Delhi'
-                ? 'bg-gradient-to-r from-[#009B69] to-[#007A8D] text-white dark:from-[#10B981] dark:to-[#06B6D4] dark:text-[#04251B] border-transparent shadow-xs font-semibold'
-                : 'bg-white hover:bg-[#E8F7EE] dark:bg-[#152227] dark:hover:bg-[#1B2B32] dark:text-zinc-200 text-zinc-800 border-[#E3EBE7] dark:border-[#22353D]'
-            }`}
-          >
-            <span>Delhi (31)</span>
-          </button>
-        </div>
-
-        <a
-          href="https://wa.me/918055035502?text=Hello%20PunarTech,%20I%20am%20browsing%20https://punartech.vercel.app/%20and%20want%20to%20enquire%20about%20your%20laptop%20inventory."
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex-[1.4] inline-flex items-center justify-center gap-1.5 py-2 px-3 rounded-[12px] bg-gradient-to-r from-[#009B69] to-[#007A8D] hover:opacity-95 text-white dark:from-[#10B981] dark:to-[#06B6D4] dark:text-[#04251B] text-xs font-['Poppins'] font-semibold shadow-md active:scale-95 transition-all truncate"
-        >
-          <WhatsAppIcon className="w-4 h-4 text-white dark:text-[#04251B] shrink-0" />
-          <span className="truncate">Chat: +91 80550 35502</span>
-        </a>
-      </nav>
-
       {/* Floating Compare Bar */}
       <CompareBar
         comparedLaptops={comparedLaptops}
@@ -775,11 +894,22 @@ export default function App() {
         onClearAll={() => setComparedLaptopIds([])}
       />
 
-      {/* Floating WhatsApp Action Button */}
+      {/* Compact Floating WhatsApp Button */}
       <FloatingWhatsAppButton />
 
-      {/* Modals */}
-      {/* 1. Full Product Details Quick View Modal */}
+      {/* Mobile Fixed Bottom Navigation */}
+      <MobileBottomNav
+        comparedCount={comparedLaptopIds.length}
+        wishlistedCount={wishlistedLaptopIds.length}
+        onOpenCompare={() => setIsCompareModalOpen(true)}
+        onOpenWishlist={() => setIsWishlistOpen(true)}
+        onResetHome={() => {
+          setFilters((prev) => ({ ...prev, branch: 'All' }));
+          setSelectedCategory('all');
+        }}
+      />
+
+      {/* Modals & Drawers */}
       <ProductDetailsModal
         laptop={activeDetailsLaptop}
         isOpen={Boolean(activeDetailsLaptop)}
@@ -789,7 +919,6 @@ export default function App() {
         onOpenRentEmi={handleOpenRentEmi}
       />
 
-      {/* 2. Side-by-Side Comparison Modal (Up to 4 Laptops) */}
       <ComparisonModal
         isOpen={isCompareModalOpen}
         onClose={() => setIsCompareModalOpen(false)}
@@ -801,7 +930,6 @@ export default function App() {
         onOpenWhatsApp={handleDirectWhatsAppEnquiry}
       />
 
-      {/* 3. Wishlist Drawer */}
       <WishlistDrawer
         isOpen={isWishlistOpen}
         onClose={() => setIsWishlistOpen(false)}
@@ -814,7 +942,6 @@ export default function App() {
         onOpenWhatsApp={handleDirectWhatsAppEnquiry}
       />
 
-      {/* 4. Share Laptop Details Modal */}
       <ShareModal
         laptop={activeShareLaptop}
         isOpen={Boolean(activeShareLaptop)}
@@ -822,7 +949,6 @@ export default function App() {
         onNotify={showToast}
       />
 
-      {/* 5. Laptop Rental & Easy EMI Calculator Modal */}
       <RentalEmiModal
         laptop={rentEmiModalLaptop}
         isOpen={isRentEmiModalOpen}
@@ -830,30 +956,29 @@ export default function App() {
         initialMode={rentEmiModalMode}
       />
 
-      {/* 5. Mobile Slide-in Filter Drawer with Sticky Header & Sticky Results Footer */}
+      {/* Mobile Slide-Out Filter Drawer */}
       {isMobileFilterDrawerOpen && (
         <div
           role="dialog"
           aria-modal="true"
           aria-label="Filter laptops drawer"
-          className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-xs lg:hidden"
+          className="fixed inset-0 z-50 flex justify-end bg-[#0B1116]/65 backdrop-blur-xs lg:hidden"
         >
-          {/* Backdrop click dismiss */}
           <div
             className="fixed inset-0"
             onClick={() => setIsMobileFilterDrawerOpen(false)}
             aria-hidden="true"
           />
 
-          <div className="relative w-full max-w-xs sm:max-w-sm bg-white dark:bg-[#152227] h-full flex flex-col shadow-2xl z-10 animate-in slide-in-from-right duration-200 border-l border-[#E3EBE7] dark:border-[#22353D]">
+          <div className="relative w-full max-w-xs sm:max-w-sm bg-white dark:bg-[#121B22] h-full flex flex-col shadow-2xl z-10 border-l border-[#E2E8F0] dark:border-[#263846]">
             {/* Sticky Drawer Header */}
-            <div className="sticky top-0 z-20 px-4 py-3.5 bg-white/95 dark:bg-[#152227]/95 backdrop-blur-md border-b border-[#E3EBE7] dark:border-[#22353D] flex items-center justify-between shrink-0 shadow-2xs">
+            <div className="px-4 py-3.5 bg-[#F8FAFC] dark:bg-[#0B1116] border-b border-[#E2E8F0] dark:border-[#263846] flex items-center justify-between shrink-0">
               <div className="flex items-center gap-2">
-                <SlidersHorizontal className="w-4 h-4 text-[#009B69] dark:text-[#10B981]" />
-                <span className="font-['Urbanist'] font-bold text-base text-zinc-950 dark:text-white">Filter Laptops</span>
+                <SlidersHorizontal className="w-4 h-4 text-[#059669] dark:text-[#10B981]" />
+                <span className="font-bold text-sm text-[#17212B] dark:text-white">Filter Stock</span>
                 {hasActiveFilters && (
-                  <span className="text-[10px] font-mono font-bold text-[#007A52] dark:text-[#34D399] bg-[#E8F7EE] dark:bg-[#10B981]/15 px-2 py-0.5 rounded-full border border-[#C8DFD4] dark:border-[#10B981]/30">
-                    Active
+                  <span className="text-[11px] font-mono font-semibold text-[#059669] dark:text-[#10B981]">
+                    (Active)
                   </span>
                 )}
               </div>
@@ -862,7 +987,7 @@ export default function App() {
                   <button
                     type="button"
                     onClick={handleResetFilters}
-                    className="text-xs font-['Poppins'] font-semibold text-[#007A52] dark:text-[#34D399] hover:underline transition-colors flex items-center gap-1 cursor-pointer"
+                    className="text-xs font-semibold text-[#0D9488] dark:text-[#14B8A6] hover:underline inline-flex items-center gap-1 cursor-pointer"
                   >
                     <RotateCcw className="w-3 h-3" />
                     <span>Reset</span>
@@ -871,7 +996,7 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => setIsMobileFilterDrawerOpen(false)}
-                  className="p-1.5 rounded-[10px] text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-[#E8F7EE] dark:hover:bg-[#10B981]/15 transition-colors cursor-pointer"
+                  className="p-1.5 rounded-lg text-[#64748B] hover:text-[#17212B] dark:hover:text-white hover:bg-[#F1F5F9] dark:hover:bg-[#18242D] transition-colors cursor-pointer"
                   aria-label="Close filters drawer"
                 >
                   <X className="w-5 h-5" />
@@ -879,7 +1004,7 @@ export default function App() {
               </div>
             </div>
 
-            {/* Scrollable Filters Content */}
+            {/* Scrollable Filters */}
             <div className="flex-1 overflow-y-auto overscroll-contain p-4">
               <FilterSidebar
                 filters={filters}
@@ -892,14 +1017,13 @@ export default function App() {
               />
             </div>
 
-            {/* Sticky Drawer Footer with Live Match Count */}
-            <div className="sticky bottom-0 z-20 bg-white/95 dark:bg-[#152227]/95 backdrop-blur-md border-t border-[#E3EBE7] dark:border-[#22353D] p-4 shadow-[0_-6px_20px_rgba(0,0,0,0.08)] dark:shadow-[0_-6px_20px_rgba(0,0,0,0.3)] shrink-0 space-y-2.5">
-              <div className="flex items-center justify-between text-xs font-['Poppins']">
-                <div className="flex items-center gap-1.5">
-                  <span className="inline-block w-2 h-2 rounded-full bg-[#009B69] dark:bg-[#10B981] animate-pulse" />
-                  <span className="text-zinc-600 dark:text-zinc-400 font-medium">Matching inventory:</span>
-                </div>
-                <span className="font-mono font-bold text-xs sm:text-sm text-[#007A52] dark:text-[#34D399] bg-[#E8F7EE] dark:bg-[#10B981]/15 px-2.5 py-0.5 rounded-[8px] border border-[#C8DFD4] dark:border-[#10B981]/30 tabular-nums">
+            {/* Sticky Drawer Footer */}
+            <div className="bg-[#F8FAFC] dark:bg-[#0B1116] border-t border-[#E2E8F0] dark:border-[#263846] p-4 shrink-0 space-y-2.5">
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-[#475569] dark:text-[#94A3B8] font-medium">
+                  Matching inventory
+                </span>
+                <span className="font-mono font-bold text-[#17212B] dark:text-white tabular-nums">
                   {sortedLaptops.length} {sortedLaptops.length === 1 ? 'laptop' : 'laptops'}
                 </span>
               </div>
@@ -909,8 +1033,7 @@ export default function App() {
                   <button
                     type="button"
                     onClick={handleResetFilters}
-                    className="py-3 px-3.5 rounded-[12px] border border-[#C8DFD4] dark:border-[#22353D] hover:bg-[#E8F7EE] dark:hover:bg-[#10B981]/15 text-[#007A52] dark:text-[#34D399] font-['Poppins'] font-semibold text-xs transition-all duration-300 shrink-0 cursor-pointer"
-                    title="Reset all filters"
+                    className="h-10 px-3.5 rounded-lg border border-[#CBD5E1] dark:border-[#2C3F4E] bg-white dark:bg-[#18242D] text-[#17212B] dark:text-white font-semibold text-xs transition-colors shrink-0 cursor-pointer"
                   >
                     Clear
                   </button>
@@ -922,13 +1045,11 @@ export default function App() {
                     setIsMobileFilterDrawerOpen(false);
                     document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="flex-1 py-3 px-4 bg-gradient-to-r from-[#009B69] to-[#007A8D] hover:from-[#00875A] hover:to-[#006979] dark:from-[#10B981] dark:to-[#06B6D4] text-white dark:text-[#04251B] font-['Poppins'] text-[15px] font-semibold rounded-[12px] shadow-sm transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer active:scale-[0.98]"
+                  className="flex-1 h-10 px-4 bg-[#059669] hover:bg-[#047857] text-white text-xs sm:text-sm font-semibold rounded-lg transition-colors cursor-pointer"
                 >
-                  <span>
-                    {sortedLaptops.length === 0
-                      ? 'No Laptops Match'
-                      : `Show ${sortedLaptops.length} ${sortedLaptops.length === 1 ? 'Laptop' : 'Laptops'}`}
-                  </span>
+                  {sortedLaptops.length === 0
+                    ? 'No Matching Laptops'
+                    : `Show ${sortedLaptops.length} ${sortedLaptops.length === 1 ? 'Laptop' : 'Laptops'}`}
                 </button>
               </div>
             </div>
@@ -936,7 +1057,7 @@ export default function App() {
         </div>
       )}
 
-      {/* 6. Admin Inventory Management Portal */}
+      {/* Staff Portal Modal */}
       <AdminDashboardModal
         isOpen={isAdminModalOpen}
         onClose={() => setIsAdminModalOpen(false)}

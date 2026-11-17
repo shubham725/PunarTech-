@@ -217,43 +217,39 @@ export const LaptopImage: React.FC<LaptopImageProps> = ({
     customSrc ||
     (hasError ? '/assets/aistudio/images_05a7d7f8.jpg' : getModelSpecificLaptopImage(laptop));
 
-  // Consistent, balanced height containers for responsive product grid
-  const heightClass =
+  const aspectClass =
     size === 'sm'
-      ? 'h-36 sm:h-40'
+      ? 'aspect-[4/3]'
       : size === 'lg'
-      ? 'h-64 sm:h-72 md:h-80'
+      ? 'aspect-[4/3] sm:aspect-[16/10] max-h-72 sm:max-h-80'
       : size === 'xl'
-      ? 'h-80 sm:h-96'
-      : 'h-48 sm:h-52';
+      ? 'aspect-[4/3] sm:aspect-[16/10] max-h-80 sm:max-h-96'
+      : 'aspect-[4/3] sm:aspect-[4/3] lg:aspect-[16/11]';
+
+  const padClass =
+    size === 'sm'
+      ? 'p-1.5 sm:p-2'
+      : size === 'md'
+      ? 'p-2.5 sm:p-3.5 lg:p-4'
+      : 'p-4 sm:p-6';
 
   return (
     <div
-      className={`relative w-full ${heightClass} bg-gradient-to-b from-slate-50 via-white to-slate-50/80 overflow-hidden flex items-center justify-center p-3 sm:p-4 select-none border-b border-slate-100 ${className}`}
+      className={`relative w-full ${aspectClass} bg-[#F1F5F9] dark:bg-[#16212A] overflow-hidden flex items-center justify-center ${padClass} select-none ${className}`}
     >
-      {/* Studio Radial Highlight for depth and clean product presentation */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,1)_0%,rgba(248,250,252,0.65)_60%,rgba(241,245,249,0.9)_100%)] pointer-events-none" />
-
-      {/* Subtle floor shadow reflection */}
-      <div className="absolute bottom-3 w-3/4 h-3 bg-slate-400/20 rounded-full blur-md pointer-events-none" />
-
-      {/* Product Image */}
       <img
         src={imgSrc}
         alt={altText || `${laptop.fullName} - PunarTech Stock ${laptop.stockId}`}
         loading="lazy"
         onError={() => setHasError(true)}
         onLoad={() => setIsLoaded(true)}
-        className={`relative z-0 max-h-[86%] max-w-[90%] w-auto h-auto object-contain transition-all duration-300 ease-out drop-shadow-[0_10px_16px_rgba(0,0,0,0.12)] group-hover:scale-105 ${
+        className={`w-full h-full object-contain object-center transition-transform duration-300 ease-out group-hover:scale-[1.03] ${
           isLoaded ? 'opacity-100' : 'opacity-0'
         }`}
       />
 
-      {/* Loading Skeleton */}
       {!isLoaded && !hasError && (
-        <div className="absolute inset-0 flex items-center justify-center bg-slate-100/80 animate-pulse">
-          <div className="w-44 h-28 bg-slate-200/80 rounded-xl" />
-        </div>
+        <div className="absolute inset-0 bg-[#E2E8F0]/50 dark:bg-[#1E2D38]/50" />
       )}
     </div>
   );

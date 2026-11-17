@@ -6,16 +6,15 @@ import { ThemeToggle } from './ThemeToggle';
 import {
   Search,
   X,
-  ExternalLink,
   MapPin,
   Heart,
   Scale,
-  Shield,
   Menu,
   ChevronDown,
-  Sparkles,
   ArrowRight,
-  Percent,
+  Wrench,
+  ShieldCheck,
+  HelpCircle,
 } from 'lucide-react';
 
 interface HeaderProps {
@@ -32,6 +31,8 @@ interface HeaderProps {
   onOpenWishlist: () => void;
   onOpenAdmin: () => void;
   onSelectLaptopFromSearch?: (laptop: Laptop) => void;
+  onSelectCategory?: (category: string) => void;
+  onSelectBudget?: (preset: string) => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -48,12 +49,17 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenWishlist,
   onOpenAdmin,
   onSelectLaptopFromSearch,
+  onSelectCategory,
+  onSelectBudget,
 }) => {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const [desktopSearchOpen, setDesktopSearchOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
+  const mobileSearchRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Autocomplete matching items (top 5 matches)
   const autocompleteResults = React.useMemo(() => {
     if (!searchQuery.trim() || searchQuery.trim().length < 2) return [];
     const q = searchQuery.toLowerCase().trim();
@@ -62,26 +68,63 @@ export const Header: React.FC<HeaderProps> = ({
     ).slice(0, 5);
   }, [searchQuery]);
 
-  // Handle outside click to close autocomplete
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
       if (
         searchContainerRef.current &&
-        !searchContainerRef.current.contains(e.target as Node)
+        !searchContainerRef.current.contains(e.target as Node) &&
+        mobileSearchRef.current &&
+        !mobileSearchRef.current.contains(e.target as Node)
       ) {
         setIsSearchFocused(false);
+      }
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
+        setActiveDropdown(null);
       }
     };
     document.addEventListener('mousedown', handleOutsideClick);
     return () => document.removeEventListener('mousedown', handleOutsideClick);
   }, []);
 
+  const scrollToSection = (sectionId: string) => {
+    setActiveDropdown(null);
+    setMobileMenuOpen(false);
+    document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleCategoryClick = (catId: string) => {
+    onSelectCategory?.(catId);
+    setActiveDropdown(null);
+    setMobileMenuOpen(false);
+    document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleBudgetClick = (preset: string) => {
+    onSelectBudget?.(preset);
+    setActiveDropdown(null);
+    setMobileMenuOpen(false);
+    document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <header className="sticky top-0 z-40 bg-white/95 dark:bg-[#090E11]/95 backdrop-blur-md border-b border-[#E3EBE7] dark:border-[#22353D] shadow-2xs transition-colors duration-300">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between gap-2 sm:gap-4 h-14 sm:h-18 md:h-20">
-          {/* LEFT: Logo & Brand Tagline */}
-          <div className="shrink-0 flex items-center">
+    <header className="sticky top-0 z-40 w-full bg-white/95 dark:bg-[#0B1116]/95 backdrop-blur-md border-b border-[#E2E8F0] dark:border-[#1E2D38] transition-colors">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Top Row: Desktop Full Nav / Mobile Bar */}
+        <div className="flex items-center justify-between gap-2 sm:gap-3 h-15 sm:h-16">
+          {/* Left: Mobile Hamburger + Brand Logo */}
+          <div className="flex items-center gap-2 sm:gap-2.5 min-w-0">
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden inline-flex items-center justify-center w-9 h-9 rounded-lg border border-[#E2E8F0] dark:border-[#263846] bg-[#F8FAFC] dark:bg-[#18242D] text-[#17212B] dark:text-[#E2E8F0] cursor-pointer shrink-0"
+              aria-label="Open menu"
+            >
+              {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+            </button>
+
             <a
               href="#"
               onClick={(e) => {
@@ -90,392 +133,593 @@ export const Header: React.FC<HeaderProps> = ({
                 onSearchChange('');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className="flex items-center group cursor-pointer"
-              title="PunarTech - Premium Laptops. Smarter Prices."
+              className="shrink-0 min-w-0 flex items-center cursor-pointer"
+              title="PunarTech - Refurbished Laptops & Laptop Services"
             >
-              <PunarTechLogo size="lg" />
+              <PunarTechLogo size="md" />
             </a>
           </div>
 
-          {/* CENTER: Smart Search Bar with Autocomplete Dropdown */}
-          <div
-            ref={searchContainerRef}
-            className="flex-1 max-w-xl relative hidden md:block"
+          {/* Center: Clean Desktop Menu matching Reference */}
+          <nav
+            ref={dropdownRef}
+            className="hidden lg:flex items-center gap-1 text-[13px] font-semibold text-[#334155] dark:text-[#CBD5E1]"
+            aria-label="Primary navigation"
           >
-            <div className="relative">
-              <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400">
-                <Search className="w-4 h-4 text-[#007A52] dark:text-[#34D399]" />
-              </div>
-              <input
-                type="text"
-                value={searchQuery}
-                onFocus={() => setIsSearchFocused(true)}
-                onChange={(e) => {
-                  onSearchChange(e.target.value);
-                  setIsSearchFocused(true);
-                }}
-                placeholder="Search laptops by brand, model or processor..."
-                className="w-full pl-10 pr-9 py-2.5 bg-[#F8FBF9] dark:bg-[#10191E] border border-[#E3EBE7] dark:border-[#22353D] rounded-[12px] text-sm font-['Poppins'] text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-hidden focus:border-[#009B69] dark:focus:border-[#10B981] focus:bg-white dark:focus:bg-[#152227] focus:ring-2 focus:ring-[#009B69]/15 dark:focus:ring-[#10B981]/20 transition-all duration-300"
-              />
-              {searchQuery && (
-                <button
-                  type="button"
-                  onClick={() => onSearchChange('')}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-zinc-400 hover:text-zinc-900 dark:hover:text-white cursor-pointer"
-                  aria-label="Clear search"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              )}
-            </div>
-
-            {/* Smart Autocomplete Dropdown */}
-            {isSearchFocused && autocompleteResults.length > 0 && (
-              <div className="absolute top-full left-0 right-0 mt-1.5 bg-white dark:bg-[#152227] rounded-[20px] shadow-xl border border-[#E3EBE7] dark:border-[#22353D] overflow-hidden z-50 animate-in fade-in zoom-in-95 duration-150">
-                <div className="px-3.5 py-2 bg-[#F8FBF9] dark:bg-[#0E1519] border-b border-[#E3EBE7] dark:border-[#22353D] flex items-center justify-between text-[11px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider font-['Poppins']">
-                  <span>Suggested Matches ({autocompleteResults.length})</span>
-                  <span className="text-[#007A52] dark:text-[#34D399] font-mono">PunarTech Stock</span>
-                </div>
-                <div className="divide-y divide-zinc-100 dark:divide-zinc-800 max-h-80 overflow-y-auto">
-                  {autocompleteResults.map((laptop) => (
-                    <button
-                      key={laptop.id}
-                      type="button"
-                      onClick={() => {
-                        onSelectLaptopFromSearch?.(laptop);
-                        setIsSearchFocused(false);
-                      }}
-                      className="w-full text-left p-3 hover:bg-[#F0FDF4] dark:hover:bg-zinc-800/80 transition-colors flex items-center justify-between gap-3 cursor-pointer group"
-                    >
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-1.5 mb-0.5">
-                          <span className="text-[10px] font-mono font-bold text-[#007A52] dark:text-[#34D399] bg-[#E8F7EE] dark:bg-[#10B981]/15 px-1.5 py-0.2 rounded border border-[#C8DFD4] dark:border-[#10B981]/30">
-                            {laptop.stockId}
-                          </span>
-                          <span className="text-xs font-bold text-zinc-900 dark:text-white group-hover:text-[#009B69] dark:group-hover:text-[#10B981] group-hover:underline transition-colors truncate font-['Urbanist']">
-                            {laptop.fullName}
-                          </span>
-                        </div>
-                        <div className="text-[11px] text-zinc-500 dark:text-zinc-400 truncate font-['Poppins']">
-                          {laptop.processor} • {laptop.ram} • {laptop.storageRaw} • {laptop.branch} Hub
-                        </div>
-                      </div>
-                      <div className="text-right shrink-0">
-                        <span className="text-xs font-black text-zinc-900 dark:text-white font-mono">
-                          {laptop.hasPrice && laptop.sellingPrice
-                            ? `₹${laptop.sellingPrice.toLocaleString('en-IN')}`
-                            : 'Price on Req'}
-                        </span>
-                        <span className="text-[10px] block text-[#007A52] dark:text-[#34D399] font-semibold">
-                          View Specs
-                        </span>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* NAVIGATION: Hub Tabs & Quick Actions (Poppins, 16px, weight 500) */}
-          <nav className="hidden lg:flex items-center gap-1.5 bg-[#F6F9F8] dark:bg-[#0E1519] p-1 rounded-[14px] border border-[#E3EBE7] dark:border-[#22353D] font-['Poppins'] text-[15px] font-medium">
-            <button
-              type="button"
-              onClick={() => onSelectBranch('All')}
-              className={`px-3.5 py-1.5 rounded-[10px] text-[14px] font-medium transition-all duration-300 cursor-pointer ${
-                selectedBranch === 'All'
-                  ? 'bg-gradient-to-r from-[#009B69] to-[#007A8D] text-white shadow-xs font-semibold dark:from-[#10B981] dark:to-[#06B6D4] dark:text-[#04251B]'
-                  : 'text-zinc-600 dark:text-zinc-400 hover:text-[#009B69] dark:hover:text-[#10B981]'
-              }`}
-            >
-              All Laptops ({totalCount})
-            </button>
-            <button
-              type="button"
-              onClick={() => onSelectBranch('Pune')}
-              className={`px-3.5 py-1.5 rounded-[10px] text-[14px] font-medium transition-all duration-300 cursor-pointer flex items-center gap-1.5 ${
-                selectedBranch === 'Pune'
-                  ? 'bg-gradient-to-r from-[#009B69] to-[#007A8D] text-white shadow-xs font-semibold dark:from-[#10B981] dark:to-[#06B6D4] dark:text-[#04251B]'
-                  : 'text-zinc-600 dark:text-zinc-400 hover:text-[#009B69] dark:hover:text-[#10B981]'
-              }`}
-            >
-              <MapPin className="w-3.5 h-3.5" />
-              <span>Pune Hub ({puneCount})</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => onSelectBranch('Delhi')}
-              className={`px-3.5 py-1.5 rounded-[10px] text-[14px] font-medium transition-all duration-300 cursor-pointer flex items-center gap-1.5 ${
-                selectedBranch === 'Delhi'
-                  ? 'bg-gradient-to-r from-[#009B69] to-[#007A8D] text-white shadow-xs font-semibold dark:from-[#10B981] dark:to-[#06B6D4] dark:text-[#04251B]'
-                  : 'text-zinc-600 dark:text-zinc-400 hover:text-[#009B69] dark:hover:text-[#10B981]'
-              }`}
-            >
-              <MapPin className="w-3.5 h-3.5" />
-              <span>Delhi Hub ({delhiCount})</span>
-            </button>
             <button
               type="button"
               onClick={() => {
-                const el = document.getElementById('rental-emi');
-                el?.scrollIntoView({ behavior: 'smooth' });
+                onSelectBranch('All');
+                onSelectCategory?.('all');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className="px-3 py-1.5 rounded-[10px] text-[14px] font-medium text-zinc-700 dark:text-zinc-300 hover:text-[#007A8D] dark:hover:text-[#38BDF8] hover:bg-[#E8F7EE] dark:hover:bg-[#10B981]/15 transition-all duration-300 cursor-pointer flex items-center gap-1"
-              title="Explore monthly rental and easy EMI plans"
+              className="px-3.5 py-2 rounded-lg bg-[#E8F7EE] dark:bg-[#10B981]/15 text-[#059669] dark:text-[#10B981] font-bold transition-colors cursor-pointer whitespace-nowrap"
             >
-              <Percent className="w-3.5 h-3.5 text-[#007A8D] dark:text-[#38BDF8]" />
-              <span>Rent &amp; EMI</span>
+              Home
             </button>
+
+            {/* Laptops Dropdown */}
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() =>
+                  setActiveDropdown(activeDropdown === 'laptops' ? null : 'laptops')
+                }
+                className="px-3 py-2 rounded-lg hover:text-[#059669] dark:hover:text-[#10B981] hover:bg-[#F8FAFC] dark:hover:bg-[#18242D] transition-colors cursor-pointer inline-flex items-center gap-1 whitespace-nowrap"
+              >
+                <span>Laptops</span>
+                <ChevronDown className="w-3.5 h-3.5 opacity-70" />
+              </button>
+
+              {activeDropdown === 'laptops' && (
+                <div className="absolute top-full left-0 mt-2 w-72 bg-white dark:bg-[#121B22] rounded-xl shadow-lg border border-[#E2E8F0] dark:border-[#1E2D38] p-2 z-50 space-y-1">
+                  {[
+                    { id: 'all', name: `All Verified Laptops (${totalCount})`, sub: 'Complete Pune & Delhi stock' },
+                    { id: 'business', name: 'Business Laptops', sub: 'Dell Latitude, ThinkPad & EliteBook' },
+                    { id: 'student', name: 'Student Laptops', sub: 'Budget-friendly under ₹18,000' },
+                    { id: 'i7', name: 'Core i7 & Coding', sub: 'Multitasking & heavy workflows' },
+                    { id: 'gaming', name: 'Gaming / Dedicated GPU', sub: 'NVIDIA GeForce & Radeon graphics' },
+                  ].map((item) => (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => handleCategoryClick(item.id)}
+                      className="w-full text-left p-2.5 rounded-lg hover:bg-[#F8FAFC] dark:hover:bg-[#18242D] transition-colors cursor-pointer"
+                    >
+                      <div className="font-bold text-xs text-[#17212B] dark:text-white">
+                        {item.name}
+                      </div>
+                      <div className="text-[11px] text-[#64748B] dark:text-[#94A3B8]">
+                        {item.sub}
+                      </div>
+                    </button>
+                  ))}
+
+                  <div className="border-t border-[#E2E8F0] dark:border-[#1E2D38] pt-2 px-2 pb-1">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#64748B] block mb-1.5">
+                      Shop by Budget
+                    </span>
+                    <div className="grid grid-cols-2 gap-1.5">
+                      {[
+                        { preset: 'k12to15', label: 'Under ₹15k' },
+                        { preset: 'k15to20', label: 'Under ₹20k' },
+                        { preset: 'k20to25', label: 'Under ₹25k' },
+                        { preset: 'above30k', label: '₹25k+' },
+                      ].map((b) => (
+                        <button
+                          key={b.preset}
+                          type="button"
+                          onClick={() => handleBudgetClick(b.preset)}
+                          className="px-2.5 py-1.5 rounded-md bg-[#F8FAFC] dark:bg-[#18242D] hover:bg-[#E8F7EE] dark:hover:bg-[#10B981]/15 text-[11px] font-semibold text-[#17212B] dark:text-[#F1F5F9] border border-[#E2E8F0] dark:border-[#263846] cursor-pointer text-left"
+                        >
+                          {b.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => {
+                onSelectBranch(selectedBranch === 'Pune' ? 'All' : 'Pune');
+                scrollToSection('catalog');
+              }}
+              className={`px-3 py-2 rounded-lg transition-colors cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap ${
+                selectedBranch === 'Pune'
+                  ? 'bg-[#E8F7EE] dark:bg-[#10B981]/15 text-[#059669] dark:text-[#10B981]'
+                  : 'hover:text-[#059669] dark:hover:text-[#10B981] hover:bg-[#F8FAFC] dark:hover:bg-[#18242D]'
+              }`}
+            >
+              <MapPin className="w-3.5 h-3.5 text-[#059669] dark:text-[#10B981]" />
+              <span>Pune Hub</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => {
+                onSelectBranch(selectedBranch === 'Delhi' ? 'All' : 'Delhi');
+                scrollToSection('catalog');
+              }}
+              className={`px-3 py-2 rounded-lg transition-colors cursor-pointer inline-flex items-center gap-1.5 whitespace-nowrap ${
+                selectedBranch === 'Delhi'
+                  ? 'bg-[#E8F7EE] dark:bg-[#10B981]/15 text-[#059669] dark:text-[#10B981]'
+                  : 'hover:text-[#059669] dark:hover:text-[#10B981] hover:bg-[#F8FAFC] dark:hover:bg-[#18242D]'
+              }`}
+            >
+              <MapPin className="w-3.5 h-3.5 text-[#0D9488] dark:text-[#14B8A6]" />
+              <span>Delhi Hub</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => scrollToSection('rental-emi')}
+              className="px-3 py-2 rounded-lg hover:text-[#059669] dark:hover:text-[#10B981] hover:bg-[#F8FAFC] dark:hover:bg-[#18242D] transition-colors cursor-pointer whitespace-nowrap"
+            >
+              Rent &amp; EMI
+            </button>
+
+            {/* Services Dropdown */}
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() =>
+                  setActiveDropdown(activeDropdown === 'services' ? null : 'services')
+                }
+                className="px-3 py-2 rounded-lg hover:text-[#059669] dark:hover:text-[#10B981] hover:bg-[#F8FAFC] dark:hover:bg-[#18242D] transition-colors cursor-pointer inline-flex items-center gap-1 whitespace-nowrap"
+              >
+                <span>Services</span>
+                <ChevronDown className="w-3.5 h-3.5 opacity-70" />
+              </button>
+
+              {activeDropdown === 'services' && (
+                <div className="absolute top-full left-0 mt-2 w-64 bg-white dark:bg-[#121B22] rounded-xl shadow-lg border border-[#E2E8F0] dark:border-[#1E2D38] p-2 z-50 space-y-1">
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('showrooms')}
+                    className="w-full text-left p-2.5 rounded-lg hover:bg-[#F8FAFC] dark:hover:bg-[#18242D] transition-colors cursor-pointer flex items-start gap-2.5"
+                  >
+                    <Wrench className="w-4 h-4 text-[#059669] shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-bold text-xs text-[#17212B] dark:text-white">
+                        Laptop Repair &amp; Upgrades
+                      </div>
+                      <div className="text-[11px] text-[#64748B] dark:text-[#94A3B8]">
+                        Pune &amp; Delhi service benches
+                      </div>
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('puncartrust-qa')}
+                    className="w-full text-left p-2.5 rounded-lg hover:bg-[#F8FAFC] dark:hover:bg-[#18242D] transition-colors cursor-pointer flex items-start gap-2.5"
+                  >
+                    <ShieldCheck className="w-4 h-4 text-[#059669] shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-bold text-xs text-[#17212B] dark:text-white">
+                        Hardware Testing &amp; QA
+                      </div>
+                      <div className="text-[11px] text-[#64748B] dark:text-[#94A3B8]">
+                        Battery, screen &amp; motherboard check
+                      </div>
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('pincode-checker')}
+                    className="w-full text-left p-2.5 rounded-lg hover:bg-[#F8FAFC] dark:hover:bg-[#18242D] transition-colors cursor-pointer flex items-start gap-2.5"
+                  >
+                    <MapPin className="w-4 h-4 text-[#0D9488] shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-bold text-xs text-[#17212B] dark:text-white">
+                        PIN Code Delivery Check
+                      </div>
+                      <div className="text-[11px] text-[#64748B] dark:text-[#94A3B8]">
+                        Check dispatch speed to your city
+                      </div>
+                    </div>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('faq')}
+                    className="w-full text-left p-2.5 rounded-lg hover:bg-[#F8FAFC] dark:hover:bg-[#18242D] transition-colors cursor-pointer flex items-start gap-2.5"
+                  >
+                    <HelpCircle className="w-4 h-4 text-[#64748B] shrink-0 mt-0.5" />
+                    <div>
+                      <div className="font-bold text-xs text-[#17212B] dark:text-white">
+                        Warranty &amp; FAQ
+                      </div>
+                      <div className="text-[11px] text-[#64748B] dark:text-[#94A3B8]">
+                        Inspection, payment &amp; support policy
+                      </div>
+                    </div>
+                  </button>
+
+                  <div className="border-t border-[#E2E8F0] dark:border-[#1E2D38] pt-1">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setActiveDropdown(null);
+                        onOpenAdmin();
+                      }}
+                      className="w-full text-left px-2.5 py-2 text-[11px] font-semibold text-[#64748B] hover:text-[#17212B] dark:hover:text-white cursor-pointer"
+                    >
+                      Coordinator Staff Portal →
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
           </nav>
 
-          {/* RIGHT: Actions (ThemeToggle, Compare, Wishlist, WhatsApp Group, Admin, Menu) */}
-          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
-            {/* Theme Toggle (Dark / Light) */}
+          {/* Right: Utility Buttons + Chat on WhatsApp CTA */}
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            {/* Desktop Search Trigger */}
+            <button
+              type="button"
+              onClick={() => {
+                setDesktopSearchOpen((prev) => !prev);
+                setIsSearchFocused(true);
+              }}
+              className={`hidden lg:inline-flex items-center justify-center w-9 h-9 rounded-lg border transition-colors cursor-pointer ${
+                desktopSearchOpen || searchQuery
+                  ? 'border-[#059669] bg-[#E8F7EE] dark:bg-[#10B981]/15 text-[#059669] dark:text-[#10B981]'
+                  : 'border-[#E2E8F0] dark:border-[#263846] bg-[#F8FAFC] dark:bg-[#18242D] text-[#475569] dark:text-[#CBD5E1] hover:border-[#059669]'
+              }`}
+              aria-label="Search laptops"
+              title="Search laptops"
+            >
+              <Search className="w-4 h-4" />
+            </button>
+
             <ThemeToggle />
 
-            {/* Wishlist Shortcut */}
             <button
               type="button"
               onClick={onOpenWishlist}
-              className="relative p-2 rounded-[12px] text-zinc-600 dark:text-zinc-300 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-[#E8F7EE] dark:hover:bg-[#10B981]/15 transition-all duration-300 border border-[#E3EBE7] dark:border-[#22353D] cursor-pointer"
-              title="View saved laptops"
-              aria-label="Wishlist"
+              className="relative inline-flex items-center justify-center w-9 h-9 rounded-lg border border-[#E2E8F0] dark:border-[#263846] bg-[#F8FAFC] dark:bg-[#18242D] text-[#475569] dark:text-[#CBD5E1] hover:border-[#059669] transition-colors cursor-pointer"
+              title="Saved laptops"
+              aria-label="Saved laptops"
             >
-              <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-rose-500 fill-rose-500/15" />
+              <Heart className="w-4 h-4" />
               {wishlistedCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-rose-500 text-white text-[10px] font-bold flex items-center justify-center shadow-xs">
+                <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#059669] text-white text-[10px] font-mono font-bold flex items-center justify-center">
                   {wishlistedCount}
                 </span>
               )}
             </button>
 
-            {/* Compare Shortcut (Shown on tablet/desktop, or on mobile only when items are being compared) */}
             <button
               type="button"
               onClick={onOpenCompare}
-              className={`${
-                comparedCount > 0 ? 'flex' : 'hidden sm:flex'
-              } items-center relative p-2 rounded-[12px] text-zinc-600 dark:text-zinc-300 hover:text-[#009B69] dark:hover:text-[#10B981] hover:bg-[#E8F7EE] dark:hover:bg-[#10B981]/15 transition-all duration-300 border border-[#E3EBE7] dark:border-[#22353D] cursor-pointer`}
-              title="Compare laptops side-by-side"
+              className="relative inline-flex items-center justify-center w-9 h-9 rounded-lg border border-[#E2E8F0] dark:border-[#263846] bg-[#F8FAFC] dark:bg-[#18242D] text-[#475569] dark:text-[#CBD5E1] hover:border-[#059669] transition-colors cursor-pointer"
+              title="Compare selected laptops"
               aria-label="Compare laptops"
             >
-              <Scale className="w-4 h-4 sm:w-5 sm:h-5 text-[#007A52] dark:text-[#34D399]" />
+              <Scale className="w-4 h-4" />
               {comparedCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#009B69] text-white dark:bg-[#10B981] dark:text-[#04251B] text-[10px] font-bold flex items-center justify-center shadow-xs">
+                <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] px-1 rounded-full bg-[#059669] text-white text-[10px] font-mono font-bold flex items-center justify-center">
                   {comparedCount}
                 </span>
               )}
             </button>
 
-            {/* WhatsApp Community Group Button (Visible on sm+ screens; on mobile it lives inside the drawer) */}
             <a
-              href={WHATSAPP_CONFIG.groupInviteUrl}
+              href={`https://wa.me/${WHATSAPP_CONFIG.number}?text=${encodeURIComponent(
+                'Hello PunarTech, I am browsing https://punartech.vercel.app/ and want to enquire about available laptops.'
+              )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-[12px] bg-gradient-to-r from-[#009B69] to-[#007A8D] hover:from-[#00875A] hover:to-[#006979] dark:from-[#10B981] dark:to-[#06B6D4] text-white dark:text-[#04251B] font-['Poppins'] text-[13px] sm:text-[14px] font-semibold border border-transparent shadow-xs transition-all duration-300 active:scale-95"
-              title="Join PunarTech WhatsApp Community for latest arrivals"
+              className="hidden sm:inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg bg-[#059669] hover:bg-[#047857] text-white text-xs font-semibold transition-colors whitespace-nowrap"
             >
-              <WhatsAppIcon className="w-4 h-4 text-white dark:text-[#04251B]" />
-              <span>Join Group</span>
-              <ExternalLink className="w-3.5 h-3.5 text-white/80 dark:text-[#04251B]/80" />
+              <WhatsAppIcon className="w-3.5 h-3.5 text-white" />
+              <span>Chat on WhatsApp</span>
             </a>
-
-            {/* Store Admin Coordinator Launcher */}
-            <button
-              type="button"
-              onClick={onOpenAdmin}
-              className="hidden md:flex items-center gap-1.5 p-2 rounded-[12px] text-zinc-600 dark:text-zinc-300 hover:text-[#007A52] dark:hover:text-[#34D399] hover:bg-[#E8F7EE] dark:hover:bg-[#10B981]/15 border border-[#E3EBE7] dark:border-[#22353D] transition-all duration-300 cursor-pointer font-['Poppins'] text-[13px] font-medium"
-              title="Store Admin & Inventory Management"
-              aria-label="Admin Portal"
-            >
-              <Shield className="w-3.5 h-3.5 text-[#007A52] dark:text-[#34D399]" />
-              <span className="hidden xl:inline">Staff</span>
-            </button>
-
-            {/* Mobile Hamburger Menu Button */}
-            <button
-              type="button"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden p-2 rounded-[12px] text-zinc-700 dark:text-zinc-200 hover:text-[#007A52] dark:hover:text-[#34D399] hover:bg-[#E8F7EE] dark:hover:bg-[#10B981]/15 border border-[#E3EBE7] dark:border-[#22353D] cursor-pointer transition-all duration-300"
-              aria-label="Toggle navigation menu"
-            >
-              <Menu className="w-5 h-5" />
-            </button>
           </div>
         </div>
 
-        {/* Mobile Search Input (Visible only on mobile) */}
-        <div className="md:hidden pb-2.5">
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-zinc-400">
-              <Search className="w-4 h-4 text-[#007A52] dark:text-[#34D399]" />
+        {/* Expandable Desktop Search Bar */}
+        {desktopSearchOpen && (
+          <div
+            ref={searchContainerRef}
+            className="hidden lg:block pb-3 pt-1 relative"
+          >
+            <div className="relative max-w-2xl mx-auto">
+              <Search className="w-4 h-4 text-[#64748B] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <input
+                type="text"
+                value={searchQuery}
+                autoFocus
+                onFocus={() => setIsSearchFocused(true)}
+                onChange={(e) => {
+                  onSearchChange(e.target.value);
+                  setIsSearchFocused(true);
+                }}
+                placeholder="Search laptops by model, brand, processor, RAM, or Stock ID (e.g. PT/P001, Latitude, i5)..."
+                className="w-full h-10 pl-10 pr-20 bg-[#F8FAFC] dark:bg-[#0F171E] text-xs sm:text-sm text-[#17212B] dark:text-[#F1F5F9] placeholder-[#64748B] border border-[#CBD5E1] dark:border-[#263846] rounded-lg"
+              />
+              <div className="absolute inset-y-0 right-2 flex items-center gap-1">
+                {searchQuery && (
+                  <button
+                    type="button"
+                    onClick={() => onSearchChange('')}
+                    className="p-1 text-[#64748B] hover:text-[#17212B] dark:hover:text-white cursor-pointer"
+                    aria-label="Clear search"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={() => setDesktopSearchOpen(false)}
+                  className="px-2 py-1 text-[11px] font-semibold text-[#64748B] hover:text-[#17212B] dark:hover:text-white cursor-pointer"
+                >
+                  Close
+                </button>
+              </div>
+
+              {isSearchFocused && autocompleteResults.length > 0 && (
+                <div className="absolute top-full left-0 right-0 mt-1.5 bg-white dark:bg-[#121B22] rounded-xl shadow-lg border border-[#E2E8F0] dark:border-[#1E2D38] overflow-hidden z-50">
+                  <div className="px-3.5 py-2 bg-[#F8FAFC] dark:bg-[#18242D] border-b border-[#E2E8F0] dark:border-[#1E2D38] flex items-center justify-between text-[11px] font-semibold text-[#64748B]">
+                    <span>Matching Units ({autocompleteResults.length})</span>
+                    <span className="font-mono text-[#059669] dark:text-[#10B981]">In Stock</span>
+                  </div>
+                  <div className="divide-y divide-[#E2E8F0] dark:divide-[#1E2D38] max-h-80 overflow-y-auto">
+                    {autocompleteResults.map((laptop) => (
+                      <button
+                        key={laptop.id}
+                        type="button"
+                        onClick={() => {
+                          onSelectLaptopFromSearch?.(laptop);
+                          setIsSearchFocused(false);
+                        }}
+                        className="w-full text-left p-3 hover:bg-[#F8FAFC] dark:hover:bg-[#18242D] transition-colors flex items-center justify-between gap-3 cursor-pointer"
+                      >
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span className="font-mono text-[11px] font-semibold text-[#059669] dark:text-[#10B981]">
+                              {laptop.stockId}
+                            </span>
+                            <span className="text-xs font-bold text-[#17212B] dark:text-white truncate">
+                              {laptop.fullName}
+                            </span>
+                          </div>
+                          <div className="text-[11px] text-[#64748B] dark:text-[#94A3B8] truncate mt-0.5">
+                            {laptop.processor} · {laptop.ram} · {laptop.storageRaw} · {laptop.branch}
+                          </div>
+                        </div>
+                        <span className="text-xs font-mono font-bold text-[#17212B] dark:text-white shrink-0 tabular-nums">
+                          {laptop.hasPrice && laptop.sellingPrice
+                            ? `₹${laptop.sellingPrice.toLocaleString('en-IN')}`
+                            : 'On Request'}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
+          </div>
+        )}
+
+        {/* Always-Visible Mobile Search Bar Row matching Mobile Template */}
+        <div ref={mobileSearchRef} className="lg:hidden pb-3 pt-0.5 relative">
+          <div className="relative">
+            <Search className="w-4 h-4 text-[#64748B] absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
             <input
               type="text"
               value={searchQuery}
-              onChange={(e) => onSearchChange(e.target.value)}
-              placeholder="Search by model, brand, processor..."
-              className="w-full pl-9 pr-8 py-2 bg-[#F8FBF9] dark:bg-[#10191E] border border-[#E3EBE7] dark:border-[#22353D] rounded-[12px] font-['Poppins'] text-xs text-zinc-900 dark:text-white placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-hidden focus:border-[#009B69] dark:focus:border-[#10B981] focus:ring-2 focus:ring-[#009B69]/15 dark:focus:ring-[#10B981]/20 focus:bg-white dark:focus:bg-[#152227] transition-all duration-300"
+              onFocus={() => setIsSearchFocused(true)}
+              onChange={(e) => {
+                onSearchChange(e.target.value);
+                setIsSearchFocused(true);
+              }}
+              placeholder="Search laptops by model, brand, processor..."
+              className="w-full h-9.5 pl-9 pr-8 bg-[#F8FAFC] dark:bg-[#0F171E] text-xs text-[#17212B] dark:text-[#F1F5F9] placeholder-[#64748B] border border-[#E2E8F0] dark:border-[#263846] rounded-lg"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={() => onSearchChange('')}
-                className="absolute inset-y-0 right-0 pr-2.5 flex items-center text-zinc-400 hover:text-zinc-900 dark:hover:text-white"
+                className="absolute inset-y-0 right-2.5 flex items-center text-[#64748B] cursor-pointer"
                 aria-label="Clear search"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
             )}
           </div>
-        </div>
 
-        {/* Mobile Expanded Drawer/Menu */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden py-3 border-t border-[#E3EBE7] dark:border-[#22353D] space-y-2.5 animate-in fade-in duration-150 font-['Poppins']">
-            {/* Hub Selector */}
-            <div className="grid grid-cols-3 gap-1 bg-[#F6F9F8] dark:bg-[#0E1519] p-1.5 rounded-[14px] border border-[#E3EBE7] dark:border-[#22353D]">
-              <button
-                type="button"
-                onClick={() => {
-                  onSelectBranch('All');
-                  setMobileMenuOpen(false);
-                }}
-                className={`py-2 text-center text-xs font-medium rounded-[10px] transition-all duration-300 ${
-                  selectedBranch === 'All'
-                    ? 'bg-gradient-to-r from-[#009B69] to-[#007A8D] text-white shadow-xs font-semibold dark:from-[#10B981] dark:to-[#06B6D4] dark:text-[#04251B]'
-                    : 'text-zinc-600 dark:text-zinc-400'
-                }`}
-              >
-                All ({totalCount})
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  onSelectBranch('Pune');
-                  setMobileMenuOpen(false);
-                }}
-                className={`py-2 text-center text-xs font-medium rounded-[10px] flex items-center justify-center gap-1 transition-all duration-300 ${
-                  selectedBranch === 'Pune'
-                    ? 'bg-gradient-to-r from-[#009B69] to-[#007A8D] text-white shadow-xs font-semibold dark:from-[#10B981] dark:to-[#06B6D4] dark:text-[#04251B]'
-                    : 'text-zinc-600 dark:text-zinc-400'
-                }`}
-              >
-                <MapPin className="w-3.5 h-3.5" />
-                <span>Pune ({puneCount})</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  onSelectBranch('Delhi');
-                  setMobileMenuOpen(false);
-                }}
-                className={`py-2 text-center text-xs font-medium rounded-[10px] flex items-center justify-center gap-1 transition-all duration-300 ${
-                  selectedBranch === 'Delhi'
-                    ? 'bg-gradient-to-r from-[#009B69] to-[#007A8D] text-white shadow-xs font-semibold dark:from-[#10B981] dark:to-[#06B6D4] dark:text-[#04251B]'
-                    : 'text-zinc-600 dark:text-zinc-400'
-                }`}
-              >
-                <MapPin className="w-3.5 h-3.5" />
-                <span>Delhi ({delhiCount})</span>
-              </button>
+          {isSearchFocused && autocompleteResults.length > 0 && (
+            <div className="mt-1.5 bg-white dark:bg-[#121B22] rounded-xl shadow-lg border border-[#E2E8F0] dark:border-[#1E2D38] overflow-hidden z-50">
+              <div className="divide-y divide-[#E2E8F0] dark:divide-[#1E2D38] max-h-64 overflow-y-auto">
+                {autocompleteResults.map((laptop) => (
+                  <button
+                    key={laptop.id}
+                    type="button"
+                    onClick={() => {
+                      onSelectLaptopFromSearch?.(laptop);
+                      setIsSearchFocused(false);
+                    }}
+                    className="w-full text-left p-2.5 hover:bg-[#F8FAFC] dark:hover:bg-[#18242D] flex items-center justify-between gap-2 cursor-pointer"
+                  >
+                    <div className="min-w-0">
+                      <div className="text-xs font-bold text-[#17212B] dark:text-white truncate">
+                        {laptop.fullName}
+                      </div>
+                      <div className="text-[10px] text-[#64748B] truncate">
+                        {laptop.stockId} · {laptop.processor} · {laptop.ram}
+                      </div>
+                    </div>
+                    <span className="text-xs font-mono font-bold text-[#059669] dark:text-[#10B981] shrink-0 tabular-nums">
+                      {laptop.hasPrice && laptop.sellingPrice
+                        ? `₹${laptop.sellingPrice.toLocaleString('en-IN')}`
+                        : 'On Request'}
+                    </span>
+                  </button>
+                ))}
+              </div>
             </div>
+          )}
+        </div>
+      </div>
 
-            {/* Mobile WhatsApp VIP Community Link */}
-            <a
-              href={WHATSAPP_CONFIG.groupInviteUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full p-3 rounded-[12px] bg-gradient-to-r from-[#009B69] to-[#007A8D] dark:from-[#10B981] dark:to-[#06B6D4] text-white dark:text-[#04251B] flex items-center justify-between shadow-xs transition-all duration-300 active:scale-98"
-            >
-              <div className="flex items-center gap-2.5">
-                <div className="w-7 h-7 rounded-full bg-white/20 dark:bg-[#04251B]/20 flex items-center justify-center shrink-0">
-                  <WhatsAppIcon className="w-4 h-4 text-white dark:text-[#04251B]" />
+      {/* Mobile Navigation Drawer */}
+      {mobileMenuOpen && (
+        <div className="lg:hidden fixed inset-0 z-50 flex">
+          <div
+            onClick={() => setMobileMenuOpen(false)}
+            className="fixed inset-0 bg-[#17212B]/50 backdrop-blur-xs"
+          />
+
+          <div className="relative mr-auto w-full max-w-xs sm:max-w-sm bg-white dark:bg-[#121B22] h-full shadow-xl flex flex-col justify-between overflow-y-auto z-10 border-r border-[#E2E8F0] dark:border-[#1E2D38]">
+            <div>
+              <div className="px-4 h-16 border-b border-[#E2E8F0] dark:border-[#1E2D38] flex items-center justify-between">
+                <PunarTechLogo size="sm" />
+                <button
+                  type="button"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-8 h-8 rounded-lg border border-[#E2E8F0] dark:border-[#263846] flex items-center justify-center text-[#475569] dark:text-[#94A3B8] cursor-pointer"
+                  aria-label="Close menu"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              <div className="p-4 space-y-6">
+                {/* Hub Switcher */}
+                <div className="space-y-2">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#64748B]">
+                    Showroom Inventory
+                  </span>
+                  <div className="grid grid-cols-3 gap-1.5">
+                    {(
+                      [
+                        { key: 'All', label: `All (${totalCount})` },
+                        { key: 'Pune', label: `Pune (${puneCount})` },
+                        { key: 'Delhi', label: `Delhi (${delhiCount})` },
+                      ] as const
+                    ).map((hub) => (
+                      <button
+                        key={hub.key}
+                        type="button"
+                        onClick={() => {
+                          onSelectBranch(hub.key);
+                          scrollToSection('catalog');
+                        }}
+                        className={`py-2 px-2 rounded-lg text-xs font-semibold border cursor-pointer transition-colors ${
+                          selectedBranch === hub.key
+                            ? 'bg-[#059669] text-white border-[#059669]'
+                            : 'bg-[#F8FAFC] dark:bg-[#18242D] text-[#17212B] dark:text-[#F1F5F9] border-[#E2E8F0] dark:border-[#263846]'
+                        }`}
+                      >
+                        {hub.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
-                <div className="text-left">
-                  <div className="text-xs font-bold font-['Urbanist'] leading-tight">Join WhatsApp VIP Community</div>
-                  <div className="text-[10px] text-white/90 dark:text-[#04251B]/80 font-['Poppins']">Get instant stock arrivals &amp; alerts</div>
+
+                {/* Categories */}
+                <div className="space-y-1">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#64748B] block mb-1.5">
+                    Browse Categories
+                  </span>
+                  {[
+                    { id: 'all', name: 'All Certified Laptops' },
+                    { id: 'business', name: 'Business Series (Latitude / ThinkPad)' },
+                    { id: 'student', name: 'Student Value (Under ₹18,000)' },
+                    { id: 'i7', name: 'Core i7 & Coding Laptops' },
+                    { id: 'gaming', name: 'Dedicated GPU Workstations' },
+                  ].map((cat) => (
+                    <button
+                      key={cat.id}
+                      type="button"
+                      onClick={() => handleCategoryClick(cat.id)}
+                      className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-[#17212B] dark:text-[#F1F5F9] hover:bg-[#F8FAFC] dark:hover:bg-[#18242D] flex items-center justify-between cursor-pointer"
+                    >
+                      <span>{cat.name}</span>
+                      <ArrowRight className="w-3.5 h-3.5 text-[#64748B]" />
+                    </button>
+                  ))}
+                </div>
+
+                {/* Navigation Anchors */}
+                <div className="space-y-1 border-t border-[#E2E8F0] dark:border-[#1E2D38] pt-4">
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('deals')}
+                    className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-[#17212B] dark:text-[#F1F5F9] hover:bg-[#F8FAFC] dark:hover:bg-[#18242D] cursor-pointer"
+                  >
+                    Today&apos;s Best Deals
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('rental-emi')}
+                    className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-[#17212B] dark:text-[#F1F5F9] hover:bg-[#F8FAFC] dark:hover:bg-[#18242D] cursor-pointer"
+                  >
+                    Laptop Rental &amp; EMI
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('showrooms')}
+                    className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-[#17212B] dark:text-[#F1F5F9] hover:bg-[#F8FAFC] dark:hover:bg-[#18242D] cursor-pointer"
+                  >
+                    Pune &amp; Delhi Showrooms
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => scrollToSection('puncartrust-qa')}
+                    className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-[#17212B] dark:text-[#F1F5F9] hover:bg-[#F8FAFC] dark:hover:bg-[#18242D] cursor-pointer"
+                  >
+                    Testing, Repair &amp; Warranty
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      onOpenCompare();
+                    }}
+                    className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-[#17212B] dark:text-[#F1F5F9] hover:bg-[#F8FAFC] dark:hover:bg-[#18242D] flex items-center justify-between cursor-pointer"
+                  >
+                    <span>Compare List</span>
+                    <span className="font-mono text-xs font-semibold text-[#059669]">
+                      {comparedCount}/4
+                    </span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      onOpenAdmin();
+                    }}
+                    className="w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-[#64748B] hover:text-[#17212B] dark:hover:text-white cursor-pointer"
+                  >
+                    Staff Coordinator Portal
+                  </button>
                 </div>
               </div>
-              <ExternalLink className="w-4 h-4 text-white/90 dark:text-[#04251B]/90 shrink-0 ml-2" />
-            </a>
-
-            {/* Quick Actions (Compare & Wishlist) */}
-            <div className="grid grid-cols-2 gap-2">
-              <button
-                type="button"
-                onClick={() => {
-                  onOpenCompare();
-                  setMobileMenuOpen(false);
-                }}
-                className="py-2.5 px-3 rounded-[12px] bg-white dark:bg-[#152227] text-zinc-900 dark:text-white border border-[#E3EBE7] dark:border-[#22353D] text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer transition-colors hover:border-[#009B69] dark:hover:border-[#10B981]"
-              >
-                <Scale className="w-3.5 h-3.5 text-[#009B69] dark:text-[#10B981]" />
-                <span>Compare {comparedCount > 0 ? `(${comparedCount})` : ''}</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  onOpenWishlist();
-                  setMobileMenuOpen(false);
-                }}
-                className="py-2.5 px-3 rounded-[12px] bg-white dark:bg-[#152227] text-zinc-900 dark:text-white border border-[#E3EBE7] dark:border-[#22353D] text-xs font-semibold flex items-center justify-center gap-2 cursor-pointer transition-colors hover:border-rose-400"
-              >
-                <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />
-                <span>Wishlist {wishlistedCount > 0 ? `(${wishlistedCount})` : ''}</span>
-              </button>
             </div>
 
-            {/* Mobile Rent & EMI Fast Link */}
-            <button
-              type="button"
-              onClick={() => {
-                const el = document.getElementById('rental-emi');
-                el?.scrollIntoView({ behavior: 'smooth' });
-                setMobileMenuOpen(false);
-              }}
-              className="w-full py-2.5 px-3 rounded-[12px] bg-white dark:bg-[#152227] text-zinc-900 dark:text-white border border-[#E3EBE7] dark:border-[#22353D] text-xs font-semibold flex items-center justify-between cursor-pointer transition-all duration-300 hover:border-[#009B69] dark:hover:border-[#10B981]"
-            >
-              <span className="flex items-center gap-1.5">
-                <Percent className="w-3.5 h-3.5 text-[#007A52] dark:text-[#34D399]" />
-                <span>Laptop Rentals &amp; Easy EMI Plans</span>
-              </span>
-              <span className="text-[10px] bg-[#E8F7EE] text-[#007A52] dark:bg-[#10B981]/20 dark:text-[#34D399] px-2 py-0.5 rounded-[6px] font-bold border border-[#C8DFD4] dark:border-[#10B981]/30">
-                From ₹999/mo
-              </span>
-            </button>
-
-            {/* Mobile Theme Toggle Row */}
-            <div className="flex items-center justify-between p-2.5 rounded-[12px] bg-[#F8FBF9] dark:bg-[#10191E] border border-[#E3EBE7] dark:border-[#22353D]">
-              <span className="text-xs font-medium text-zinc-900 dark:text-zinc-200">Appearance Theme:</span>
-              <ThemeToggle showLabel={true} />
-            </div>
-
-            <div className="flex items-center justify-between pt-1 px-1 text-xs font-medium">
-              <button
-                type="button"
-                onClick={() => {
-                  onOpenAdmin();
-                  setMobileMenuOpen(false);
-                }}
-                className="inline-flex items-center gap-1.5 text-zinc-900 dark:text-white font-semibold py-1.5 hover:underline"
-              >
-                <Shield className="w-4 h-4 text-[#007A52] dark:text-[#34D399]" />
-                <span>Coordinator Staff Portal</span>
-              </button>
-
+            <div className="p-4 border-t border-[#E2E8F0] dark:border-[#1E2D38] bg-[#F8FAFC] dark:bg-[#0F171E] space-y-2">
               <a
-                href="https://wa.me/918055035502?text=Hello%20PunarTech,%20I%20am%20browsing%20https://punartech.vercel.app/%20and%20need%20assistance."
+                href={`https://wa.me/${WHATSAPP_CONFIG.number}?text=${encodeURIComponent(
+                  'Hello PunarTech, I am browsing https://punartech.vercel.app/ and want to enquire about your laptops.'
+                )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-zinc-500 dark:text-zinc-400 hover:text-[#007A52] dark:hover:text-[#34D399] font-mono text-[11px]"
+                className="w-full h-10 rounded-lg bg-[#059669] hover:bg-[#047857] text-white text-xs font-semibold flex items-center justify-center gap-2 transition-colors"
               >
-                Help: +91 80550 35502
+                <WhatsAppIcon className="w-4 h-4 text-white" />
+                <span>WhatsApp {WHATSAPP_CONFIG.displayPhone}</span>
               </a>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </header>
   );
 };

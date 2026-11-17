@@ -2,7 +2,7 @@ import React from 'react';
 import { PunarTechLogo } from './icons/PunarTechLogo';
 import { WhatsAppIcon } from './icons/WhatsAppIcon';
 import { WHATSAPP_CONFIG } from '../data/laptops';
-import { ShieldCheck, MapPin, PhoneCall } from 'lucide-react';
+import { MapPin, PhoneCall } from 'lucide-react';
 
 interface FooterProps {
   onSelectBranch: (b: 'All' | 'Pune' | 'Delhi') => void;
@@ -18,46 +18,26 @@ export const Footer: React.FC<FooterProps> = ({
   onOpenAdmin,
 }) => {
   return (
-    <footer className="bg-[#090E11] text-zinc-400 border-t border-[#1C2C33] pt-12 pb-24 sm:pb-12 transition-colors font-['Poppins']">
+    <footer className="bg-[#17212B] dark:bg-[#080D11] text-[#94A3B8] border-t border-[#263846] pt-12 pb-10 transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-12">
-          {/* Brand Column (2 cols) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-10">
+          {/* Brand Column */}
           <div className="lg:col-span-2 space-y-4">
-            <PunarTechLogo size="lg" />
-            <p className="text-xs text-zinc-400 leading-relaxed max-w-sm font-['Poppins']">
-              PunarTech is your premier destination for thoroughly tested, high-value refurbished and pre-owned laptops. Operating verified hubs in Pune and Delhi with transparent specifications and direct WhatsApp communication.
+            <PunarTechLogo size="lg" forceTheme="dark" />
+            <p className="text-xs text-[#94A3B8] leading-relaxed max-w-sm">
+              PunarTech supplies verified refurbished business laptops, repair support, monthly rentals, and flexible EMI options from physical hubs in Pune and Delhi.
             </p>
-            <div className="text-xs text-[#10B981] font-bold">
-              Tagline: "Premium Laptops. Smarter Prices."
-            </div>
-            <div className="flex flex-wrap items-center gap-3 text-[11px] text-zinc-500 pt-1">
-              <span className="flex items-center gap-1 text-[#10B981] font-semibold">
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span>100% Motherboard Tested</span>
-              </span>
-              <span>•</span>
-              <span className="text-[#06B6D4]">Authentic Stock IDs</span>
+            <div className="text-xs text-[#CBD5E1] font-medium">
+              <span>Pune &amp; Delhi Showrooms · Tested Hardware · Warranty Backed</span>
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Inventory Navigation */}
           <div className="space-y-3">
-            <h4 className="text-sm font-['Urbanist'] font-bold uppercase tracking-wider text-white">
-              Quick Links
+            <h4 className="text-xs font-bold uppercase tracking-wider text-white">
+              Inventory
             </h4>
             <ul className="space-y-2 text-xs">
-              <li>
-                <a
-                  href="#"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }}
-                  className="hover:text-[#10B981] transition-colors"
-                >
-                  Home
-                </a>
-              </li>
               <li>
                 <button
                   type="button"
@@ -65,7 +45,7 @@ export const Footer: React.FC<FooterProps> = ({
                     onSelectBranch('All');
                     document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="hover:text-[#10B981] transition-colors cursor-pointer"
+                  className="hover:text-white transition-colors cursor-pointer"
                 >
                   All 91 Laptops
                 </button>
@@ -77,9 +57,9 @@ export const Footer: React.FC<FooterProps> = ({
                     onSelectBranch('Pune');
                     document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="hover:text-[#10B981] transition-colors cursor-pointer flex items-center gap-1"
+                  className="hover:text-white transition-colors cursor-pointer inline-flex items-center gap-1.5"
                 >
-                  <MapPin className="w-3 h-3 text-[#10B981]" />
+                  <MapPin className="w-3.5 h-3.5 text-[#10B981]" />
                   <span>Pune Hub (60 Units)</span>
                 </button>
               </li>
@@ -90,9 +70,9 @@ export const Footer: React.FC<FooterProps> = ({
                     onSelectBranch('Delhi');
                     document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="hover:text-[#10B981] transition-colors cursor-pointer flex items-center gap-1"
+                  className="hover:text-white transition-colors cursor-pointer inline-flex items-center gap-1.5"
                 >
-                  <MapPin className="w-3 h-3 text-[#06B6D4]" />
+                  <MapPin className="w-3.5 h-3.5 text-[#14B8A6]" />
                   <span>Delhi Hub (31 Units)</span>
                 </button>
               </li>
@@ -100,32 +80,43 @@ export const Footer: React.FC<FooterProps> = ({
                 <button
                   type="button"
                   onClick={() => {
-                    onSelectCategory?.('deals');
+                    onSelectCategory?.('business');
                     document.getElementById('catalog')?.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="hover:text-[#10B981] transition-colors cursor-pointer"
+                  className="hover:text-white transition-colors cursor-pointer"
                 >
-                  Today's Best Deals
+                  Business Laptops
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => {
+                    document.getElementById('rental-emi')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="hover:text-white transition-colors cursor-pointer"
+                >
+                  Rent &amp; Easy EMI
                 </button>
               </li>
             </ul>
           </div>
 
-          {/* Customer Support */}
+          {/* Support & Showrooms */}
           <div className="space-y-3">
-            <h4 className="text-sm font-['Urbanist'] font-bold uppercase tracking-wider text-white">
-              Customer Support
+            <h4 className="text-xs font-bold uppercase tracking-wider text-white">
+              Support &amp; Service
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
                 <a
-                  href="https://wa.me/918055035502?text=Hello%20PunarTech,%20I%20am%20browsing%20https://punartech.vercel.app/%20and%20need%20support."
+                  href={`https://wa.me/${WHATSAPP_CONFIG.number}?text=Hello%20PunarTech,%20I%20am%20browsing%20https://punartech.vercel.app/%20and%20need%20support.`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-[#10B981] transition-colors flex items-center gap-1.5 text-zinc-200 font-semibold"
+                  className="hover:text-white transition-colors inline-flex items-center gap-1.5 text-white font-semibold"
                 >
                   <PhoneCall className="w-3.5 h-3.5 text-[#10B981]" />
-                  <span>WhatsApp: +91 80550 35502</span>
+                  <span className="font-mono tabular-nums">{WHATSAPP_CONFIG.displayPhone}</span>
                 </a>
               </li>
               <li>
@@ -133,29 +124,44 @@ export const Footer: React.FC<FooterProps> = ({
                   href={WHATSAPP_CONFIG.groupInviteUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-[#10B981] transition-colors flex items-center gap-1.5"
+                  className="hover:text-white transition-colors inline-flex items-center gap-1.5"
                 >
-                  <WhatsAppIcon className="w-3.5 h-3.5 text-[#25D366]" />
-                  <span>Join WhatsApp Community</span>
+                  <WhatsAppIcon className="w-3.5 h-3.5 text-[#10B981]" />
+                  <span>Official WhatsApp Group</span>
                 </a>
               </li>
               <li>
                 <a
-                  href="#faq"
+                  href="#showrooms"
                   onClick={(e) => {
                     e.preventDefault();
-                    document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' });
+                    document.getElementById('showrooms')?.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="hover:text-[#10B981] transition-colors"
+                  className="hover:text-white transition-colors"
                 >
-                  Frequently Asked Questions
+                  Repair &amp; Technical Support
                 </a>
               </li>
               <li>
                 <button
                   type="button"
+                  onClick={() => {
+                    if (onOpenFAQ) {
+                      onOpenFAQ();
+                    } else {
+                      document.getElementById('faq')?.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                  className="hover:text-white transition-colors cursor-pointer"
+                >
+                  Frequently Asked Questions
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
                   onClick={onOpenAdmin}
-                  className="text-zinc-500 hover:text-white transition-colors cursor-pointer text-left"
+                  className="text-[#94A3B8] hover:text-white transition-colors cursor-pointer text-left"
                 >
                   Coordinator Staff Portal
                 </button>
@@ -163,48 +169,48 @@ export const Footer: React.FC<FooterProps> = ({
             </ul>
           </div>
 
-          {/* Business & Legal Information */}
+          {/* Standards & Store Info */}
           <div className="space-y-3">
-            <h4 className="text-sm font-['Urbanist'] font-bold uppercase tracking-wider text-white">
-              Business Transparency
+            <h4 className="text-xs font-bold uppercase tracking-wider text-white">
+              Quality &amp; Policies
             </h4>
-            <ul className="space-y-2 text-xs text-zinc-400">
+            <ul className="space-y-2 text-xs text-[#94A3B8]">
+              <li>Multi-point Hardware &amp; Battery QA</li>
+              <li>Grade A+ / Grade A Verified Grading</li>
+              <li>In-Store Inspection in Pune &amp; Delhi</li>
+              <li>Insured Multi-Layer Courier Dispatch</li>
               <li>
-                <span>Refurbished Grade: <strong className="text-[#10B981]">Grade A++ Verified</strong></span>
-              </li>
-              <li>
-                <span>Testing Standard: Motherboard, RAM &amp; Drive Verified</span>
-              </li>
-              <li>
-                <span>In-Store Inspection: Pune &amp; Delhi</span>
-              </li>
-              <li>
-                <span>Dispatch: Multi-layer Protective Packaging</span>
-              </li>
-              <li>
-                <span>Official Live Website: <a href="https://punartech.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-[#10B981] hover:underline font-mono">punartech.vercel.app</a></span>
-              </li>
-              <li>
-                <span className="text-zinc-500 text-[11px]">Privacy Policy • Terms of Sale</span>
+                <span>Live Store: </span>
+                <a
+                  href="https://punartech.vercel.app/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#10B981] hover:underline font-mono"
+                >
+                  punartech.vercel.app
+                </a>
               </li>
             </ul>
           </div>
         </div>
 
         {/* Bottom strip */}
-        <div className="pt-8 border-t border-[#1C2C33] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-zinc-500">
+        <div className="pt-6 border-t border-[#263846] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#64748B]">
           <div className="flex flex-wrap items-center gap-3">
-            <span className="text-white font-bold">PunarTech</span>
-            <span>•</span>
-            <a href="https://punartech.vercel.app/" className="hover:text-[#10B981] transition-colors font-mono">punartech.vercel.app</a>
-            <span>•</span>
+            <span className="text-white font-semibold">PunarTech</span>
+            <span>·</span>
+            <a
+              href="https://punartech.vercel.app/"
+              className="hover:text-white transition-colors font-mono"
+            >
+              punartech.vercel.app
+            </a>
+            <span>·</span>
             <span>Pune &amp; Delhi Hubs</span>
-            <span>•</span>
-            <span className="font-mono text-[#10B981] font-bold">PunarTech On Top!</span>
           </div>
 
           <div>
-            © {new Date().getFullYear()} PunarTech. All rights reserved. "Premium Laptops. Smarter Prices."
+            © {new Date().getFullYear()} PunarTech. Refurbished Laptops, Rentals &amp; Repair Support.
           </div>
         </div>
       </div>

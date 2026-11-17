@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   ShieldCheck,
-  Award,
+  Wrench,
   Laptop,
   CheckCircle2,
   Headphones,
@@ -12,76 +12,77 @@ export const WhyChooseUs: React.FC = () => {
   const pillars = [
     {
       icon: ShieldCheck,
-      title: 'Quality Tested',
+      title: 'Tested Hardware Reliability',
       description:
-        'Every laptop undergoes motherboard boot testing, display lines inspection, keyboard responsiveness, and battery backup verification.',
-    },
-    {
-      icon: Award,
-      title: 'Affordable Pricing',
-      description:
-        'Get business-grade Dell Latitudes, HP EliteBooks, and ThinkPads at smarter, transparent prices with zero hidden markups or fake MRPs.',
-    },
-    {
-      icon: Laptop,
-      title: 'Multiple Leading Brands',
-      description:
-        'Diverse collection covering Dell, HP, Lenovo, Acer, Apple, ASUS, and MSI with authentic stock IDs for each physical unit.',
+        'Each device passes motherboard power checks, display inspection, keyboard testing, port diagnostics, and battery health verification.',
     },
     {
       icon: CheckCircle2,
-      title: 'Transparent Specifications',
+      title: 'Verified Selling Prices',
       description:
-        'Exact processor generation, DDR memory capacity, storage technology (SSD/HDD), and graphics chips clearly documented.',
+        'Business-series Dell Latitudes, HP EliteBooks, and ThinkPads priced transparently with exact configuration details and zero hidden charges.',
+    },
+    {
+      icon: Wrench,
+      title: 'Repair & Technical Support',
+      description:
+        'In-house hardware diagnostics, SSD/RAM upgrades, thermal servicing, and after-sales repair support handled by PunarTech technicians.',
+    },
+    {
+      icon: Laptop,
+      title: 'Unit-Level Stock Traceability',
+      description:
+        'Every laptop across Dell, HP, Lenovo, Apple, Acer, ASUS, and MSI carries a physical Stock ID for live verification.',
     },
     {
       icon: Headphones,
-      title: 'Dedicated WhatsApp Support',
+      title: 'Direct WhatsApp Assistance',
       description:
-        'Connect directly with our helpline at +91 80550 35502 for live photos, 360-degree video demos, and real-time guidance.',
+        'Message +91 80550 35502 for unedited unit photographs, battery diagnostic screenshots, or live video walkthroughs before purchase.',
     },
     {
       icon: MapPin,
-      title: 'Dual Inventory Hubs',
+      title: 'Pune & Delhi Inventory Hubs',
       description:
-        'Physical hubs in Pune (60 Units) and Delhi (31 Units) ready for in-store verification, local hand-over, or protective courier dispatch.',
+        'Physical stock stocked across Pune (60 units) and Delhi (31 units) for showroom pickup or insured PAN-India courier dispatch.',
     },
   ];
 
   return (
-    <section className="py-12 sm:py-16 bg-[#F8FBF9] dark:bg-[#090E11] border-b border-[#E3EBE7] dark:border-[#22353D] transition-colors font-['Poppins']">
+    <section
+      id="quality-support"
+      className="bg-[#F8FAFC] dark:bg-[#0B1116] border-b border-[#E2E8F0] dark:border-[#1E2D38] py-14 sm:py-16 transition-colors"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <span className="text-xs font-['Poppins'] font-semibold uppercase tracking-wider text-[#007A8D] dark:text-[#06B6D4] block mb-1">
-            The PunarTech Standard
-          </span>
-          <h2 className="text-2xl sm:text-4xl font-['Urbanist'] font-bold text-zinc-950 dark:text-white tracking-tight">
-            Why Choose PunarTech?
+        <div className="max-w-2xl mb-10">
+          <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#0D9488] dark:text-[#14B8A6]">
+            Why Choose PunarTech
+          </p>
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#17212B] dark:text-[#F1F5F9] tracking-tight mt-1">
+            Built on transparent hardware standards and real support.
           </h2>
-          <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 mt-1">
-            Built on genuine hardware quality, technical transparency, and responsive customer service.
+          <p className="text-sm text-[#475569] dark:text-[#94A3B8] mt-2 leading-relaxed">
+            Whether buying a refurbished business workstation, upgrading memory, or booking repair service, every specification and price is verified upfront.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {pillars.map((pillar, idx) => {
+        <div className="grid grid-cols-12 gap-6">
+          {pillars.map((pillar) => {
             const Icon = pillar.icon;
             return (
               <div
-                key={idx}
-                className="p-6 sm:p-7 rounded-[22px] bg-white dark:bg-[#152227] border border-[#E3EBE7] dark:border-[#22353D] hover:border-[#009B69] dark:hover:border-[#10B981] hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group"
+                key={pillar.title}
+                className="col-span-12 sm:col-span-6 lg:col-span-4 p-6 rounded-xl bg-white dark:bg-[#121B22] border border-[#E2E8F0] dark:border-[#1E2D38]"
               >
-                <div>
-                  <div className="w-12 h-12 rounded-[14px] bg-[#E8F7EE] dark:bg-[#10B981]/15 border border-[#BCE7CB] dark:border-[#10B981]/30 text-[#007A8D] dark:text-[#10B981] flex items-center justify-center mb-4 group-hover:bg-[#009B69] group-hover:text-white dark:group-hover:bg-[#10B981] dark:group-hover:text-[#090E11] transition-colors duration-300">
-                    <Icon className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-lg font-['Urbanist'] font-bold text-zinc-950 dark:text-white mb-2 group-hover:text-[#009B69] dark:group-hover:text-[#10B981] transition-colors">
-                    {pillar.title}
-                  </h3>
-                  <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-['Poppins']">
-                    {pillar.description}
-                  </p>
+                <div className="w-10 h-10 rounded-lg bg-[#F8FAFC] dark:bg-[#18242D] border border-[#E2E8F0] dark:border-[#263846] text-[#059669] dark:text-[#10B981] flex items-center justify-center mb-4">
+                  <Icon className="w-5 h-5" />
                 </div>
+                <h3 className="text-base font-bold text-[#17212B] dark:text-[#F1F5F9] mb-2">
+                  {pillar.title}
+                </h3>
+                <p className="text-xs sm:text-[13px] text-[#475569] dark:text-[#94A3B8] leading-relaxed">
+                  {pillar.description}
+                </p>
               </div>
             );
           })}

@@ -1,113 +1,83 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, HelpCircle } from 'lucide-react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 export const FAQSection: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   const faqs = [
     {
-      q: '1. What is a refurbished laptop?',
-      a: 'A refurbished laptop is a pre-owned enterprise or commercial unit that has been thoroughly tested, cleaned, and restored to full working condition. Unlike uninspected second-hand devices, PunarTech units undergo hardware diagnosis for motherboard power, display health, RAM stability, and drive health.',
+      q: 'What does PunarTech refurbishing include?',
+      a: 'Every laptop is a commercial or enterprise unit that undergoes motherboard, display, keyboard, port, SSD health, and battery testing before listing. Compatible power adapters are included.',
     },
     {
-      q: '2. Are laptop specifications verified before listing?',
-      a: 'Yes. Every laptop in our 91-unit catalog is assigned a unique physical Stock ID (PT/P001 to PT/D031). We physically confirm the exact processor generation, DDR memory capacity, and SSD/HDD storage before publishing.',
+      q: 'Are laptop specifications and Stock IDs verified?',
+      a: 'Yes. Every one of our 91 units carries an individual physical Stock ID (PT/P001–PT/P060 in Pune, PT/D001–PT/D031 in Delhi) with confirmed processor, RAM, storage, and display specifications.',
     },
     {
-      q: '3. How can I check laptop availability?',
-      a: 'Inventory is active across Pune and Delhi hubs. Click the "WhatsApp" button on any laptop card to auto-generate an enquiry with the model and stock ID. Our coordinator confirms real-time availability immediately.',
+      q: 'Can I inspect a laptop at your Pune or Delhi showroom before buying?',
+      a: 'Yes. Message +91 80550 35502 on WhatsApp with the Stock ID to confirm showroom availability and inspect the physical device in person—or request a live video walkthrough remotely.',
     },
     {
-      q: '4. Can I compare different laptops side-by-side?',
-      a: 'Yes! Click the "Compare" button on up to 4 laptops. An interactive comparison bar will appear at the bottom of the screen. Tap "Compare Now" to view specifications side-by-side with highlights for lowest price, highest RAM, and largest storage.',
+      q: 'Do you offer laptop repair services, upgrades, rentals, and EMI?',
+      a: 'Yes. In addition to refurbished laptop sales, PunarTech provides hardware repair and SSD/RAM upgrades, flexible monthly rentals (quote on request), and 3 to 12-month EMI options.',
     },
     {
-      q: '5. Do you have physical hubs in Pune and Delhi?',
-      a: 'Yes, PunarTech operates dedicated inventory hubs in both Pune (60 laptops) and Delhi (31 laptops). You can filter the catalog specifically by branch to view only local stock ready for immediate pickup.',
+      q: 'How can I compare multiple laptops?',
+      a: 'Click Compare on up to 4 laptops anywhere in the catalog, then open the side-by-side comparison table to inspect processor, RAM, storage, display, and pricing together.',
     },
     {
-      q: '6. How can I contact PunarTech?',
-      a: 'You can chat or call our coordinator directly on WhatsApp at +91 80550 35502, join our official PunarTech WhatsApp Community Group, or use the direct enquiry buttons on each product.',
-    },
-    {
-      q: '7. What warranty and testing period is provided?',
-      a: 'All units come with our PunarTech 100% Tested Motherboard Assurance. Warranty terms and testing check periods depend on the specific grade and model. Contact us on WhatsApp with the Stock ID to receive specific warranty confirmation for your model.',
-    },
-    {
-      q: '8. What payment methods are available?',
-      a: 'We accept UPI (Google Pay, PhonePe, Paytm), direct bank transfers, and cash upon in-person branch inspection and verification.',
-    },
-    {
-      q: '9. Do you provide delivery or courier dispatch?',
-      a: 'Yes. In addition to in-store branch visits, we arrange protective multi-layer bubble-wrap courier shipping with compatible power adapter and charging cord included.',
-    },
-    {
-      q: '10. Can I visit the store to test the laptop before buying?',
-      a: 'Absolutely. We encourage customers in Pune and Delhi to visit our inventory hubs, test the keyboard and screen display, check battery health in real-time, and make an informed purchase.',
-    },
-    {
-      q: '11. How does the PunarTech laptop rental program work?',
-      a: 'You can rent laptops monthly starting from ₹999/month for Core i3 student models up to ₹2,999/month for Apple MacBooks and Core i7 workstations. We require basic digital KYC (Aadhaar or College/Company ID) and a 100% refundable security deposit. All rentals include free maintenance and doorstep delivery in Pune and Delhi.',
-    },
-    {
-      q: '12. Can I buy a laptop on EMI without a credit card?',
-      a: 'Yes! In addition to 0% No-Cost EMI on leading Credit Cards, we support Cardless Debit Card EMI and financing via Bajaj Finserv, ZestMoney, and Snapmint. Approval takes just 15 minutes digitally with flexible 3, 6, 9, or 12-month installment plans.',
+      q: 'What payment and dispatch methods are supported?',
+      a: 'We accept UPI, bank transfer, EMI financing, and showroom payment. Remote orders ship across India in protective packaging after live unit verification.',
     },
   ];
 
-  const toggle = (idx: number) => {
-    setOpenIndex(openIndex === idx ? null : idx);
-  };
-
   return (
-    <section id="faq" className="py-12 sm:py-16 bg-white dark:bg-[#090E11] border-b border-[#E3EBE7] dark:border-[#22353D] transition-colors font-['Poppins']">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <div className="inline-flex items-center gap-1.5 text-xs font-['Poppins'] font-semibold uppercase tracking-wider text-[#007A52] dark:text-[#34D399] mb-1">
-            <HelpCircle className="w-4 h-4 text-[#009B69] dark:text-[#10B981]" />
-            <span>Transparency &amp; Answers</span>
+    <section
+      id="faq"
+      className="bg-[#F8FAFC] dark:bg-[#0B1116] border-b border-[#E2E8F0] dark:border-[#1E2D38] py-14 sm:py-16 transition-colors"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-12 gap-6 lg:gap-8 items-start">
+          <div className="col-span-12 lg:col-span-4 space-y-2">
+            <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#0D9488] dark:text-[#14B8A6]">
+              Support &amp; Policies
+            </p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#17212B] dark:text-[#F1F5F9] tracking-tight">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-xs sm:text-sm text-[#475569] dark:text-[#94A3B8] leading-relaxed">
+              Clear answers about refurbishment testing, physical inspection at Pune and Delhi showrooms, warranty coverage, repairs, and EMI.
+            </p>
           </div>
-          <h2 className="text-2xl sm:text-4xl font-['Urbanist'] font-bold text-zinc-950 dark:text-white tracking-tight">
-            Frequently Asked Questions
-          </h2>
-          <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 mt-1 font-['Poppins']">
-            Clear, honest answers about our refurbished laptops, testing standards, and branch hubs.
-          </p>
-        </div>
 
-        <div className="space-y-3">
-          {faqs.map((faq, index) => {
-            const isOpen = openIndex === index;
-            return (
-              <div
-                key={index}
-                className="bg-[#F8FBF9] dark:bg-[#152227] rounded-[16px] border border-[#E3EBE7] dark:border-[#22353D] overflow-hidden transition-all duration-300 shadow-2xs"
-              >
-                <button
-                  type="button"
-                  onClick={() => toggle(index)}
-                  className="w-full py-4 px-5 text-left flex items-center justify-between gap-4 cursor-pointer hover:bg-[#E8F7EE] dark:hover:bg-[#1B2B32] transition-colors duration-300"
-                >
-                  <span className="text-base font-['Urbanist'] font-bold text-zinc-950 dark:text-white">
-                    {faq.q}
-                  </span>
-                  <div className="w-7 h-7 rounded-full bg-[#E8F7EE] dark:bg-[#10B981]/15 text-[#007A52] dark:text-[#34D399] flex items-center justify-center shrink-0">
+          <div className="col-span-12 lg:col-span-8 bg-white dark:bg-[#121B22] rounded-xl border border-[#E2E8F0] dark:border-[#1E2D38] divide-y divide-[#E2E8F0] dark:divide-[#1E2D38] px-5 sm:px-6">
+            {faqs.map((faq, index) => {
+              const isOpen = openIndex === index;
+              return (
+                <div key={index}>
+                  <button
+                    type="button"
+                    onClick={() => setOpenIndex(isOpen ? null : index)}
+                    className="w-full py-4 sm:py-5 text-left flex items-center justify-between gap-4 cursor-pointer"
+                  >
+                    <span className="text-sm sm:text-base font-semibold text-[#17212B] dark:text-[#F1F5F9]">
+                      {faq.q}
+                    </span>
                     {isOpen ? (
-                      <ChevronUp className="w-4 h-4" />
+                      <ChevronUp className="w-4 h-4 text-[#059669] dark:text-[#10B981] shrink-0" />
                     ) : (
-                      <ChevronDown className="w-4 h-4" />
+                      <ChevronDown className="w-4 h-4 text-[#64748B] shrink-0" />
                     )}
-                  </div>
-                </button>
-
-                {isOpen && (
-                  <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-zinc-600 dark:text-zinc-300 leading-relaxed border-t border-[#E3EBE7] dark:border-[#22353D] font-['Poppins']">
-                    <p>{faq.a}</p>
-                  </div>
-                )}
-              </div>
-            );
-          })}
+                  </button>
+                  {isOpen && (
+                    <p className="pb-5 text-xs sm:text-sm text-[#475569] dark:text-[#94A3B8] leading-relaxed">
+                      {faq.a}
+                    </p>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

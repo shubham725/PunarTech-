@@ -15,24 +15,22 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({ className = '', showLa
     <button
       type="button"
       onClick={toggleTheme}
-      className={`relative inline-flex items-center justify-center p-2 rounded-[12px] transition-all duration-300 cursor-pointer ${
+      className={`inline-flex items-center justify-center h-9 px-2.5 rounded-lg border transition-colors cursor-pointer ${
         isDark
-          ? 'bg-[#152227] text-[#34D399] hover:bg-[#1B2B32] border border-[#22353D] shadow-xs'
-          : 'bg-white text-[#007A52] hover:bg-[#E8F7EE] border border-[#E3EBE7] shadow-xs'
+          ? 'bg-[#18242D] text-[#E2E8F0] hover:bg-[#1E2D38] border-[#263846]'
+          : 'bg-white text-[#17212B] hover:bg-[#F1F5F9] border-[#E2E8F0]'
       } ${className}`}
       title={isDark ? 'Switch to Light Theme' : 'Switch to Dark Theme'}
       aria-label={isDark ? 'Switch to Light Theme' : 'Switch to Dark Theme'}
     >
-      <div className="relative w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center transition-transform duration-300 transform">
-        {isDark ? (
-          <Sun className="w-4 h-4 sm:w-5 sm:h-5 transition-all duration-300 rotate-0 scale-100 text-amber-400" />
-        ) : (
-          <Moon className="w-4 h-4 sm:w-5 sm:h-5 transition-all duration-300 rotate-0 scale-100 text-[#007A52]" />
-        )}
-      </div>
+      {isDark ? (
+        <Sun className="w-4 h-4 text-[#10B981]" />
+      ) : (
+        <Moon className="w-4 h-4 text-[#475569]" />
+      )}
       {showLabel && (
-        <span className="ml-2 text-xs font-semibold text-zinc-700 dark:text-zinc-300">
-          {isDark ? 'Light Mode' : 'Dark Mode'}
+        <span className="ml-2 text-xs font-semibold">
+          {isDark ? 'Light Theme' : 'Dark Theme'}
         </span>
       )}
     </button>

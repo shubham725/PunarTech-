@@ -3,21 +3,10 @@ import {
   Calendar,
   CreditCard,
   Building2,
-  CheckCircle2,
-  Clock,
-  ShieldCheck,
-  ArrowRight,
-  Sparkles,
-  Zap,
-  HelpCircle,
-  FileCheck,
-  RefreshCw,
-  Truck,
-  Percent,
+  Check,
 } from 'lucide-react';
 import { WhatsAppIcon } from './icons/WhatsAppIcon';
-import { getRentalWhatsAppUrl, getEmiWhatsAppUrl } from '../utils/finance';
-import { Laptop } from '../data/laptops';
+import { Laptop, WHATSAPP_CONFIG } from '../data/laptops';
 
 interface RentalAndEmiSectionProps {
   onOpenRentModal?: (mode: 'rent' | 'emi', laptop?: Laptop) => void;
@@ -36,40 +25,23 @@ export const RentalAndEmiSection: React.FC<RentalAndEmiSectionProps> = ({ onOpen
   const rentalTiers = [
     {
       title: 'Student & Basic Core i3',
-      rentPerMonth: 999,
-      deposit: 2500,
       specs: 'Intel Core i3 · 4GB/8GB RAM · Fast SSD',
-      bestFor: 'College coursework, browsing, basic MS Office & video calls',
     },
     {
       title: 'Office Business Core i5',
-      rentPerMonth: 1399,
-      deposit: 3000,
-      specs: 'Intel Core i5 (6th-8th Gen) · 8GB RAM · 256GB SSD',
-      bestFor: 'Work from home, accounting, coding, multitasking',
+      specs: 'Intel Core i5 (6th–8th Gen) · 8GB RAM · 256GB SSD',
     },
     {
       title: 'High Performance Core i7',
-      rentPerMonth: 1699,
-      deposit: 3500,
       specs: 'Intel Core i7 · 16GB RAM · 512GB SSD',
-      bestFor: 'Heavy development, design, virtualization & analytics',
     },
     {
       title: 'Apple MacBook Air / Pro',
-      rentPerMonth: 2999,
-      deposit: 6000,
       specs: 'Apple Retina Display · All-day Battery · macOS',
-      bestFor: 'UI/UX design, iOS development, creative professionals',
     },
   ];
 
   const activeTier = rentalTiers[selectedRentalTier];
-
-  // Duration discount: 6+ months gets 5% off, 12+ months gets 10% off
-  const durationDiscountRate = rentalDuration >= 12 ? 0.1 : rentalDuration >= 6 ? 0.05 : 0;
-  const effectiveMonthlyRent = Math.round(activeTier.rentPerMonth * (1 - durationDiscountRate));
-  const totalRentForPeriod = effectiveMonthlyRent * rentalDuration;
 
   // EMI calculations
   const emiPrincipal = Math.max(0, emiLaptopPrice - emiDownPayment);
@@ -87,7 +59,11 @@ export const RentalAndEmiSection: React.FC<RentalAndEmiSectionProps> = ({ onOpen
 • Live Website: https://punartech.vercel.app/
 
 Please share available laptop models in this category and rental documentation requirements.`;
-    window.open(`https://wa.me/918055035502?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
+    window.open(
+      `https://wa.me/${WHATSAPP_CONFIG.number}?text=${encodeURIComponent(text)}`,
+      '_blank',
+      'noopener,noreferrer'
+    );
   };
 
   const handleEmiWhatsApp = () => {
@@ -100,257 +76,259 @@ Please share available laptop models in this category and rental documentation r
 • Live Website: https://punartech.vercel.app/
 
 Please guide me with the instant 15-minute approval process.`;
-    window.open(`https://wa.me/918055035502?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
+    window.open(
+      `https://wa.me/${WHATSAPP_CONFIG.number}?text=${encodeURIComponent(text)}`,
+      '_blank',
+      'noopener,noreferrer'
+    );
   };
 
   return (
-    <section id="rental-emi" className="py-12 sm:py-16 bg-[#F8FBF9] dark:bg-[#090E11] border-y border-[#E3EBE7] dark:border-[#22353D] transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-12">
+    <section
+      id="rental-emi"
+      className="bg-[#F8FAFC] dark:bg-[#0B1116] border-b border-[#E2E8F0] dark:border-[#1E2D38] py-14 sm:py-16 transition-colors"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#E8F7EE] dark:bg-[#10B981]/15 text-[#007A52] dark:text-[#34D399] text-xs font-['Poppins'] font-semibold uppercase tracking-wider border border-[#C8DFD4] dark:border-[#10B981]/30 shadow-xs">
-            <Percent className="w-3.5 h-3.5 text-[#009B69] dark:text-[#10B981]" />
-            <span>Flexible Purchase &amp; Rental Options</span>
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+          <div className="max-w-2xl">
+            <p className="text-xs font-bold uppercase tracking-[0.12em] text-[#0D9488] dark:text-[#14B8A6]">
+              Flexible Financing &amp; Leasing
+            </p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-[#17212B] dark:text-[#F1F5F9] tracking-tight mt-1">
+              Rent a Laptop or Buy on Easy EMI
+            </h2>
+            <p className="text-sm text-[#475569] dark:text-[#94A3B8] mt-2 leading-relaxed">
+              Short-term monthly rentals for students and project teams, plus zero-cost and low-cost EMI plans across Pune and Delhi.
+            </p>
           </div>
-
-          <h2 className="text-2xl sm:text-4xl font-['Urbanist'] font-bold text-zinc-950 dark:text-white tracking-tight">
-            Rent a Laptop or Buy on <span className="text-logo-gradient">Easy EMI</span>
-          </h2>
-
-          <p className="text-sm sm:text-base text-zinc-600 dark:text-zinc-400 leading-relaxed font-['Poppins']">
-            Need a laptop for college or a short-term freelance contract? Want to buy a premium laptop without paying the entire amount upfront? We offer transparent <strong className="text-zinc-950 dark:text-white">monthly rentals</strong> and <strong className="text-zinc-950 dark:text-white">low-cost EMI financing</strong> across Pune and Delhi.
-          </p>
+          {onOpenRentModal && (
+            <button
+              type="button"
+              onClick={() => onOpenRentModal('emi')}
+              className="self-start md:self-auto h-10 px-4 rounded-lg bg-white dark:bg-[#121B22] hover:bg-[#F1F5F9] dark:hover:bg-[#18242D] text-[#17212B] dark:text-[#F1F5F9] border border-[#CBD5E1] dark:border-[#2C3F4E] text-xs font-semibold transition-colors cursor-pointer"
+            >
+              Open Quick Estimator Modal
+            </button>
+          )}
         </div>
 
         {/* 3 Core Value Pillars */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-12 gap-6">
           {/* 1. Monthly Laptop Rental */}
-          <div className="bg-white dark:bg-[#152227] rounded-[22px] p-6 sm:p-7 border border-[#E3EBE7] dark:border-[#22353D] flex flex-col justify-between hover:border-[#009B69] dark:hover:border-[#10B981] hover:shadow-xl hover:shadow-[#009B69]/10 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+          <div className="col-span-12 lg:col-span-4 bg-white dark:bg-[#121B22] rounded-xl p-6 border border-[#E2E8F0] dark:border-[#1E2D38] flex flex-col justify-between">
             <div className="space-y-4">
-              <div className="w-12 h-12 rounded-[14px] bg-[#E8F7EE] dark:bg-[#10B981]/15 text-[#007A52] dark:text-[#34D399] flex items-center justify-center border border-[#C8DFD4] dark:border-[#10B981]/30 shadow-xs">
-                <Calendar className="w-6 h-6 text-[#009B69] dark:text-[#10B981]" />
+              <div className="flex items-center justify-between">
+                <div className="w-10 h-10 rounded-lg bg-[#F1F5F9] dark:bg-[#18242D] border border-[#E2E8F0] dark:border-[#263846] text-[#059669] dark:text-[#10B981] flex items-center justify-center">
+                  <Calendar className="w-5 h-5" />
+                </div>
+                <span className="text-[11px] font-semibold text-[#475569] dark:text-[#94A3B8] uppercase tracking-wider">
+                  Short &amp; Long Term
+                </span>
               </div>
 
               <div>
-                <span className="text-xs font-['Poppins'] font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider block">
-                  Short &amp; Long Term
-                </span>
-                <h3 className="text-xl font-['Urbanist'] font-bold text-zinc-950 dark:text-white mt-0.5">
+                <h3 className="text-lg font-bold text-[#17212B] dark:text-white">
                   Monthly Laptop Rental
                 </h3>
-              </div>
-
-              <div className="pt-1">
-                <div className="flex items-baseline gap-2 flex-wrap">
-                  <span className="text-xl sm:text-2xl font-black text-[#007A52] dark:text-[#34D399] font-['Urbanist']">
+                <div className="flex items-baseline gap-2 mt-1.5">
+                  <span className="text-xl font-bold text-[#059669] dark:text-[#10B981]">
                     Rent on Request
                   </span>
-                  <span className="text-[10px] font-semibold text-zinc-600 dark:text-zinc-400 bg-[#E8F7EE] dark:bg-[#10B981]/15 px-2 py-0.5 rounded-[6px] border border-[#C8DFD4] dark:border-[#10B981]/30">
+                  <span className="text-[11px] font-medium text-[#475569] dark:text-[#94A3B8]">
                     Custom Quote
                   </span>
                 </div>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 font-['Poppins']">
-                  Undisclosed rent amount — tailored to your configuration and duration. Contact us for instant best quotation.
+                <p className="text-xs text-[#475569] dark:text-[#94A3B8] mt-1">
+                  Tailored monthly pricing based on configuration and rental tenure.
                 </p>
               </div>
 
-              <ul className="space-y-2 text-xs text-zinc-700 dark:text-zinc-300 pt-2 border-t border-[#E3EBE7] dark:border-[#22353D] font-['Poppins']">
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#009B69] dark:text-[#10B981] shrink-0" />
-                  <span>Low security deposit with simple KYC</span>
+              <ul className="space-y-2 text-xs text-[#334155] dark:text-[#CBD5E1] pt-3 border-t border-[#E2E8F0] dark:border-[#1E2D38]">
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                  <span>Refundable security deposit with simple KYC</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#009B69] dark:text-[#10B981] shrink-0" />
-                  <span>Free servicing &amp; instant doorstep replacement</span>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                  <span>Free servicing &amp; unit replacement support</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#009B69] dark:text-[#10B981] shrink-0" />
-                  <span>Pre-installed Windows 10/11 &amp; essential tools</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#009B69] dark:text-[#10B981] shrink-0" />
-                  <span>Same-day handover in Pune &amp; Delhi hubs</span>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                  <span>Same-day pickup in Pune &amp; Delhi showrooms</span>
                 </li>
               </ul>
             </div>
 
-            <div className="pt-6">
+            <div className="pt-5 mt-5 border-t border-[#E2E8F0] dark:border-[#1E2D38]">
               <button
                 type="button"
                 onClick={handleRentalWhatsApp}
-                className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-[12px] bg-gradient-to-r from-[#009B69] to-[#007A8D] hover:from-[#00875A] hover:to-[#006979] dark:from-[#10B981] dark:to-[#06B6D4] text-white dark:text-[#04251B] border border-transparent text-[15px] font-['Poppins'] font-semibold shadow-xs transition-all duration-300 cursor-pointer active:scale-95"
+                className="w-full h-10 px-4 rounded-lg bg-[#059669] hover:bg-[#047857] text-white text-xs font-semibold inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
               >
-                <WhatsAppIcon className="w-4 h-4 text-white dark:text-[#04251B]" />
-                <span>Enquire Rental on WhatsApp</span>
+                <WhatsAppIcon className="w-4 h-4 text-white" />
+                <span>Enquire Rental Quote</span>
               </button>
             </div>
           </div>
 
           {/* 2. Easy EMI & Installment Purchases */}
-          <div className="bg-white dark:bg-[#152227] rounded-[22px] p-6 sm:p-7 border border-[#E3EBE7] dark:border-[#22353D] flex flex-col justify-between hover:border-[#009B69] dark:hover:border-[#10B981] hover:shadow-xl hover:shadow-[#009B69]/10 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+          <div className="col-span-12 lg:col-span-4 bg-white dark:bg-[#121B22] rounded-xl p-6 border border-[#E2E8F0] dark:border-[#1E2D38] flex flex-col justify-between">
             <div className="space-y-4">
-              <div className="w-12 h-12 rounded-[14px] bg-[#E8F7EE] dark:bg-[#10B981]/15 text-[#007A52] dark:text-[#34D399] flex items-center justify-center border border-[#C8DFD4] dark:border-[#10B981]/30 shadow-xs">
-                <CreditCard className="w-6 h-6 text-[#009B69] dark:text-[#10B981]" />
+              <div className="flex items-center justify-between">
+                <div className="w-10 h-10 rounded-lg bg-[#F1F5F9] dark:bg-[#18242D] border border-[#E2E8F0] dark:border-[#263846] text-[#059669] dark:text-[#10B981] flex items-center justify-center">
+                  <CreditCard className="w-5 h-5" />
+                </div>
+                <span className="text-[11px] font-semibold text-[#475569] dark:text-[#94A3B8] uppercase tracking-wider">
+                  Flexible Ownership
+                </span>
               </div>
 
               <div>
-                <span className="text-xs font-['Poppins'] font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider block">
-                  Flexible Ownership
-                </span>
-                <h3 className="text-xl font-['Urbanist'] font-bold text-zinc-950 dark:text-white mt-0.5">
+                <h3 className="text-lg font-bold text-[#17212B] dark:text-white">
                   Easy EMI Financing
                 </h3>
-              </div>
-
-              <div className="pt-1">
-                <div className="flex items-baseline gap-1">
-                  <span className="text-xs text-zinc-500 dark:text-zinc-400">EMI starts at</span>
-                  <span className="text-2xl sm:text-3xl font-black text-[#007A52] dark:text-[#34D399] font-mono">
+                <div className="flex items-baseline gap-1.5 mt-1.5">
+                  <span className="text-xs text-[#475569] dark:text-[#94A3B8]">From</span>
+                  <span className="text-2xl font-bold text-[#17212B] dark:text-white font-mono tabular-nums">
                     ₹1,500
                   </span>
-                  <span className="text-xs text-zinc-500 dark:text-zinc-400">/ month</span>
+                  <span className="text-xs text-[#475569] dark:text-[#94A3B8]">/ month</span>
                 </div>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 font-['Poppins']">
-                  Split your laptop cost into 3, 6, 9 or 12 monthly installments.
+                <p className="text-xs text-[#475569] dark:text-[#94A3B8] mt-1">
+                  Split your purchase over 3, 6, 9, or 12 monthly installments.
                 </p>
               </div>
 
-              <ul className="space-y-2 text-xs text-zinc-700 dark:text-zinc-300 pt-2 border-t border-[#E3EBE7] dark:border-[#22353D] font-['Poppins']">
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#009B69] dark:text-[#10B981] shrink-0" />
-                  <span>0% No-Cost EMI on leading Credit Cards</span>
+              <ul className="space-y-2 text-xs text-[#334155] dark:text-[#CBD5E1] pt-3 border-t border-[#E2E8F0] dark:border-[#1E2D38]">
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                  <span>0% No-Cost EMI options on 3 &amp; 6 month plans</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#009B69] dark:text-[#10B981] shrink-0" />
-                  <span>Cardless EMI via Bajaj Finserv / ZestMoney / Snapmint</span>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                  <span>Cardless EMI via Bajaj Finserv, Zest &amp; Snapmint</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#009B69] dark:text-[#10B981] shrink-0" />
-                  <span>Instant 15-minute digital approval</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#009B69] dark:text-[#10B981] shrink-0" />
-                  <span>Full ownership of laptop from day one</span>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                  <span>15-minute digital check and immediate ownership</span>
                 </li>
               </ul>
             </div>
 
-            <div className="pt-6">
+            <div className="pt-5 mt-5 border-t border-[#E2E8F0] dark:border-[#1E2D38]">
               <button
                 type="button"
                 onClick={handleEmiWhatsApp}
-                className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-[12px] bg-gradient-to-r from-[#009B69] to-[#007A8D] hover:from-[#00875A] hover:to-[#006979] dark:from-[#10B981] dark:to-[#06B6D4] text-white dark:text-[#04251B] text-[15px] font-['Poppins'] font-semibold shadow-xs transition-all duration-300 cursor-pointer active:scale-95 border border-transparent"
+                className="w-full h-10 px-4 rounded-lg bg-[#059669] hover:bg-[#047857] text-white text-xs font-semibold inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
               >
-                <WhatsAppIcon className="w-4 h-4 text-white dark:text-[#04251B]" />
-                <span>Apply for EMI on WhatsApp</span>
+                <WhatsAppIcon className="w-4 h-4 text-white" />
+                <span>Check EMI Eligibility</span>
               </button>
             </div>
           </div>
 
           {/* 3. Corporate Bulk & Office Lease */}
-          <div className="bg-white dark:bg-[#152227] rounded-[22px] p-6 sm:p-7 border border-[#E3EBE7] dark:border-[#22353D] flex flex-col justify-between hover:border-[#009B69] dark:hover:border-[#10B981] hover:shadow-xl hover:shadow-[#009B69]/10 hover:-translate-y-1 transition-all duration-300 relative overflow-hidden group">
+          <div className="col-span-12 lg:col-span-4 bg-white dark:bg-[#121B22] rounded-xl p-6 border border-[#E2E8F0] dark:border-[#1E2D38] flex flex-col justify-between">
             <div className="space-y-4">
-              <div className="w-12 h-12 rounded-[14px] bg-[#E8F7EE] dark:bg-[#10B981]/15 text-[#007A52] dark:text-[#34D399] flex items-center justify-center border border-[#C8DFD4] dark:border-[#10B981]/30 shadow-xs">
-                <Building2 className="w-6 h-6 text-[#009B69] dark:text-[#10B981]" />
+              <div className="flex items-center justify-between">
+                <div className="w-10 h-10 rounded-lg bg-[#F1F5F9] dark:bg-[#18242D] border border-[#E2E8F0] dark:border-[#263846] text-[#0D9488] dark:text-[#14B8A6] flex items-center justify-center">
+                  <Building2 className="w-5 h-5" />
+                </div>
+                <span className="text-[11px] font-semibold text-[#475569] dark:text-[#94A3B8] uppercase tracking-wider">
+                  B2B &amp; Teams
+                </span>
               </div>
 
               <div>
-                <span className="text-xs font-['Poppins'] font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider block">
-                  B2B &amp; Startups
-                </span>
-                <h3 className="text-xl font-['Urbanist'] font-bold text-zinc-950 dark:text-white mt-0.5">
+                <h3 className="text-lg font-bold text-[#17212B] dark:text-white">
                   Corporate Bulk Lease
                 </h3>
-              </div>
-
-              <div className="pt-1">
-                <div className="flex items-baseline gap-1">
-                  <span className="text-xs text-zinc-500 dark:text-zinc-400">Volumes from</span>
-                  <span className="text-2xl sm:text-3xl font-black text-zinc-950 dark:text-white font-mono">
-                    5 to 50+
+                <div className="flex items-baseline gap-1.5 mt-1.5">
+                  <span className="text-xs text-[#475569] dark:text-[#94A3B8]">Batches of</span>
+                  <span className="text-2xl font-bold text-[#17212B] dark:text-white font-mono tabular-nums">
+                    5 – 50+
                   </span>
-                  <span className="text-xs text-zinc-500 dark:text-zinc-400">units</span>
+                  <span className="text-xs text-[#475569] dark:text-[#94A3B8]">units</span>
                 </div>
-                <p className="text-xs text-zinc-500 dark:text-zinc-400 mt-1 font-['Poppins']">
-                  Scale your IT infrastructure without capital expenditure.
+                <p className="text-xs text-[#475569] dark:text-[#94A3B8] mt-1">
+                  Deploy uniform business fleets without upfront capital spend.
                 </p>
               </div>
 
-              <ul className="space-y-2 text-xs text-zinc-700 dark:text-zinc-300 pt-2 border-t border-[#E3EBE7] dark:border-[#22353D] font-['Poppins']">
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#009B69] dark:text-[#10B981] shrink-0" />
-                  <span>GST invoice with 18% Input Tax Credit benefit</span>
+              <ul className="space-y-2 text-xs text-[#334155] dark:text-[#CBD5E1] pt-3 border-t border-[#E2E8F0] dark:border-[#1E2D38]">
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                  <span>GST invoicing with 18% Input Tax Credit</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#009B69] dark:text-[#10B981] shrink-0" />
-                  <span>Dedicated corporate engineer &amp; 4-hour SLA in Pune/Delhi</span>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                  <span>4-hour swap SLA in Pune &amp; Delhi NCR</span>
                 </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#009B69] dark:text-[#10B981] shrink-0" />
-                  <span>Custom RAM / SSD / OS image configuration</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[#009B69] dark:text-[#10B981] shrink-0" />
-                  <span>Monthly corporate billing &amp; asset tracking</span>
+                <li className="flex items-start gap-2">
+                  <Check className="w-4 h-4 text-[#059669] dark:text-[#10B981] shrink-0 mt-0.5" />
+                  <span>Custom RAM, SSD, and corporate OS imaging</span>
                 </li>
               </ul>
             </div>
 
-            <div className="pt-6">
+            <div className="pt-5 mt-5 border-t border-[#E2E8F0] dark:border-[#1E2D38]">
               <a
-                href="https://wa.me/918055035502?text=Hello%20PunarTech,%20I%20am%20browsing%20https://punartech.vercel.app/%20and%20looking%20for%20Corporate%20Bulk%20Laptop%20Rental%20/%20Lease%20for%20our%20company.%20Please%20share%20B2B%20catalog%20and%20quotation."
+                href={`https://wa.me/${WHATSAPP_CONFIG.number}?text=${encodeURIComponent(
+                  'Hello PunarTech, I am browsing https://punartech.vercel.app/ and looking for Corporate Bulk Laptop Rental / Lease for our company. Please share B2B catalog and quotation.'
+                )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-[12px] bg-gradient-to-r from-[#009B69] to-[#007A8D] hover:from-[#00875A] hover:to-[#006979] dark:from-[#10B981] dark:to-[#06B6D4] text-white dark:text-[#04251B] text-[15px] font-['Poppins'] font-semibold shadow-xs transition-all duration-300 cursor-pointer active:scale-95 border border-transparent"
+                className="w-full h-10 px-4 rounded-lg bg-white dark:bg-[#18242D] hover:bg-[#F1F5F9] dark:hover:bg-[#1E2D38] text-[#17212B] dark:text-[#F1F5F9] border border-[#CBD5E1] dark:border-[#2C3F4E] text-xs font-semibold inline-flex items-center justify-center gap-2 transition-colors"
               >
-                <WhatsAppIcon className="w-4 h-4 text-white dark:text-[#04251B]" />
-                <span>Get Corporate B2B Quote</span>
+                <WhatsAppIcon className="w-4 h-4 text-[#059669] dark:text-[#10B981]" />
+                <span>Request B2B Quote</span>
               </a>
             </div>
           </div>
         </div>
 
         {/* Interactive Dual Estimator Box */}
-        <div className="bg-white dark:bg-[#152227] rounded-[24px] border border-[#E3EBE7] dark:border-[#22353D] p-6 sm:p-8 shadow-sm transition-colors">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 divide-y lg:divide-y-0 lg:divide-x divide-[#E3EBE7] dark:divide-[#22353D]">
+        <div className="bg-white dark:bg-[#121B22] rounded-xl border border-[#E2E8F0] dark:border-[#1E2D38] p-6 sm:p-8">
+          <div className="grid grid-cols-12 gap-8 divide-y lg:divide-y-0 lg:divide-x divide-[#E2E8F0] dark:divide-[#1E2D38]">
             {/* Left: Interactive Rental Estimator */}
-            <div className="space-y-5">
-              <div className="flex items-center justify-between">
+            <div className="col-span-12 lg:col-span-6 space-y-5">
+              <div className="flex items-start justify-between gap-2">
                 <div>
-                  <span className="text-xs font-['Poppins'] font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
-                    Interactive Calculator
+                  <span className="text-[11px] font-bold text-[#0D9488] dark:text-[#14B8A6] uppercase tracking-wider block">
+                    Rental Configurator
                   </span>
-                  <h3 className="text-lg sm:text-xl font-['Urbanist'] font-bold text-zinc-950 dark:text-white">
+                  <h3 className="text-lg font-bold text-[#17212B] dark:text-white mt-0.5">
                     1. Estimate Your Laptop Rent
                   </h3>
                 </div>
-                <span className="text-[11px] font-['Poppins'] font-semibold bg-[#E8F7EE] dark:bg-[#10B981]/15 text-[#007A52] dark:text-[#34D399] px-3 py-1 rounded-full border border-[#C8DFD4] dark:border-[#10B981]/30">
-                  Pune &amp; Delhi Stock
+                <span className="text-[11px] font-medium text-[#475569] dark:text-[#94A3B8] bg-[#F1F5F9] dark:bg-[#18242D] px-2.5 py-1 rounded-md border border-[#E2E8F0] dark:border-[#263846] shrink-0">
+                  Pune &amp; Delhi
                 </span>
               </div>
 
               {/* Tier Selection */}
               <div className="space-y-2">
-                <label className="text-xs font-['Poppins'] font-semibold text-zinc-900 dark:text-zinc-200 block">
-                  Select Laptop Configuration:
+                <label className="text-xs font-semibold text-[#17212B] dark:text-[#E2E8F0] block">
+                  Select Laptop Configuration
                 </label>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {rentalTiers.map((t, idx) => (
                     <button
                       key={t.title}
                       type="button"
                       onClick={() => setSelectedRentalTier(idx)}
-                      className={`p-3 rounded-[12px] border text-left transition-all duration-300 cursor-pointer ${
+                      className={`p-3 rounded-lg border text-left transition-colors cursor-pointer ${
                         selectedRentalTier === idx
-                          ? 'border-[#009B69] dark:border-[#10B981] bg-[#F0FDF4] dark:bg-[#10B981]/15 ring-2 ring-[#009B69]/20 dark:ring-[#10B981]/30 shadow-xs'
-                          : 'border-[#E3EBE7] dark:border-[#22353D] bg-[#F6F9F8] dark:bg-[#0E1519] hover:bg-white dark:hover:bg-[#152227] text-zinc-900 dark:text-zinc-300'
+                          ? 'border-[#059669] dark:border-[#10B981] bg-[#ECFDF5] dark:bg-[#10B981]/10'
+                          : 'border-[#E2E8F0] dark:border-[#263846] bg-[#F8FAFC] dark:bg-[#18242D] hover:bg-white dark:hover:bg-[#121B22]'
                       }`}
                     >
-                      <span className="text-xs font-['Poppins'] font-semibold text-zinc-900 dark:text-white block truncate">
+                      <span className="text-xs font-bold text-[#17212B] dark:text-white block truncate">
                         {t.title}
                       </span>
-                      <span className="text-[11px] font-semibold text-[#007A52] dark:text-[#34D399] block mt-0.5">
-                        Rent on Request
+                      <span className="text-[11px] text-[#059669] dark:text-[#10B981] font-medium block mt-0.5 truncate">
+                        {t.specs}
                       </span>
                     </button>
                   ))}
@@ -359,48 +337,48 @@ Please guide me with the instant 15-minute approval process.`;
 
               {/* Duration Buttons */}
               <div className="space-y-2">
-                <div className="flex items-center justify-between text-xs font-['Poppins']">
-                  <span className="font-semibold text-zinc-900 dark:text-zinc-200">Rental Period:</span>
-                  <span className="text-[#007A52] dark:text-[#34D399] font-semibold">
-                    {rentalDuration >= 6 ? 'Includes Long-Term Discount!' : 'Flexible Tenure'}
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-semibold text-[#17212B] dark:text-[#E2E8F0]">Rental Duration</span>
+                  <span className="text-[#059669] dark:text-[#10B981] font-medium">
+                    {rentalDuration >= 6 ? 'Long-term discount eligible' : 'Standard plan'}
                   </span>
                 </div>
-                <div className="grid grid-cols-4 gap-1.5">
+                <div className="grid grid-cols-4 gap-2">
                   {[1, 3, 6, 12].map((m) => (
                     <button
                       key={m}
                       type="button"
                       onClick={() => setRentalDuration(m)}
-                      className={`py-2 px-1 rounded-[12px] text-xs font-['Poppins'] font-semibold border transition-all duration-300 cursor-pointer text-center ${
+                      className={`py-2 px-2 rounded-lg text-xs font-semibold border transition-colors cursor-pointer text-center ${
                         rentalDuration === m
-                          ? 'bg-gradient-to-r from-[#009B69] to-[#007A8D] text-white dark:from-[#10B981] dark:to-[#06B6D4] dark:text-[#04251B] border-transparent shadow-xs font-bold'
-                          : 'bg-white hover:bg-[#E8F7EE] dark:bg-[#10191E] text-zinc-700 dark:text-zinc-300 border-[#E3EBE7] dark:border-[#22353D]'
+                          ? 'bg-[#17212B] dark:bg-[#059669] text-white border-transparent'
+                          : 'bg-white hover:bg-[#F8FAFC] dark:bg-[#18242D] dark:hover:bg-[#1E2D38] text-[#334155] dark:text-[#CBD5E1] border-[#E2E8F0] dark:border-[#263846]'
                       }`}
                     >
-                      {m} {m === 1 ? 'Month' : 'Months'}
+                      {m} {m === 1 ? 'Mo' : 'Mos'}
                     </button>
                   ))}
                 </div>
               </div>
 
               {/* Calculated Summary Box */}
-              <div className="p-4 bg-[#F6F9F8] dark:bg-[#0E1519] rounded-[16px] border border-[#E3EBE7] dark:border-[#22353D] space-y-2.5 font-['Poppins']">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-zinc-500 dark:text-zinc-400">Monthly Rental:</span>
-                  <span className="font-semibold text-[#007A52] dark:text-[#34D399] text-sm">
-                    Undisclosed / On Request (Contact Us)
+              <div className="p-4 bg-[#F8FAFC] dark:bg-[#18242D] rounded-lg border border-[#E2E8F0] dark:border-[#263846] space-y-2 text-xs">
+                <div className="flex items-center justify-between">
+                  <span className="text-[#475569] dark:text-[#94A3B8]">Monthly Rental</span>
+                  <span className="font-semibold text-[#059669] dark:text-[#10B981]">
+                    Undisclosed / On Request
                   </span>
                 </div>
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-zinc-500 dark:text-zinc-400">Rental Duration:</span>
-                  <span className="font-mono font-bold text-zinc-900 dark:text-white">
-                    {rentalDuration} {rentalDuration === 1 ? 'Month' : 'Months'} (Flexible Plan)
+                <div className="flex items-center justify-between">
+                  <span className="text-[#475569] dark:text-[#94A3B8]">Selected Duration</span>
+                  <span className="font-mono font-bold text-[#17212B] dark:text-white tabular-nums">
+                    {rentalDuration} {rentalDuration === 1 ? 'Month' : 'Months'}
                   </span>
                 </div>
-                <div className="flex items-center justify-between text-xs border-t border-[#E3EBE7] dark:border-[#22353D] pt-2">
-                  <span className="text-zinc-500 dark:text-zinc-400">Security Deposit:</span>
-                  <span className="font-semibold text-zinc-800 dark:text-zinc-200">
-                    Nominal &amp; 100% Refundable on Return
+                <div className="flex items-center justify-between border-t border-[#E2E8F0] dark:border-[#263846] pt-2">
+                  <span className="text-[#475569] dark:text-[#94A3B8]">Security Deposit</span>
+                  <span className="font-medium text-[#17212B] dark:text-[#E2E8F0]">
+                    Nominal &amp; 100% Refundable
                   </span>
                 </div>
               </div>
@@ -408,34 +386,34 @@ Please guide me with the instant 15-minute approval process.`;
               <button
                 type="button"
                 onClick={handleRentalWhatsApp}
-                className="w-full py-3 px-4 rounded-[12px] bg-gradient-to-r from-[#009B69] to-[#007A8D] hover:from-[#00875A] hover:to-[#006979] dark:from-[#10B981] dark:to-[#06B6D4] text-white dark:text-[#04251B] border border-transparent font-['Poppins'] text-[15px] font-semibold flex items-center justify-center gap-2 shadow-xs transition-all duration-300 cursor-pointer active:scale-95"
+                className="w-full h-11 px-4 rounded-lg bg-[#059669] hover:bg-[#047857] text-white text-xs sm:text-sm font-semibold inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
               >
-                <WhatsAppIcon className="w-4 h-4 text-white dark:text-[#04251B]" />
-                <span>Contact Us for Rental Quote (+91 80550 35502)</span>
+                <WhatsAppIcon className="w-4 h-4 text-white" />
+                <span>Request Rental Quote (+91 80550 35502)</span>
               </button>
             </div>
 
             {/* Right: Interactive EMI Estimator */}
-            <div className="space-y-5 lg:pl-8 pt-8 lg:pt-0">
-              <div className="flex items-center justify-between">
+            <div className="col-span-12 lg:col-span-6 space-y-5 lg:pl-8 pt-8 lg:pt-0">
+              <div className="flex items-start justify-between gap-2">
                 <div>
-                  <span className="text-xs font-['Poppins'] font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">
+                  <span className="text-[11px] font-bold text-[#0D9488] dark:text-[#14B8A6] uppercase tracking-wider block">
                     EMI Calculator
                   </span>
-                  <h3 className="text-lg sm:text-xl font-['Urbanist'] font-bold text-zinc-950 dark:text-white">
+                  <h3 className="text-lg font-bold text-[#17212B] dark:text-white mt-0.5">
                     2. Calculate Monthly EMI
                   </h3>
                 </div>
-                <span className="text-[11px] font-['Poppins'] font-semibold bg-zinc-100 dark:bg-zinc-800 text-zinc-900 dark:text-zinc-200 px-3 py-1 rounded-full border border-zinc-200 dark:border-zinc-700">
-                  Instant 15-Min Process
+                <span className="text-[11px] font-medium text-[#475569] dark:text-[#94A3B8] bg-[#F1F5F9] dark:bg-[#18242D] px-2.5 py-1 rounded-md border border-[#E2E8F0] dark:border-[#263846] shrink-0">
+                  15-Min Approval
                 </span>
               </div>
 
-              {/* Laptop Price Slider / Preset */}
-              <div className="space-y-2">
-                <div className="flex items-center justify-between text-xs font-['Poppins']">
-                  <span className="font-semibold text-zinc-900 dark:text-zinc-200">Target Laptop Budget:</span>
-                  <span className="font-mono font-bold text-zinc-950 dark:text-white text-sm">
+              {/* Laptop Price Slider */}
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-semibold text-[#17212B] dark:text-[#E2E8F0]">Laptop Price Budget</span>
+                  <span className="font-mono font-bold text-[#17212B] dark:text-white text-sm tabular-nums">
                     ₹{emiLaptopPrice.toLocaleString('en-IN')}
                   </span>
                 </div>
@@ -445,10 +423,16 @@ Please guide me with the instant 15-minute approval process.`;
                   max="45000"
                   step="1000"
                   value={emiLaptopPrice}
-                  onChange={(e) => setEmiLaptopPrice(Number(e.target.value))}
-                  className="w-full accent-[#009B69] dark:accent-[#10B981] cursor-pointer"
+                  onChange={(e) => {
+                    const nextPrice = Number(e.target.value);
+                    setEmiLaptopPrice(nextPrice);
+                    if (emiDownPayment > nextPrice - 5000) {
+                      setEmiDownPayment(Math.max(0, nextPrice - 5000));
+                    }
+                  }}
+                  className="w-full accent-[#059669] dark:accent-[#10B981] cursor-pointer"
                 />
-                <div className="flex justify-between text-[10px] text-zinc-500 dark:text-zinc-400 font-mono">
+                <div className="flex justify-between text-[10px] text-[#64748B] font-mono">
                   <span>₹10,000</span>
                   <span>₹25,000</span>
                   <span>₹45,000</span>
@@ -456,10 +440,10 @@ Please guide me with the instant 15-minute approval process.`;
               </div>
 
               {/* Down Payment Slider */}
-              <div className="space-y-2">
-                <div className="flex items-center justify-between text-xs font-['Poppins']">
-                  <span className="font-semibold text-zinc-900 dark:text-zinc-200">Down Payment:</span>
-                  <span className="font-mono font-bold text-[#009B69] dark:text-[#10B981]">
+              <div className="space-y-1.5">
+                <div className="flex items-center justify-between text-xs">
+                  <span className="font-semibold text-[#17212B] dark:text-[#E2E8F0]">Down Payment</span>
+                  <span className="font-mono font-bold text-[#059669] dark:text-[#10B981] tabular-nums">
                     ₹{emiDownPayment.toLocaleString('en-IN')}
                   </span>
                 </div>
@@ -470,35 +454,34 @@ Please guide me with the instant 15-minute approval process.`;
                   step="1000"
                   value={emiDownPayment}
                   onChange={(e) => setEmiDownPayment(Number(e.target.value))}
-                  className="w-full accent-[#009B69] dark:accent-[#10B981] cursor-pointer"
+                  className="w-full accent-[#059669] dark:accent-[#10B981] cursor-pointer"
                 />
               </div>
 
               {/* Tenure Selector */}
               <div className="space-y-2">
-                <label className="text-xs font-['Poppins'] font-semibold text-zinc-900 dark:text-zinc-200 block">
-                  Select EMI Tenure:
+                <label className="text-xs font-semibold text-[#17212B] dark:text-[#E2E8F0] block">
+                  Repayment Tenure
                 </label>
-                <div className="grid grid-cols-4 gap-1.5">
-                  {[
-                    { m: 3, label: '3 Months (0% Int)' },
-                    { m: 6, label: '6 Months (0% Int)' },
-                    { m: 9, label: '9 Months' },
-                    { m: 12, label: '12 Months' },
-                  ].map((item) => (
+                <div className="grid grid-cols-4 gap-2">
+                  {[3, 6, 9, 12].map((m) => (
                     <button
-                      key={item.m}
+                      key={m}
                       type="button"
-                      onClick={() => setEmiTenure(item.m)}
-                      className={`p-2 rounded-[12px] text-center border transition-all duration-300 cursor-pointer ${
-                        emiTenure === item.m
-                          ? 'bg-gradient-to-r from-[#009B69] to-[#007A8D] text-white border-transparent shadow-xs font-bold'
-                          : 'bg-white hover:bg-[#F0F9F5] dark:bg-[#10191E] dark:hover:bg-[#1A2C33] text-zinc-700 dark:text-zinc-300 border-[#E3EBE7] dark:border-[#22353D]'
+                      onClick={() => setEmiTenure(m)}
+                      className={`p-2 rounded-lg text-center border transition-colors cursor-pointer ${
+                        emiTenure === m
+                          ? 'bg-[#17212B] dark:bg-[#059669] text-white border-transparent'
+                          : 'bg-white hover:bg-[#F8FAFC] dark:bg-[#18242D] dark:hover:bg-[#1E2D38] text-[#334155] dark:text-[#CBD5E1] border-[#E2E8F0] dark:border-[#263846]'
                       }`}
                     >
-                      <span className="text-xs font-['Poppins'] font-semibold block">{item.m} Mo</span>
-                      <span className={`text-[9px] block font-semibold truncate ${emiTenure === item.m ? 'text-white/80' : 'text-zinc-500 dark:text-zinc-400'}`}>
-                        {item.m <= 6 ? 'No-Cost' : 'Low-Cost'}
+                      <span className="text-xs font-semibold block">{m} Mo</span>
+                      <span
+                        className={`text-[10px] block truncate ${
+                          emiTenure === m ? 'text-white/80' : 'text-[#64748B] dark:text-[#94A3B8]'
+                        }`}
+                      >
+                        {m <= 6 ? 'No-Cost' : 'Low-Cost'}
                       </span>
                     </button>
                   ))}
@@ -506,29 +489,31 @@ Please guide me with the instant 15-minute approval process.`;
               </div>
 
               {/* Calculated EMI Display */}
-              <div className="p-4 bg-[#F8FBF9] dark:bg-[#0E1519] rounded-[16px] border border-[#E3EBE7] dark:border-[#22353D] space-y-2.5 font-['Poppins']">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-zinc-600 dark:text-zinc-400">Estimated Monthly EMI:</span>
-                  <span className="font-mono font-bold text-[#009B69] dark:text-[#10B981] text-xl">
+              <div className="p-4 bg-[#F8FAFC] dark:bg-[#18242D] rounded-lg border border-[#E2E8F0] dark:border-[#263846] space-y-2 text-xs">
+                <div className="flex items-center justify-between">
+                  <span className="text-[#475569] dark:text-[#94A3B8]">Estimated Monthly EMI</span>
+                  <span className="font-mono font-bold text-[#059669] dark:text-[#10B981] text-lg tabular-nums">
                     ₹{monthlyEmi.toLocaleString('en-IN')}/mo
                   </span>
                 </div>
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-zinc-600 dark:text-zinc-400">Financed Loan Amount:</span>
-                  <span className="font-mono font-bold text-zinc-900 dark:text-zinc-200">
+                <div className="flex items-center justify-between">
+                  <span className="text-[#475569] dark:text-[#94A3B8]">Financed Loan Amount</span>
+                  <span className="font-mono font-bold text-[#17212B] dark:text-white tabular-nums">
                     ₹{emiPrincipal.toLocaleString('en-IN')}
                   </span>
                 </div>
-                <div className="flex items-center justify-between text-[11px] text-zinc-600 dark:text-zinc-400 font-semibold border-t border-[#E3EBE7] dark:border-[#22353D] pt-2">
-                  <span>Supported Partners:</span>
-                  <span className="text-[#007A8D] dark:text-[#06B6D4]">Bajaj Finserv · ZestMoney · Cards</span>
+                <div className="flex items-center justify-between border-t border-[#E2E8F0] dark:border-[#263846] pt-2 text-[11px]">
+                  <span className="text-[#475569] dark:text-[#94A3B8]">Partners</span>
+                  <span className="font-semibold text-[#0D9488] dark:text-[#14B8A6]">
+                    Bajaj Finserv · ZestMoney · Cards
+                  </span>
                 </div>
               </div>
 
               <button
                 type="button"
                 onClick={handleEmiWhatsApp}
-                className="w-full py-3 px-4 rounded-[12px] bg-gradient-to-r from-[#009B69] to-[#007A8D] hover:from-[#008759] hover:to-[#00697a] text-white font-['Poppins'] text-[15px] font-semibold flex items-center justify-center gap-2 shadow-sm transition-all duration-300 cursor-pointer active:scale-95"
+                className="w-full h-11 px-4 rounded-lg bg-[#059669] hover:bg-[#047857] text-white text-xs sm:text-sm font-semibold inline-flex items-center justify-center gap-2 transition-colors cursor-pointer"
               >
                 <WhatsAppIcon className="w-4 h-4 text-white" />
                 <span>Check EMI Eligibility on WhatsApp</span>
@@ -538,51 +523,42 @@ Please guide me with the instant 15-minute approval process.`;
         </div>
 
         {/* How Rental & EMI Works (4 Simple Steps) */}
-        <div className="space-y-4 pt-4 border-t border-[#E3EBE7] dark:border-[#22353D] font-['Poppins']">
-          <h3 className="text-xl sm:text-2xl font-['Urbanist'] font-bold text-zinc-950 dark:text-white text-center">
-            How Does Laptop Rental &amp; EMI Work at PunarTech?
-          </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 text-xs">
-            <div className="p-5 bg-white dark:bg-[#152227] rounded-[20px] border border-[#E3EBE7] dark:border-[#22353D] space-y-2 shadow-2xs hover:border-[#009B69] dark:hover:border-[#10B981] hover:shadow-xs transition-all duration-300">
-              <span className="w-7 h-7 rounded-[8px] bg-gradient-to-br from-[#009B69] to-[#007A8D] text-white font-bold font-mono flex items-center justify-center text-xs shadow-xs">
-                1
+        <div className="grid grid-cols-12 gap-6">
+          {[
+            {
+              step: '01',
+              title: 'Select Configuration',
+              body: 'Pick any unit from our 91 verified laptops or choose a rental tier.',
+            },
+            {
+              step: '02',
+              title: 'Share Digital KYC',
+              body: 'Verify Aadhaar and student or employee ID over WhatsApp (+91 80550 35502).',
+            },
+            {
+              step: '03',
+              title: '15-Minute Approval',
+              body: 'Receive instant eligibility confirmation for EMI or refundable rental deposit.',
+            },
+            {
+              step: '04',
+              title: 'Pickup or Dispatch',
+              body: 'Collect from our Pune or Delhi hubs or arrange insured courier delivery.',
+            },
+          ].map((item) => (
+            <div
+              key={item.step}
+              className="col-span-12 sm:col-span-6 lg:col-span-3 p-5 bg-white dark:bg-[#121B22] rounded-xl border border-[#E2E8F0] dark:border-[#1E2D38] space-y-1.5"
+            >
+              <span className="font-mono text-xs font-bold text-[#059669] dark:text-[#10B981]">
+                STEP {item.step}
               </span>
-              <span className="font-['Urbanist'] font-bold text-zinc-950 dark:text-white block text-base">Pick Your Model</span>
-              <p className="text-zinc-600 dark:text-zinc-400">
-                Select any laptop from our 91 verified inventory units or pick a configuration tier.
+              <h4 className="text-sm font-bold text-[#17212B] dark:text-white">{item.title}</h4>
+              <p className="text-xs text-[#475569] dark:text-[#94A3B8] leading-relaxed">
+                {item.body}
               </p>
             </div>
-
-            <div className="p-5 bg-white dark:bg-[#152227] rounded-[20px] border border-[#E3EBE7] dark:border-[#22353D] space-y-2 shadow-2xs hover:border-[#009B69] dark:hover:border-[#10B981] hover:shadow-xs transition-all duration-300">
-              <span className="w-7 h-7 rounded-[8px] bg-gradient-to-br from-[#009B69] to-[#007A8D] text-white font-bold font-mono flex items-center justify-center text-xs shadow-xs">
-                2
-              </span>
-              <span className="font-['Urbanist'] font-bold text-zinc-950 dark:text-white block text-base">Quick Digital KYC</span>
-              <p className="text-zinc-600 dark:text-zinc-400">
-                Share Aadhaar card / College ID / Company ID on WhatsApp (+91 80550 35502).
-              </p>
-            </div>
-
-            <div className="p-5 bg-white dark:bg-[#152227] rounded-[20px] border border-[#E3EBE7] dark:border-[#22353D] space-y-2 shadow-2xs hover:border-[#009B69] dark:hover:border-[#10B981] hover:shadow-xs transition-all duration-300">
-              <span className="w-7 h-7 rounded-[8px] bg-gradient-to-br from-[#009B69] to-[#007A8D] text-white font-bold font-mono flex items-center justify-center text-xs shadow-xs">
-                3
-              </span>
-              <span className="font-['Urbanist'] font-bold text-zinc-950 dark:text-white block text-base">Instant Approval</span>
-              <p className="text-zinc-600 dark:text-zinc-400">
-                Get approval in 15 minutes. For rentals, pay refundable deposit + 1st month rent.
-              </p>
-            </div>
-
-            <div className="p-5 bg-white dark:bg-[#152227] rounded-[20px] border border-[#E3EBE7] dark:border-[#22353D] space-y-2 shadow-2xs hover:border-[#009B69] dark:hover:border-[#10B981] hover:shadow-xs transition-all duration-300">
-              <span className="w-7 h-7 rounded-[8px] bg-gradient-to-br from-[#009B69] to-[#007A8D] text-white font-bold font-mono flex items-center justify-center text-xs shadow-xs">
-                4
-              </span>
-              <span className="font-['Urbanist'] font-bold text-zinc-950 dark:text-white block text-base">Hub Handover or Dispatch</span>
-              <p className="text-zinc-600 dark:text-zinc-400">
-                Collect physically from Pune / Delhi Hub or get fast insured doorstep delivery.
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>

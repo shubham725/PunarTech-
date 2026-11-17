@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { RotateCcw, ChevronDown, ChevronUp, SlidersHorizontal, X, Check } from 'lucide-react';
+import { RotateCcw, ChevronDown, ChevronUp, X } from 'lucide-react';
 
 export interface FilterState {
   branch: 'All' | 'Pune' | 'Delhi';
@@ -52,13 +52,11 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
   onCloseMobileDrawer,
   hideHeader = false,
 }) => {
-  // Collapsible section state
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
     branch: true,
     price: true,
     brand: true,
     processor: true,
-    generation: false,
     ram: true,
     storage: false,
     graphics: false,
@@ -93,7 +91,6 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
     });
   };
 
-  // Check active filter count
   const activeCount =
     (filters.branch !== 'All' ? 1 : 0) +
     (filters.pricePreset || filters.customMinPrice || filters.customMaxPrice ? 1 : 0) +
@@ -109,81 +106,77 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
 
   return (
     <aside
-      className={`bg-white dark:bg-[#152227] rounded-[22px] divide-y divide-[#E3EBE7] dark:divide-[#22353D] transition-colors duration-300 font-['Poppins'] ${
-        isMobileDrawer ? 'border-0 p-0 shadow-none' : 'border border-[#E3EBE7] dark:border-[#22353D] shadow-sm p-4 sm:p-5 w-full'
+      className={`bg-white dark:bg-[#121B22] divide-y divide-[#E2E8F0] dark:divide-[#1E2D38] ${
+        isMobileDrawer
+          ? 'border-0 p-0'
+          : 'rounded-xl border border-[#E2E8F0] dark:border-[#1E2D38] p-5 w-full'
       }`}
     >
-      {/* Filter Header */}
       {!hideHeader && (
-        <>
-          <div className="pb-3 flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <SlidersHorizontal className="w-4 h-4 text-[#009B69] dark:text-[#10B981]" />
-              <h2 className="text-sm font-bold text-zinc-950 dark:text-white font-['Urbanist']">Filters</h2>
-              {activeCount > 0 && (
-                <span className="text-[11px] font-mono font-bold text-[#007A52] dark:text-[#34D399] bg-[#E8F7EE] dark:bg-[#10B981]/15 px-2 py-0.5 rounded-full border border-[#C8DFD4] dark:border-[#10B981]/30">
-                  {activeCount}
-                </span>
-              )}
-            </div>
-
-            <div className="flex items-center gap-2">
-              {activeCount > 0 && (
-                <button
-                  type="button"
-                  onClick={onReset}
-                  className="inline-flex items-center gap-1 text-xs font-semibold text-[#007A52] dark:text-[#34D399] hover:underline transition-colors cursor-pointer"
-                >
-                  <RotateCcw className="w-3 h-3" />
-                  <span>Reset</span>
-                </button>
-              )}
-
-              {isMobileDrawer && onCloseMobileDrawer && (
-                <button
-                  type="button"
-                  onClick={onCloseMobileDrawer}
-                  className="p-1 rounded-[8px] text-zinc-400 hover:text-zinc-950 dark:hover:text-white cursor-pointer"
-                  aria-label="Close filters"
-                >
-                  <X className="w-5 h-5" />
-                </button>
-              )}
-            </div>
+        <div className="pb-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <h2 className="text-sm font-bold text-[#17212B] dark:text-[#F1F5F9]">
+              Filters
+            </h2>
+            {activeCount > 0 && (
+              <span className="font-mono text-[11px] font-semibold text-[#059669] dark:text-[#10B981]">
+                ({activeCount})
+              </span>
+            )}
           </div>
 
-          {/* Matching Results Count */}
-          <div className="py-2.5 text-xs text-zinc-500 dark:text-zinc-400 flex items-center justify-between">
-            <span>Available Matches:</span>
-            <span className="font-mono font-bold text-[#007A52] dark:text-[#34D399] tabular-nums">
-              {totalMatches} laptops
-            </span>
+          <div className="flex items-center gap-3">
+            {activeCount > 0 && (
+              <button
+                type="button"
+                onClick={onReset}
+                className="inline-flex items-center gap-1 text-xs font-semibold text-[#0D9488] dark:text-[#14B8A6] hover:underline cursor-pointer"
+              >
+                <RotateCcw className="w-3 h-3" />
+                <span>Reset</span>
+              </button>
+            )}
+
+            {isMobileDrawer && onCloseMobileDrawer && (
+              <button
+                type="button"
+                onClick={onCloseMobileDrawer}
+                className="p-1 rounded-lg text-[#64748B] hover:text-[#17212B] dark:hover:text-white cursor-pointer"
+                aria-label="Close filters"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
           </div>
-        </>
+        </div>
       )}
 
-      {/* 1. Branch Selector */}
-      <div className="py-3">
+      {/* 1. Showroom Hub */}
+      <div className="py-4">
         <button
           type="button"
           onClick={() => toggleSection('branch')}
-          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-zinc-950 dark:text-white cursor-pointer font-['Urbanist']"
+          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#17212B] dark:text-[#F1F5F9] cursor-pointer"
         >
-          <span>Inventory Hub</span>
-          {openSections.branch ? <ChevronUp className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" /> : <ChevronDown className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />}
+          <span>Location</span>
+          {openSections.branch ? (
+            <ChevronUp className="w-3.5 h-3.5 text-[#64748B]" />
+          ) : (
+            <ChevronDown className="w-3.5 h-3.5 text-[#64748B]" />
+          )}
         </button>
 
         {openSections.branch && (
-          <div className="mt-2.5 grid grid-cols-3 gap-1 bg-[#F6F9F8] dark:bg-[#0E1519] p-1.5 rounded-[12px] border border-[#E3EBE7] dark:border-[#22353D]">
+          <div className="mt-3 grid grid-cols-3 gap-1.5">
             {(['All', 'Pune', 'Delhi'] as const).map((b) => (
               <button
                 key={b}
                 type="button"
                 onClick={() => updateBranch(b)}
-                className={`py-1.5 text-xs font-semibold rounded-[8px] transition-all duration-300 cursor-pointer ${
+                className={`py-2 px-1 text-xs font-semibold rounded-lg border transition-colors cursor-pointer ${
                   filters.branch === b
-                    ? 'bg-gradient-to-r from-[#009B69] to-[#007A8D] text-white dark:from-[#10B981] dark:to-[#06B6D4] dark:text-[#04251B] shadow-xs font-bold'
-                    : 'text-zinc-600 dark:text-zinc-400 hover:text-[#009B69] dark:hover:text-[#10B981]'
+                    ? 'bg-[#059669] text-white border-[#059669]'
+                    : 'bg-[#F8FAFC] dark:bg-[#18242D] text-[#475569] dark:text-[#94A3B8] border-[#E2E8F0] dark:border-[#263846] hover:text-[#17212B] dark:hover:text-white'
                 }`}
               >
                 {b === 'All' ? 'All (91)' : b === 'Pune' ? 'Pune (60)' : 'Delhi (31)'}
@@ -193,19 +186,23 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         )}
       </div>
 
-      {/* 2. Price Filter */}
-      <div className="py-3">
+      {/* 2. Price Range */}
+      <div className="py-4">
         <button
           type="button"
           onClick={() => toggleSection('price')}
-          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-zinc-950 dark:text-white cursor-pointer font-['Urbanist']"
+          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#17212B] dark:text-[#F1F5F9] cursor-pointer"
         >
-          <span>Budget Range (INR)</span>
-          {openSections.price ? <ChevronUp className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" /> : <ChevronDown className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />}
+          <span>Price Range</span>
+          {openSections.price ? (
+            <ChevronUp className="w-3.5 h-3.5 text-[#64748B]" />
+          ) : (
+            <ChevronDown className="w-3.5 h-3.5 text-[#64748B]" />
+          )}
         </button>
 
         {openSections.price && (
-          <div className="mt-2.5 space-y-2">
+          <div className="mt-3 space-y-2">
             {[
               { id: 'under12k', label: 'Under ₹12,000' },
               { id: 'k12to15', label: '₹12,000 – ₹15,000' },
@@ -216,48 +213,52 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
             ].map((p) => (
               <label
                 key={p.id}
-                className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer hover:text-[#009B69] dark:hover:text-[#10B981] select-none"
+                className="flex items-center gap-2.5 text-xs text-[#475569] dark:text-[#94A3B8] cursor-pointer hover:text-[#17212B] dark:hover:text-white select-none"
               >
                 <input
                   type="checkbox"
                   checked={filters.pricePreset === p.id}
                   onChange={() => handlePricePreset(p.id)}
-                  className="rounded border-[#E3EBE7] dark:border-[#22353D] text-[#009B69] focus:ring-[#009B69] w-3.5 h-3.5 accent-[#009B69] dark:accent-[#10B981]"
+                  className="w-4 h-4 rounded border-[#CBD5E1] accent-[#059669]"
                 />
-                <span className="font-mono text-zinc-700 dark:text-zinc-300">{p.label}</span>
+                <span className="font-mono">{p.label}</span>
               </label>
             ))}
 
-            <div className="pt-2 border-t border-[#E3EBE7] dark:border-[#22353D]">
-              <label className="flex items-center gap-2 text-xs text-zinc-500 dark:text-zinc-400 cursor-pointer select-none hover:text-[#009B69] dark:hover:text-[#10B981]">
+            <div className="pt-2 border-t border-[#E2E8F0] dark:border-[#1E2D38]">
+              <label className="flex items-center gap-2.5 text-xs text-[#64748B] dark:text-[#94A3B8] cursor-pointer select-none">
                 <input
                   type="checkbox"
                   checked={filters.includeUnpriced}
                   onChange={(e) =>
                     onFilterChange({ ...filters, includeUnpriced: e.target.checked })
                   }
-                  className="rounded border-[#E3EBE7] dark:border-[#22353D] text-[#009B69] focus:ring-[#009B69] w-3.5 h-3.5 accent-[#009B69] dark:accent-[#10B981]"
+                  className="w-4 h-4 rounded border-[#CBD5E1] accent-[#059669]"
                 />
-                <span>Include "Contact for Price"</span>
+                <span>Show &ldquo;Contact for Price&rdquo;</span>
               </label>
             </div>
           </div>
         )}
       </div>
 
-      {/* 3. Brands */}
-      <div className="py-3">
+      {/* 3. Brand */}
+      <div className="py-4">
         <button
           type="button"
           onClick={() => toggleSection('brand')}
-          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-zinc-950 dark:text-white cursor-pointer font-['Urbanist']"
+          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#17212B] dark:text-[#F1F5F9] cursor-pointer"
         >
           <span>Brand</span>
-          {openSections.brand ? <ChevronUp className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" /> : <ChevronDown className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />}
+          {openSections.brand ? (
+            <ChevronUp className="w-3.5 h-3.5 text-[#64748B]" />
+          ) : (
+            <ChevronDown className="w-3.5 h-3.5 text-[#64748B]" />
+          )}
         </button>
 
         {openSections.brand && (
-          <div className="mt-2.5 space-y-1.5">
+          <div className="mt-3 space-y-2">
             {[
               { name: 'Dell', count: 46 },
               { name: 'HP', count: 25 },
@@ -269,74 +270,82 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
             ].map((b) => (
               <label
                 key={b.name}
-                className="flex items-center justify-between text-xs text-zinc-700 dark:text-zinc-300 hover:text-[#009B69] dark:hover:text-[#10B981] cursor-pointer select-none"
+                className="flex items-center justify-between text-xs text-[#475569] dark:text-[#94A3B8] hover:text-[#17212B] dark:hover:text-white cursor-pointer select-none"
               >
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2.5">
                   <input
                     type="checkbox"
                     checked={filters.brands.includes(b.name)}
                     onChange={() => toggleArrayItem(filters.brands, b.name, 'brands')}
-                    className="rounded border-[#E3EBE7] dark:border-[#22353D] text-[#009B69] focus:ring-[#009B69] w-3.5 h-3.5 accent-[#009B69] dark:accent-[#10B981]"
+                    className="w-4 h-4 rounded border-[#CBD5E1] accent-[#059669]"
                   />
                   <span>{b.name}</span>
                 </div>
-                <span className="font-mono text-[11px] text-zinc-500 dark:text-zinc-400">{b.count}</span>
+                <span className="font-mono text-[11px] text-[#64748B] tabular-nums">{b.count}</span>
               </label>
             ))}
           </div>
         )}
       </div>
 
-      {/* 4. Processors */}
-      <div className="py-3">
+      {/* 4. Processor */}
+      <div className="py-4">
         <button
           type="button"
           onClick={() => toggleSection('processor')}
-          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-zinc-950 dark:text-white cursor-pointer font-['Urbanist']"
+          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#17212B] dark:text-[#F1F5F9] cursor-pointer"
         >
-          <span>Processor Series</span>
-          {openSections.processor ? <ChevronUp className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" /> : <ChevronDown className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />}
+          <span>Processor</span>
+          {openSections.processor ? (
+            <ChevronUp className="w-3.5 h-3.5 text-[#64748B]" />
+          ) : (
+            <ChevronDown className="w-3.5 h-3.5 text-[#64748B]" />
+          )}
         </button>
 
         {openSections.processor && (
-          <div className="mt-2.5 space-y-1.5">
+          <div className="mt-3 space-y-2">
             {[
-              { name: 'Intel Core i3' },
-              { name: 'Intel Core i5' },
-              { name: 'Intel Core i7' },
-              { name: 'AMD Ryzen' },
-              { name: 'Pentium' },
-            ].map((p) => (
+              'Intel Core i3',
+              'Intel Core i5',
+              'Intel Core i7',
+              'AMD Ryzen',
+              'Pentium',
+            ].map((proc) => (
               <label
-                key={p.name}
-                className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 hover:text-[#009B69] dark:hover:text-[#10B981] cursor-pointer select-none"
+                key={proc}
+                className="flex items-center gap-2.5 text-xs text-[#475569] dark:text-[#94A3B8] hover:text-[#17212B] dark:hover:text-white cursor-pointer select-none"
               >
                 <input
                   type="checkbox"
-                  checked={filters.processors.includes(p.name)}
-                  onChange={() => toggleArrayItem(filters.processors, p.name, 'processors')}
-                  className="rounded border-[#E3EBE7] dark:border-[#22353D] text-[#009B69] focus:ring-[#009B69] w-3.5 h-3.5 accent-[#009B69] dark:accent-[#10B981]"
+                  checked={filters.processors.includes(proc)}
+                  onChange={() => toggleArrayItem(filters.processors, proc, 'processors')}
+                  className="w-4 h-4 rounded border-[#CBD5E1] accent-[#059669]"
                 />
-                <span>{p.name}</span>
+                <span>{proc}</span>
               </label>
             ))}
           </div>
         )}
       </div>
 
-      {/* 5. Memory (RAM) */}
-      <div className="py-3">
+      {/* 5. RAM */}
+      <div className="py-4">
         <button
           type="button"
           onClick={() => toggleSection('ram')}
-          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-zinc-950 dark:text-white cursor-pointer font-['Urbanist']"
+          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#17212B] dark:text-[#F1F5F9] cursor-pointer"
         >
           <span>Memory (RAM)</span>
-          {openSections.ram ? <ChevronUp className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" /> : <ChevronDown className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />}
+          {openSections.ram ? (
+            <ChevronUp className="w-3.5 h-3.5 text-[#64748B]" />
+          ) : (
+            <ChevronDown className="w-3.5 h-3.5 text-[#64748B]" />
+          )}
         </button>
 
         {openSections.ram && (
-          <div className="mt-2.5 grid grid-cols-3 gap-1.5">
+          <div className="mt-3 grid grid-cols-3 gap-1.5">
             {[4, 8, 16].map((r) => {
               const active = filters.ram.includes(r);
               return (
@@ -344,10 +353,10 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                   key={r}
                   type="button"
                   onClick={() => toggleArrayItem(filters.ram, r, 'ram')}
-                  className={`py-1.5 px-2 rounded-[10px] text-xs font-mono font-semibold border transition-all duration-300 cursor-pointer text-center ${
+                  className={`py-2 px-2 rounded-lg text-xs font-mono font-semibold border transition-colors cursor-pointer ${
                     active
-                      ? 'bg-gradient-to-r from-[#009B69] to-[#007A8D] text-white border-transparent dark:from-[#10B981] dark:to-[#06B6D4] dark:text-[#04251B] shadow-xs font-bold'
-                      : 'bg-white dark:bg-[#10191E] hover:bg-[#E8F7EE] dark:hover:bg-[#1B2B32] text-zinc-800 dark:text-zinc-200 border-[#E3EBE7] dark:border-[#22353D]'
+                      ? 'bg-[#059669] text-white border-[#059669]'
+                      : 'bg-[#F8FAFC] dark:bg-[#18242D] text-[#17212B] dark:text-[#E2E8F0] border-[#E2E8F0] dark:border-[#263846] hover:border-[#059669]'
                   }`}
                 >
                   {r}GB
@@ -358,29 +367,33 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         )}
       </div>
 
-      {/* 6. Storage Type */}
-      <div className="py-3">
+      {/* 6. Storage */}
+      <div className="py-4">
         <button
           type="button"
           onClick={() => toggleSection('storage')}
-          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-zinc-950 dark:text-white cursor-pointer font-['Urbanist']"
+          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#17212B] dark:text-[#F1F5F9] cursor-pointer"
         >
-          <span>Storage Architecture</span>
-          {openSections.storage ? <ChevronUp className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" /> : <ChevronDown className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />}
+          <span>Storage</span>
+          {openSections.storage ? (
+            <ChevronUp className="w-3.5 h-3.5 text-[#64748B]" />
+          ) : (
+            <ChevronDown className="w-3.5 h-3.5 text-[#64748B]" />
+          )}
         </button>
 
         {openSections.storage && (
-          <div className="mt-2.5 space-y-1.5">
+          <div className="mt-3 space-y-2">
             {['SSD only', 'SSD + HDD', 'HDD only'].map((st) => (
               <label
                 key={st}
-                className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 hover:text-[#009B69] dark:hover:text-[#10B981] cursor-pointer select-none"
+                className="flex items-center gap-2.5 text-xs text-[#475569] dark:text-[#94A3B8] hover:text-[#17212B] dark:hover:text-white cursor-pointer select-none"
               >
                 <input
                   type="checkbox"
                   checked={filters.storageTypes.includes(st)}
                   onChange={() => toggleArrayItem(filters.storageTypes, st, 'storageTypes')}
-                  className="rounded border-[#E3EBE7] dark:border-[#22353D] text-[#009B69] focus:ring-[#009B69] w-3.5 h-3.5 accent-[#009B69] dark:accent-[#10B981]"
+                  className="w-4 h-4 rounded border-[#CBD5E1] accent-[#059669]"
                 />
                 <span>{st}</span>
               </label>
@@ -389,20 +402,24 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
         )}
       </div>
 
-      {/* 7. Dedicated Graphics */}
-      <div className="py-3">
+      {/* 7. Graphics */}
+      <div className="py-4">
         <button
           type="button"
           onClick={() => toggleSection('graphics')}
-          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-zinc-950 dark:text-white cursor-pointer font-['Urbanist']"
+          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#17212B] dark:text-[#F1F5F9] cursor-pointer"
         >
-          <span>Graphics GPU</span>
-          {openSections.graphics ? <ChevronUp className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" /> : <ChevronDown className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />}
+          <span>Graphics</span>
+          {openSections.graphics ? (
+            <ChevronUp className="w-3.5 h-3.5 text-[#64748B]" />
+          ) : (
+            <ChevronDown className="w-3.5 h-3.5 text-[#64748B]" />
+          )}
         </button>
 
         {openSections.graphics && (
-          <div className="mt-2.5 space-y-1.5">
-            <label className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 hover:text-[#009B69] dark:hover:text-[#10B981] cursor-pointer select-none">
+          <div className="mt-3 space-y-2">
+            <label className="flex items-center gap-2.5 text-xs text-[#475569] dark:text-[#94A3B8] hover:text-[#17212B] dark:hover:text-white cursor-pointer select-none">
               <input
                 type="checkbox"
                 checked={filters.hasDedicatedGraphics === true}
@@ -412,37 +429,41 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
                     hasDedicatedGraphics: e.target.checked ? true : null,
                   })
                 }
-                className="rounded border-[#E3EBE7] dark:border-[#22353D] text-[#009B69] focus:ring-[#009B69] w-3.5 h-3.5 accent-[#009B69] dark:accent-[#10B981]"
+                className="w-4 h-4 rounded border-[#CBD5E1] accent-[#059669]"
               />
-              <span className="font-semibold">Dedicated GPU Only (NVIDIA / Radeon)</span>
+              <span>Dedicated GPU Only</span>
             </label>
           </div>
         )}
       </div>
 
-      {/* 8. Display Classes */}
-      <div className="py-3">
+      {/* 8. Display */}
+      <div className="pt-4">
         <button
           type="button"
           onClick={() => toggleSection('display')}
-          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-zinc-950 dark:text-white cursor-pointer font-['Urbanist']"
+          className="w-full flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#17212B] dark:text-[#F1F5F9] cursor-pointer"
         >
-          <span>Screen Size</span>
-          {openSections.display ? <ChevronUp className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" /> : <ChevronDown className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />}
+          <span>Display Size</span>
+          {openSections.display ? (
+            <ChevronUp className="w-3.5 h-3.5 text-[#64748B]" />
+          ) : (
+            <ChevronDown className="w-3.5 h-3.5 text-[#64748B]" />
+          )}
         </button>
 
         {openSections.display && (
-          <div className="mt-2.5 space-y-1.5">
+          <div className="mt-3 space-y-2">
             {['13-inch class', '14-inch class', '15.6-inch class'].map((dc) => (
               <label
                 key={dc}
-                className="flex items-center gap-2 text-xs text-zinc-700 dark:text-zinc-300 hover:text-[#009B69] dark:hover:text-[#10B981] cursor-pointer select-none"
+                className="flex items-center gap-2.5 text-xs text-[#475569] dark:text-[#94A3B8] hover:text-[#17212B] dark:hover:text-white cursor-pointer select-none"
               >
                 <input
                   type="checkbox"
                   checked={filters.displayClasses.includes(dc)}
                   onChange={() => toggleArrayItem(filters.displayClasses, dc, 'displayClasses')}
-                  className="rounded border-[#E3EBE7] dark:border-[#22353D] text-[#009B69] focus:ring-[#009B69] w-3.5 h-3.5 accent-[#009B69] dark:accent-[#10B981]"
+                  className="w-4 h-4 rounded border-[#CBD5E1] accent-[#059669]"
                 />
                 <span>{dc}</span>
               </label>
@@ -450,6 +471,15 @@ export const FilterSidebar: React.FC<FilterSidebarProps> = ({
           </div>
         )}
       </div>
+
+      {!hideHeader && (
+        <div className="pt-4 mt-4 border-t border-[#E2E8F0] dark:border-[#1E2D38] flex items-center justify-between text-xs text-[#64748B]">
+          <span>Matching Stock</span>
+          <span className="font-mono font-bold text-[#17212B] dark:text-white tabular-nums">
+            {totalMatches} units
+          </span>
+        </div>
+      )}
     </aside>
   );
 };
